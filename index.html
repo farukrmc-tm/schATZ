@@ -3,47 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>schATZ - Almanca Kelime İstasyonu</title>
-    <!-- Tailwind CSS CDN -->
+    <title>schATZ - Akademik Almanca İstasyonu</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Ikon Kütüphanesi -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts - Premium Tipografi -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Outfit', sans-serif;
-            transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20% { transform: translateX(-8px); }
-            40% { transform: translateX(6px); }
-            60% { transform: translateX(-6px); }
-            80% { transform: translateX(4px); }
-        }
-        .animate-shake {
-            animation: shake 0.4s ease-in-out;
-        }
-        @keyframes popIn {
-            0% { transform: scale(0.96); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        .animate-pop {
-            animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
+        body { font-family: 'Outfit', sans-serif; transition: background-color 0.4s, color 0.4s; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-8px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-6px); } 80% { transform: translateX(4px); } }
+        .animate-shake { animation: shake 0.4s ease-in-out; }
+        @keyframes popIn { 0% { transform: scale(0.96); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        .animate-pop { animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.2); border-radius: 99px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.4); }
+        
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: #f97316; cursor: pointer; margin-top: -8px; box-shadow: 0 0 10px rgba(249, 115, 22, 0.4); }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: #334155; border-radius: 4px; }
+        
+        .custom-checkbox input:checked + div { background-color: #f97316; border-color: #f97316; }
+        .custom-checkbox input:checked + div i { opacity: 1; }
     </style>
 </head>
 <body id="appBody" class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
 
-    <!-- ÜST BAR (NAVBAR) -->
+    <!-- ÜST BAR -->
     <header id="appHeader" class="border-b border-slate-900 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40 px-4 py-3 transition-colors duration-300">
         <div class="max-w-5xl mx-auto flex items-center justify-between">
-            <!-- Logo & Başlık -->
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-xl shadow-lg shadow-indigo-500/20">
                     <i class="fa-solid fa-gem text-white text-lg"></i>
@@ -54,32 +41,21 @@
                 </div>
             </div>
             
-            <!-- Kontrol Araçları -->
             <div class="flex items-center gap-2">
                 <button id="soundToggleBtn" class="p-2.5 bg-slate-900/80 border border-slate-800 hover:border-indigo-500/40 rounded-xl text-slate-300 hover:text-indigo-400 transition-all active:scale-95" title="Sesi Aç/Kapat">
                     <i id="soundIcon" class="fa-solid fa-volume-high"></i>
                 </button>
-                
                 <div class="relative">
-                    <button id="themeMenuBtn" class="p-2.5 bg-slate-900/80 border border-slate-800 hover:border-indigo-500/40 rounded-xl text-slate-300 hover:text-indigo-400 transition-all active:scale-95" title="Arka Plan Teması">
+                    <button id="themeMenuBtn" class="p-2.5 bg-slate-900/80 border border-slate-800 hover:border-indigo-500/40 rounded-xl text-slate-300 hover:text-indigo-400 transition-all active:scale-95">
                         <i class="fa-solid fa-palette"></i>
                     </button>
                     <div id="themeDropdown" class="absolute right-0 mt-2 w-44 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-1.5 hidden z-50 animate-pop">
-                        <button onclick="setTheme('slate')" class="w-full text-left px-3 py-2 text-xs rounded-xl hover:bg-slate-800 flex items-center gap-2.5 text-slate-300 font-medium">
-                            <span class="w-3.5 h-3.5 rounded-full bg-slate-950 border border-slate-700"></span> Gece Mavisi
-                        </button>
-                        <button onclick="setTheme('emerald')" class="w-full text-left px-3 py-2 text-xs rounded-xl hover:bg-emerald-950/40 flex items-center gap-2.5 text-slate-300 font-medium">
-                            <span class="w-3.5 h-3.5 rounded-full bg-emerald-950 border border-emerald-800"></span> Zümrüt Ormanı
-                        </button>
-                        <button onclick="setTheme('purple')" class="w-full text-left px-3 py-2 text-xs rounded-xl hover:bg-purple-950/40 flex items-center gap-2.5 text-slate-300 font-medium">
-                            <span class="w-3.5 h-3.5 rounded-full bg-purple-950 border border-purple-800"></span> Asil Mor
-                        </button>
-                        <button onclick="setTheme('light')" class="w-full text-left px-3 py-2 text-xs rounded-xl hover:bg-slate-100 hover:text-slate-950 flex items-center gap-2.5 text-slate-600 font-medium">
-                            <span class="w-3.5 h-3.5 rounded-full bg-slate-100 border border-slate-300"></span> Klasik Aydınlık
-                        </button>
+                        <button onclick="setTheme('slate')" class="w-full text-left px-3 py-2 text-xs rounded-xl hover:bg-slate-800 flex items-center gap-2.5 text-slate-300 font-medium"><span class="w-3.5 h-3.5 rounded-full bg-slate-950 border border-slate-700"></span> Gece Mavisi</button>
+                        <button onclick="setTheme('emerald')" class="w-full text-left px-3 py-2 text-xs rounded-xl hover:bg-emerald-950/40 flex items-center gap-2.5 text-slate-300 font-medium"><span class="w-3.5 h-3.5 rounded-full bg-emerald-950 border border-emerald-800"></span> Zümrüt Ormanı</button>
+                        <button onclick="setTheme('purple')" class="w-full text-left px-3 py-2 text-xs rounded-xl hover:bg-purple-950/40 flex items-center gap-2.5 text-slate-300 font-medium"><span class="w-3.5 h-3.5 rounded-full bg-purple-950 border border-purple-800"></span> Asil Mor</button>
+                        <button onclick="setTheme('light')" class="w-full text-left px-3 py-2 text-xs rounded-xl hover:bg-slate-100 hover:text-slate-950 flex items-center gap-2.5 text-slate-600 font-medium"><span class="w-3.5 h-3.5 rounded-full bg-slate-100 border border-slate-300"></span> Klasik Aydınlık</button>
                     </div>
                 </div>
-
                 <button id="libraryBtn" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-black transition-all shadow-lg shadow-indigo-600/10 flex items-center gap-2 active:scale-95">
                     <i class="fa-solid fa-book-open"></i> Klasör
                 </button>
@@ -87,8 +63,8 @@
         </div>
     </header>
 
-    <!-- ANA İÇERİK ALANI -->
-    <main class="flex-1 max-w-5xl w-full mx-auto p-4 flex flex-col justify-between gap-6">
+    <!-- ANA İÇERİK -->
+    <main class="flex-1 max-w-5xl w-full mx-auto p-4 flex flex-col justify-between gap-6 relative">
         
         <!-- Oyun İstatistik Paneli -->
         <div class="grid grid-cols-3 gap-3 bg-slate-900/20 p-3.5 rounded-3xl border border-slate-900 shadow-xl backdrop-blur-sm">
@@ -101,258 +77,211 @@
                 <span id="streakEl" class="text-xl font-black text-emerald-400">0</span>
             </div>
             <div class="text-center p-3 rounded-2xl bg-slate-950/40 border border-slate-900">
-                <span class="block text-[10px] text-slate-500 font-extrabold uppercase tracking-widest mb-0.5">Havuzda Kalan</span>
+                <span class="block text-[10px] text-slate-500 font-extrabold uppercase tracking-widest mb-0.5" id="poolLabel">Havuzda Kalan</span>
                 <span id="poolCountEl" class="text-xl font-black text-amber-400">0</span>
             </div>
         </div>
 
-        <!-- Seviye Sekmeleri -->
-        <div class="flex flex-wrap gap-2 justify-center" id="levelTabs">
-            <button data-level="B2" class="lvl-tab px-4 py-2.5 rounded-xl text-xs font-bold transition-all bg-indigo-600 text-white border border-indigo-500 shadow-md">
-                B2 Seviyesi
-            </button>
-            <button data-level="B1" class="lvl-tab px-4 py-2.5 rounded-xl text-xs font-bold transition-all bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800">
-                B1 Seviyesi
-            </button>
-            <button data-level="A2" class="lvl-tab px-4 py-2.5 rounded-xl text-xs font-bold transition-all bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800">
-                A2 Seviyesi
-            </button>
-            <button data-level="A1" class="lvl-tab px-4 py-2.5 rounded-xl text-xs font-bold transition-all bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800">
-                A1 Seviyesi
-            </button>
-            <button data-level="mistake" class="lvl-tab px-4 py-2.5 rounded-xl text-xs font-bold transition-all bg-slate-900 text-rose-400 hover:bg-rose-950/20 border border-rose-950/40 relative">
-                <i class="fa-solid fa-triangle-exclamation mr-1.5 text-[10px]"></i> Hatalılar
-                <span id="mistakeBadge" class="absolute -top-1.5 -right-1 bg-rose-500 text-white text-[9px] px-1.5 py-0.5 rounded-full font-black hidden">0</span>
-            </button>
-            <button data-level="custom" class="lvl-tab px-4 py-2.5 rounded-xl text-xs font-bold transition-all bg-slate-900 text-amber-400 hover:bg-amber-950/20 border border-amber-950/40 relative">
-                <i class="fa-solid fa-star mr-1.5 text-[10px]"></i> Özel Liste
-                <span id="customBadge" class="absolute -top-1.5 -right-1 bg-amber-500 text-slate-950 text-[9px] px-1.5 py-0.5 rounded-full font-black hidden">0</span>
-            </button>
-            <!-- ODAK MODU BUTONU -->
-            <button id="openDrillTabBtn" class="lvl-tab px-4 py-2.5 rounded-xl text-xs font-bold transition-all bg-slate-900 text-orange-400 hover:bg-orange-950/20 border border-orange-950/40 relative">
-                <i class="fa-solid fa-fire mr-1.5 text-[10px] animate-pulse"></i> Yoğun Pratik
-            </button>
+        <div class="flex flex-col items-center">
+            <!-- Seviye Sekmeleri -->
+            <div class="flex flex-wrap gap-2 justify-center w-full" id="levelTabs">
+                <button data-level="190_Fiil" class="lvl-tab px-5 py-3 rounded-xl text-xs font-black transition-all bg-indigo-600 text-white border border-indigo-500 shadow-md">
+                    <i class="fa-solid fa-list-check mr-1.5"></i> 190 Akademik Fiil
+                </button>
+                <button data-level="Aspekte_B1" class="lvl-tab px-5 py-3 rounded-xl text-xs font-bold transition-all bg-slate-900 text-slate-400 border border-slate-800">
+                    <i class="fa-solid fa-book-bookmark mr-1.5"></i> Aspekte B1+
+                </button>
+                <button data-level="mistake" class="lvl-tab px-5 py-3 rounded-xl text-xs font-bold transition-all bg-slate-900 text-rose-400 border border-rose-950/40 relative">
+                    <i class="fa-solid fa-triangle-exclamation mr-1.5 text-[10px]"></i> Hatalılar
+                    <span id="mistakeBadge" class="absolute -top-1.5 -right-1 bg-rose-500 text-white text-[9px] px-1.5 py-0.5 rounded-full font-black hidden">0</span>
+                </button>
+                <button data-level="custom" class="lvl-tab px-5 py-3 rounded-xl text-xs font-bold transition-all bg-slate-900 text-amber-400 border border-amber-950/40 relative">
+                    <i class="fa-solid fa-star mr-1.5 text-[10px]"></i> Özel Liste
+                    <span id="customBadge" class="absolute -top-1.5 -right-1 bg-amber-500 text-slate-950 text-[9px] px-1.5 py-0.5 rounded-full font-black hidden">0</span>
+                </button>
+                <!-- ODAK MODU BUTONU -->
+                <button id="openDrillTabBtn" class="lvl-tab px-5 py-3 rounded-xl text-xs font-black transition-all bg-orange-600/20 text-orange-400 hover:bg-orange-600 hover:text-white border border-orange-500/50 relative shadow-lg shadow-orange-500/10">
+                    <i class="fa-solid fa-fire mr-1.5 text-[10px] animate-pulse"></i> Yoğun Pratik
+                </button>
+            </div>
+            
+            <!-- ŞIK MEVCUT HEDEF İSTASYON KARTI -->
+            <div id="stationTargetWrapper" class="hidden w-full max-w-sm mx-auto mt-5 animate-pop">
+                <button onclick="renderStationsMap(); document.getElementById('stationsModal').classList.remove('hidden');" class="w-full relative overflow-hidden bg-gradient-to-br from-slate-900 to-indigo-950 border border-indigo-500/30 rounded-[24px] p-4 shadow-xl active:scale-95 transition-transform text-left group">
+                    <div class="absolute -top-6 -right-6 p-4 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:rotate-12 duration-500"><i class="fa-solid fa-map text-8xl text-indigo-300"></i></div>
+                    <div class="flex items-center gap-4 relative z-10">
+                        <div class="w-12 h-12 bg-indigo-500/20 text-indigo-400 rounded-2xl flex items-center justify-center text-2xl shrink-0 border border-indigo-500/30 shadow-inner">
+                            <i class="fa-solid fa-route"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex justify-between items-end mb-0.5">
+                                <p class="text-[10px] text-indigo-300 font-black uppercase tracking-widest" id="mainStationSubtitle">Mevcut İstasyon</p>
+                                <span id="mainStationPct" class="text-[10px] font-bold text-emerald-400 bg-emerald-950/50 px-1.5 py-0.5 rounded-md border border-emerald-900/50">%0</span>
+                            </div>
+                            <h3 id="mainStationTitle" class="text-base font-black text-white leading-tight mb-2">1. İstasyon (1-20)</h3>
+                            <div class="w-full bg-slate-950/80 rounded-full h-1.5 border border-slate-800/80 overflow-hidden">
+                                <div id="mainStationProgressBar" class="bg-gradient-to-r from-indigo-500 to-emerald-400 h-1.5 rounded-full transition-all duration-700" style="width: 0%"></div>
+                            </div>
+                            <p class="text-[9px] text-slate-500 font-semibold mt-1.5 flex items-center gap-1"><i class="fa-solid fa-hand-pointer"></i> Haritayı Aç / İstasyon Değiştir</p>
+                        </div>
+                    </div>
+                </button>
+            </div>
         </div>
 
-        <!-- Kelime Eşleştirme Matrisi -->
-        <div class="flex-1 flex flex-col justify-center min-h-[380px]">
+        <!-- EŞLEŞTİRME MATRİSİ -->
+        <div id="matchingGameArea" class="flex-1 flex flex-col justify-center min-h-[380px]">
             <div class="grid grid-cols-2 gap-4 md:gap-8">
                 <div class="flex flex-col gap-3">
                     <div class="text-[10px] font-extrabold tracking-widest text-slate-500 uppercase px-1 flex items-center justify-between">
-                        <span>ALMANCA KELİMELER</span>
-                        <i class="fa-solid fa-volume-high opacity-50"></i>
+                        <span id="col1Title">ALMANCA KELİMELER</span>
                     </div>
                     <div id="deColumn" class="flex flex-col gap-3.5 min-h-[320px]"></div>
                 </div>
                 <div class="flex flex-col gap-3">
                     <div class="text-[10px] font-extrabold tracking-widest text-slate-500 uppercase px-1 flex items-center justify-between">
-                        <span>TÜRKÇE ANLAMLARI</span>
-                        <i class="fa-solid fa-language opacity-50"></i>
+                        <span id="col2Title">TÜRKÇE ANLAMLARI</span>
                     </div>
                     <div id="trColumn" class="flex flex-col gap-3.5 min-h-[320px]"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Alt Bilgi / LinkedIn & İletişim -->
-        <div class="text-center text-xs text-slate-500 py-4 border-t border-slate-900/60 flex flex-col items-center justify-center gap-3">
-            <div class="flex items-center gap-2 text-slate-400">
-                <i class="fa-solid fa-circle-info text-indigo-400"></i>
-                <span>Artikel Renkleri: <b class="text-blue-400">der</b>, <b class="text-rose-400">die</b>, <b class="text-emerald-400">das</b>. Kalıplar ve cümleler için <b>Klasör</b> sekmesine bakın.</span>
+        <!-- KLAVYE PRATİĞİ (Aşama 2) -->
+        <div id="keyboardGameArea" class="hidden flex-1 flex-col justify-center items-center min-h-[380px] bg-slate-900/30 rounded-3xl border border-slate-800 p-6 animate-pop">
+            <div class="text-center mb-8">
+                <div class="inline-block px-3 py-1 bg-orange-500/20 text-orange-400 border border-orange-500/30 rounded-full text-[10px] font-black tracking-widest uppercase mb-4 animate-pulse">
+                    AŞAMA 2: YAZMA PRATİĞİ
+                </div>
+                <h3 id="kbTargetWord" class="text-3xl font-black text-white mb-2">meydan okuma</h3>
+                <p class="text-xs text-slate-400 font-medium">Bu kelimenin Almancasını artikeliyle/edatıyla birlikte yaz.</p>
+                <p id="kbHintText" class="text-[10px] text-indigo-400 font-bold mt-2 opacity-0 transition-opacity">İpucu...</p>
             </div>
-            <div class="flex items-center justify-center gap-6 mt-1 bg-slate-900/50 px-6 py-2.5 rounded-2xl border border-slate-800 flex-wrap">
-                <a href="https://www.linkedin.com/in/ömer-faruk-k-9785a73b9?utm_source=share_via&utm_content=profile&utm_medium=member_iOS" target="_blank" class="hover:text-indigo-400 transition-all flex items-center gap-2 font-medium">
-                    <i class="fa-brands fa-linkedin text-lg text-indigo-500"></i> Ömer Faruk K.
-                </a>
-                <span class="hidden sm:block w-px h-4 bg-slate-700"></span>
-                <a href="mailto:omerfarukkirmaci04@gmail.com" class="hover:text-amber-400 transition-all flex items-center gap-2 font-medium">
-                    <i class="fa-solid fa-envelope text-base text-amber-500"></i> Hata / Öneri Bildir
-                </a>
+            
+            <div class="w-full max-w-md relative">
+                <input type="text" id="kbInput" autocomplete="off" placeholder="Örn: abhängen von" class="w-full bg-slate-950 border-2 border-slate-700 rounded-2xl px-5 py-4 text-center text-lg font-bold text-white focus:outline-none focus:border-orange-500 transition-colors placeholder:text-slate-600 placeholder:font-normal">
+                
+                <div class="flex gap-2 mt-4">
+                    <button id="kbHintBtn" title="İpucu Al (-5 Puan)" class="px-5 py-3.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-bold transition-all active:scale-95">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </button>
+                    <button id="kbPassBtn" title="Kelimeyi Sona At" class="px-5 py-3.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-bold transition-all active:scale-95 flex items-center gap-1.5">
+                        Pas <i class="fa-solid fa-forward-step"></i>
+                    </button>
+                    <button id="kbSubmitBtn" class="flex-1 py-3.5 bg-orange-600 hover:bg-orange-500 text-white rounded-xl font-black transition-all active:scale-95 shadow-lg shadow-orange-600/20">
+                        Kontrol Et
+                    </button>
+                </div>
             </div>
+            
+            <div class="mt-8 flex gap-1.5" id="kbProgressDots"></div>
+        </div>
+
+        <div class="text-center text-[11px] text-slate-500 py-4 border-t border-slate-900/60 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+            <span><i class="fa-solid fa-circle-info text-indigo-400 mr-1"></i> Artikel/Edat Renkleri: <b class="text-blue-400">der / Dativ</b> | <b class="text-rose-400">die / Akkusativ</b> | <b class="text-emerald-400">das</b></span>
+            <span class="hidden sm:block">|</span>
+            <span><b class="text-indigo-400">Ünlem (!)</b> işaretine basarak kelimenin TestDaF kalıbını ve örnek cümlesini görebilirsin.</span>
         </div>
 
     </main>
 
-    <!-- MODAL: YOĞUN PRATİK (ODAK MODU) -->
-    <div id="drillModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[60] flex items-center justify-center p-4 hidden">
-        <div class="bg-slate-900 border border-slate-700 rounded-3xl w-full max-w-lg shadow-2xl animate-pop relative flex flex-col max-h-[90vh]">
-            
-            <div class="p-6 border-b border-slate-800 bg-slate-900/50 flex items-center gap-4 rounded-t-3xl">
-                <div class="w-12 h-12 bg-orange-500/10 text-orange-500 rounded-2xl flex items-center justify-center text-2xl">
-                    <i class="fa-solid fa-fire"></i>
-                </div>
-                <div class="flex-1">
-                    <h2 class="text-xl font-black text-slate-100">Yoğun Pratik (Odak Modu)</h2>
-                    <p class="text-xs text-slate-400 mt-0.5">Öğrenemediğin 5 kelimeyi gir, sana 50 kez sorayım!</p>
-                </div>
-                <button id="closeDrillBtn" class="text-slate-400 hover:text-white p-2 bg-slate-800 rounded-full transition-all">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
+    <!-- !!! MODALLAR (SADECE BİRER KERE YAZILDI - KOPYALARI SİLİNDİ) !!! -->
 
-            <div class="p-6 overflow-y-auto space-y-4">
-                <div class="space-y-3" id="drillInputsContainer">
-                    <!-- JS ile doldurulacak -->
-                </div>
-            </div>
-
-            <div class="p-5 border-t border-slate-800 bg-slate-900/80 rounded-b-3xl">
-                <button id="startDrillBtn" class="w-full py-3.5 bg-gradient-to-r from-orange-600 to-rose-600 hover:from-orange-500 hover:to-rose-500 text-white rounded-xl font-black shadow-lg shadow-orange-600/20 transition-all active:scale-[0.98] flex justify-center items-center gap-2">
-                    <i class="fa-solid fa-bolt"></i> 50x Eşleştirmeyi Başlat
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL 1: KELİME KLASÖRÜ & VERİ YÖNETİMİ -->
-    <div id="libraryModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-5xl max-h-[85vh] flex flex-col overflow-hidden shadow-2xl animate-pop">
-            <div class="p-5 border-b border-slate-850 flex items-center justify-between bg-slate-900/50 flex-wrap gap-4">
+    <!-- İSTASYON HARİTASI MODALI -->
+    <div id="stationsModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[70] flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-md flex flex-col overflow-hidden shadow-2xl animate-pop h-[80vh]">
+            <div class="p-5 border-b border-slate-800 bg-slate-900/50 flex items-center justify-between shrink-0">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-indigo-600/10 text-indigo-400 flex items-center justify-center text-lg">
-                        <i class="fa-solid fa-book-open"></i>
-                    </div>
-                    <div>
-                        <h2 class="font-black text-slate-100">schATZ Kelime Klasörü</h2>
-                        <p class="text-xs text-slate-400">Tüm listeniz ve yedekleme seçenekleri</p>
-                    </div>
+                    <div class="w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center text-lg shadow-lg shadow-indigo-500/30"><i class="fa-solid fa-map"></i></div>
+                    <div><h2 class="text-lg font-black text-slate-100">Öğrenme Haritası</h2><p id="modalMapSubtitle" class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">190 Akademik Fiil</p></div>
                 </div>
-                <div class="flex items-center gap-2">
-                    <input type="file" id="backupFileInput" accept=".json" class="hidden">
-                    <button id="importBackupBtn" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-emerald-400 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5" title="Yedeği Yükle">
-                        <i class="fa-solid fa-upload"></i> İçe Aktar
-                    </button>
-                    <button id="exportBackupBtn" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-blue-400 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 mr-2" title="Yedeği İndir">
-                        <i class="fa-solid fa-download"></i> Yedekle
-                    </button>
-                    
-                    <button id="importShortcutBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
-                        <i class="fa-solid fa-plus"></i> Toplu Ekle
-                    </button>
-                    <button id="closeLibraryBtn" class="text-slate-400 hover:text-white p-2 rounded-xl hover:bg-slate-800 transition-all">
-                        <i class="fa-solid fa-xmark text-lg"></i>
-                    </button>
-                </div>
+                <button onclick="document.getElementById('stationsModal').classList.add('hidden')" class="text-slate-400 hover:text-white p-2 rounded-xl hover:bg-slate-800 transition-all"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-            <div class="p-4 bg-slate-950/40 border-b border-slate-850 flex flex-col md:flex-row gap-3">
-                <div class="flex-1 relative">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                    <input type="text" id="libSearchInput" class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-4 py-2.5 text-xs focus:outline-none focus:border-indigo-500 transition-all text-slate-200" placeholder="Kelime veya Türkçe anlam ara...">
-                </div>
-                <div class="flex gap-1 overflow-x-auto pb-1 md:pb-0" id="libFilterTabs">
-                    <button data-filter="all" class="lib-filter-tab px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-indigo-600 text-white">Tümü</button>
-                    <button data-filter="B2" class="lib-filter-tab px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-slate-900 text-slate-400">B2 TestDaF</button>
-                    <button data-filter="B1" class="lib-filter-tab px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-slate-900 text-slate-400">B1</button>
-                    <button data-filter="A2" class="lib-filter-tab px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-slate-900 text-slate-400">A2</button>
-                    <button data-filter="A1" class="lib-filter-tab px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-slate-900 text-slate-400">A1</button>
-                    <button data-filter="custom" class="lib-filter-tab px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-slate-900 text-slate-400">Özel</button>
-                    <button data-filter="mistake" class="lib-filter-tab px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-slate-900 text-rose-400">Hatalılar</button>
-                </div>
-                <button id="resetDatabaseBtn" class="p-2.5 bg-rose-950/20 text-rose-400 hover:bg-rose-950/40 rounded-xl text-xs font-bold transition-all border border-rose-900/20" title="Veritabanını Fabrika Ayarlarına Döndür">
-                    <i class="fa-solid fa-trash-arrow-up"></i> Sıfırla
-                </button>
-            </div>
-            <div class="flex-1 overflow-y-auto p-4 bg-slate-950/10">
-                <table class="w-full text-left text-xs text-slate-300">
-                    <thead class="text-[10px] text-slate-500 uppercase tracking-wider border-b border-slate-850">
-                        <tr>
-                            <th class="py-3 px-4">Almanca</th>
-                            <th class="py-3 px-4">Türkçe</th>
-                            <th class="py-3 px-4">Seviye</th>
-                            <th class="py-3 px-4">Durum</th>
-                            <th class="py-3 px-4 text-right">İşlemler</th>
-                        </tr>
-                    </thead>
-                    <tbody id="libTableBody" class="divide-y divide-slate-850/40"></tbody>
-                </table>
+            
+            <div id="stationsListContainer" class="p-4 overflow-y-auto flex-1 space-y-3 bg-slate-950/30">
+                <!-- JS ile Doldurulacak -->
             </div>
         </div>
     </div>
 
-    <!-- MODAL 2: KELİME DETAY KARTI -->
-    <div id="wordDetailsModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[60] flex items-center justify-center p-4 hidden">
-        <div class="bg-slate-900 border border-slate-700 rounded-3xl w-full max-w-lg p-6 shadow-2xl animate-pop relative">
-            <button onclick="closeWordDetails()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 bg-slate-800 rounded-full transition-all">
+    <!-- ÖRNEK CÜMLE GÖSTERİM MODALI -->
+    <div id="exampleModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[70] flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-700 rounded-3xl w-full max-w-sm p-6 shadow-2xl relative text-center animate-pop">
+            <button onclick="document.getElementById('exampleModal').classList.add('hidden')" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 bg-slate-800 hover:bg-slate-700 rounded-full transition-all">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-            <div class="text-center mb-6">
-                <div class="inline-block px-3 py-1 bg-indigo-950/50 text-indigo-400 border border-indigo-500/30 rounded-full text-[10px] font-black tracking-widest uppercase mb-3" id="detailLevel">B2 SEVİYESİ</div>
-                <h2 id="detailDe" class="text-3xl font-black text-white mb-2 font-mono">...</h2>
-                <p id="detailTr" class="text-sm font-medium text-slate-400">...</p>
+            <div class="w-12 h-12 bg-indigo-500/10 text-indigo-400 rounded-full flex items-center justify-center text-xl mx-auto mb-3">
+                <i class="fa-solid fa-lightbulb"></i>
             </div>
-            <div class="space-y-4">
-                <div class="bg-slate-950/50 border border-slate-800 rounded-2xl p-4">
-                    <p class="text-[10px] font-black text-amber-500 uppercase tracking-widest mb-2"><i class="fa-solid fa-link mr-1"></i> Kalıbı / Kullanımı</p>
-                    <p id="detailKalip" class="text-sm text-slate-200 font-medium">Kalıp bilgisi eklenmemiş.</p>
-                </div>
-                <div class="bg-indigo-950/20 border border-indigo-900/30 rounded-2xl p-4">
-                    <p class="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-2"><i class="fa-solid fa-quote-left mr-1"></i> Örnek Cümle</p>
-                    <p id="detailOrnek" class="text-sm text-slate-200 italic mb-2 leading-relaxed">Örnek cümle eklenmemiş.</p>
-                    <p id="detailOrnekTr" class="text-xs text-slate-500 font-medium">Çeviri yok.</p>
-                </div>
+            <h3 id="exVerb" class="text-2xl font-black text-white mb-1"></h3>
+            <p id="exPrep" class="text-[10px] font-black text-indigo-400 mb-4 uppercase tracking-widest bg-indigo-950/30 inline-block px-3 py-1 rounded-full border border-indigo-900/30"></p>
+            
+            <div class="bg-slate-950/50 border border-slate-800 rounded-2xl p-4 text-left">
+                <p class="text-[10px] text-slate-500 font-black mb-1 uppercase tracking-widest">Akademik Örnek</p>
+                <p id="exSentenceDe" class="text-slate-200 italic leading-relaxed text-sm mb-2"></p>
+                <p id="exSentenceTr" class="text-slate-400 text-xs font-medium border-t border-slate-800/50 pt-2"></p>
             </div>
-            <div class="mt-6 flex gap-2">
-                <button onclick="speakGerman(document.getElementById('detailDe').innerText)" class="flex-1 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold transition-all">
-                    <i class="fa-solid fa-volume-high mr-2"></i> Telaffuz Et
-                </button>
-            </div>
+            <button id="exSpeakBtn" class="mt-5 w-full py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2">
+                <i class="fa-solid fa-volume-high"></i> Almanca Dinle
+            </button>
         </div>
     </div>
 
-    <!-- MODAL 3: KELİME DÜZENLEME -->
-    <div id="editWordModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[60] flex items-center justify-center p-4 hidden">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md p-6 shadow-2xl animate-pop">
-            <h3 class="font-bold text-slate-100 text-sm mb-4"><i class="fa-solid fa-pen-to-square mr-2 text-indigo-400"></i>Kelimeyi Düzenle</h3>
-            <div class="space-y-3">
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">Almanca</label>
-                        <input type="text" id="editDeInput" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-indigo-500">
-                    </div>
-                    <div>
-                        <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">Türkçe</label>
-                        <input type="text" id="editTrInput" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-indigo-500">
-                    </div>
+    <!-- YOĞUN PRATİK KURULUM MODALI -->
+    <div id="drillSetupModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[60] flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-lg shadow-2xl animate-pop flex flex-col overflow-hidden max-h-[90vh]">
+            <div class="p-6 border-b border-slate-800 bg-orange-950/20 flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-orange-600 text-white rounded-xl flex items-center justify-center text-2xl shadow-lg shadow-orange-500/30"><i class="fa-solid fa-fire"></i></div>
+                    <div><h2 class="text-xl font-black text-slate-100">Yoğun Pratik Kampı</h2><p class="text-xs text-slate-400 mt-0.5">Aşama 1: Eşleştirme | Aşama 2: Yazma</p></div>
                 </div>
-                <div>
-                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">Kalıbı</label>
-                    <input type="text" id="editKalipInput" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-indigo-500">
-                </div>
-                <div>
-                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">Örnek Cümle</label>
-                    <textarea id="editOrnekInput" rows="2" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-indigo-500"></textarea>
-                </div>
+                <button onclick="document.getElementById('drillSetupModal').classList.add('hidden')" class="text-slate-400 hover:text-white p-2 rounded-full hover:bg-slate-800 transition-all"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-            <div class="flex gap-2 mt-5">
-                <button id="cancelEditBtn" class="flex-1 py-2.5 bg-slate-850 hover:bg-slate-800 text-slate-300 rounded-xl text-xs font-bold">İptal</button>
-                <button id="saveSingleWordBtn" class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold">Kaydet</button>
-            </div>
-        </div>
-    </div>
 
-    <!-- MODAL 4: TOPLU EKLEME -->
-    <div id="importModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[60] flex items-center justify-center p-4 hidden">
-        <div class="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl animate-pop">
-            <div class="p-5 border-b border-slate-850 flex items-center justify-between bg-slate-900/50">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-sm">
-                        <i class="fa-solid fa-file-import"></i>
-                    </div>
-                    <div>
-                        <h2 class="font-black text-slate-100">Kelimeleri Yükle</h2>
-                        <p class="text-xs text-slate-400">Almanca = Türkçe formatında yapıştırın</p>
-                    </div>
+            <div class="flex border-b border-slate-800 bg-slate-950/50 p-2 gap-2 shrink-0" id="drillMenuTabs">
+                <button onclick="switchDrillTab('manual')" id="tabBtn-manual" class="flex-1 py-2 rounded-xl text-xs font-bold transition-all bg-slate-800 text-white">📝 Kendin Gir</button>
+                <button onclick="switchDrillTab('select')" id="tabBtn-select" class="flex-1 py-2 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-slate-200">☑️ Listeden Seç</button>
+                <button onclick="switchDrillTab('mistake')" id="tabBtn-mistake" class="flex-1 py-2 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-slate-200">⚠️ Hatalar</button>
+            </div>
+
+            <div class="p-5 overflow-y-auto flex-1">
+                <div id="drillSec-manual" class="space-y-3">
+                    <p class="text-[10px] text-slate-400 uppercase font-bold tracking-widest text-center mb-4">Hemen çalışmak istediğin 5 kelimeyi yaz</p>
+                    <div id="manualInputsContainer"></div>
+                    <button onclick="startManualDrill()" class="w-full mt-4 py-3.5 bg-orange-600 hover:bg-orange-500 text-white rounded-xl font-black text-sm transition-all active:scale-[0.98]">
+                        Kampa Başla
+                    </button>
                 </div>
-                <button id="closeImportBtn" class="text-slate-400 hover:text-white p-2 rounded-xl hover:bg-slate-800 transition-all">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <div class="p-5 overflow-y-auto">
-                <textarea id="importArea" rows="8" class="w-full bg-slate-950 border border-slate-850 rounded-2xl p-3 text-xs font-mono text-slate-300 focus:outline-none focus:border-indigo-500" placeholder="die Herausforderung = meydan okuma&#10;bevorzugen = tercih etmek"></textarea>
-            </div>
-            <div class="p-4 border-t border-slate-850 bg-slate-900/40 flex gap-2">
-                <button id="cancelImportBtn" class="flex-1 py-3 bg-slate-850 hover:bg-slate-800 text-slate-300 rounded-xl text-xs font-bold transition-all">Vazgeç</button>
-                <button id="saveWordsBtn" class="flex-1 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all">Aktar</button>
+                <div id="drillSec-select" class="hidden flex-col h-[50vh]">
+                    <div class="relative mb-3 shrink-0">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                        <input type="text" id="drillSearchInput" onkeyup="filterDrillSelect()" class="w-full bg-slate-950 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-orange-500" placeholder="Kelime ara...">
+                    </div>
+                    <div class="flex justify-between items-center mb-2 px-1 shrink-0">
+                        <span class="text-[10px] font-bold text-slate-500 uppercase">Havuzdaki Kelimeler</span>
+                        <span class="text-[10px] font-bold text-orange-400 bg-orange-950/30 px-2 py-0.5 rounded" id="selectCountDisplay">0 Seçildi</span>
+                    </div>
+                    <div id="drillSelectList" class="flex-1 overflow-y-auto border border-slate-800 rounded-xl p-2 space-y-1 bg-slate-950/30"></div>
+                    <button onclick="startSelectedDrill()" class="w-full mt-4 shrink-0 py-3.5 bg-orange-600 hover:bg-orange-500 text-white rounded-xl font-black text-sm transition-all active:scale-[0.98]">
+                        Seçili Kelimelerle Kampa Başla
+                    </button>
+                </div>
+                <div id="drillSec-mistake" class="hidden flex flex-col justify-center items-center py-6">
+                    <div class="w-16 h-16 bg-rose-500/10 text-rose-500 rounded-full flex items-center justify-center text-3xl mb-4">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <p class="text-sm font-bold text-slate-300 text-center mb-6" id="mistakeInfoText">Hata havuzunda yeterli kelime var.</p>
+                    <div class="w-full mb-6">
+                        <div class="flex justify-between items-end mb-2">
+                            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest">Kaç Kelime Çalışacaksın?</label>
+                            <span id="mistakeSliderVal" class="text-xl font-black text-orange-500">5</span>
+                        </div>
+                        <input type="range" id="drillMistakeSlider" min="3" max="15" value="5" oninput="document.getElementById('mistakeSliderVal').innerText = this.value">
+                    </div>
+                    <button onclick="startMistakeDrill()" id="btnStartMistake" class="w-full py-3.5 bg-orange-600 hover:bg-orange-500 text-white rounded-xl font-black text-sm transition-all active:scale-[0.98]">
+                        Hataları Temizlemeye Başla
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -360,107 +289,375 @@
     <!-- MODAL 5: BİTİRİŞ -->
     <div id="congratsModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[60] flex items-center justify-center p-4 hidden">
         <div class="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-sm p-6 text-center shadow-2xl animate-pop">
-            <div class="w-16 h-16 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
-                <i class="fa-solid fa-trophy animate-bounce"></i>
+            <div id="congratsIcon" class="w-16 h-16 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-4"><i class="fa-solid fa-trophy animate-bounce"></i></div>
+            <h2 id="congratsTitle" class="text-xl font-black text-slate-100 mb-2">Tebrikler, Müthişsin!</h2>
+            <p class="text-xs text-slate-400 mb-5 leading-relaxed" id="congratsDesc">Bu gruptaki tüm kelimeleri başarıyla öğrendin!</p>
+            <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-4 mb-6 grid grid-cols-2 gap-2" id="congratsStats">
+                <div><span class="block text-[10px] text-slate-500 font-extrabold uppercase">Kazanılan Skor</span><span id="finalScore" class="text-lg font-black text-indigo-400">0</span></div>
+                <div><span class="block text-[10px] text-slate-500 font-extrabold uppercase">Maksimum Kombo</span><span id="finalStreak" class="text-lg font-black text-emerald-400">0</span></div>
             </div>
-            <h2 class="text-xl font-black text-slate-100 mb-2">Tebrikler, Müthişsin!</h2>
-            <p class="text-xs text-slate-400 mb-5 leading-relaxed" id="congratsDesc">Bu gruptaki tüm kelimeleri başarıyla eşleştirerek öğrendin!</p>
-            <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-4 mb-6 grid grid-cols-2 gap-2">
-                <div>
-                    <span class="block text-[10px] text-slate-500 font-extrabold uppercase">Kazanılan Skor</span>
-                    <span id="finalScore" class="text-lg font-black text-indigo-400">0</span>
-                </div>
-                <div>
-                    <span class="block text-[10px] text-slate-500 font-extrabold uppercase">Maksimum Kombo</span>
-                    <span id="finalStreak" class="text-lg font-black text-emerald-400">0</span>
-                </div>
-            </div>
-            <button id="restartGameBtn" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold transition-all active:scale-95">Yeniden Oyna</button>
+            <!-- YENİ MANTIK: Tıklandığında sonraki istasyona geçer -->
+            <button id="restartGameBtn" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold transition-all active:scale-95">Tamam</button>
         </div>
     </div>
 
-    <!-- TOAST -->
-    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-3 bg-slate-900 border border-slate-800 rounded-2xl text-xs font-semibold text-slate-200 shadow-xl flex items-center gap-2 transition-all duration-300 opacity-0 translate-y-4 pointer-events-none z-[70]">
-        <i class="fa-solid fa-circle-check text-emerald-400" id="toastIcon"></i>
-        <span id="toastMsg">İşlem Başarılı!</span>
+    <!-- TOAST & DİĞER MODALLAR -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-3 bg-slate-900 border border-slate-800 rounded-2xl text-xs font-semibold text-slate-200 shadow-xl flex items-center gap-2 transition-all duration-300 opacity-0 translate-y-4 pointer-events-none z-[80]">
+        <i class="fa-solid fa-circle-check text-emerald-400" id="toastIcon"></i><span id="toastMsg">İşlem Başarılı!</span>
+    </div>
+
+    <div id="libraryModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-5xl max-h-[85vh] flex flex-col overflow-hidden shadow-2xl">
+            <div class="p-5 border-b border-slate-850 flex items-center justify-between bg-slate-900/50 flex-wrap gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-600/10 text-indigo-400 flex items-center justify-center text-lg"><i class="fa-solid fa-book-open"></i></div>
+                    <div><h2 class="font-black text-slate-100">schATZ Kelime Klasörü</h2></div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button id="importShortcutBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold transition-all">Toplu Ekle</button>
+                    <button id="closeLibraryBtn" class="text-slate-400 p-2 rounded-xl hover:bg-slate-800"><i class="fa-solid fa-xmark text-lg"></i></button>
+                </div>
+            </div>
+            <div class="p-4 bg-slate-950/40 border-b border-slate-850 flex flex-col md:flex-row gap-3">
+                <input type="text" id="libSearchInput" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-200" placeholder="Kelime ara...">
+                <button id="resetDatabaseBtn" class="p-2.5 bg-rose-950/20 text-rose-400 hover:bg-rose-950/40 rounded-xl text-xs font-bold border border-rose-900/20">Sıfırla</button>
+            </div>
+            <div class="flex-1 overflow-y-auto p-4 bg-slate-950/10">
+                <table class="w-full text-left text-xs text-slate-300">
+                    <tbody id="libTableBody" class="divide-y divide-slate-850/40"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div id="wordDetailsModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[60] flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-700 rounded-3xl w-full max-w-lg p-6 shadow-2xl relative">
+            <button onclick="document.getElementById('wordDetailsModal').classList.add('hidden')" class="absolute top-4 right-4 text-slate-400 p-2 bg-slate-800 rounded-full"><i class="fa-solid fa-xmark"></i></button>
+            <div class="text-center mb-6"><h2 id="detailDe" class="text-3xl font-black text-white mb-2"></h2><p id="detailTr" class="text-sm text-slate-400"></p></div>
+            <div class="space-y-4">
+                <div class="bg-slate-950/50 border border-slate-800 rounded-2xl p-4"><p class="text-[10px] font-black text-amber-500 uppercase mb-2">Kalıbı</p><p id="detailKalip" class="text-sm text-slate-200 font-bold">Yok</p></div>
+                <div class="bg-indigo-950/20 border border-indigo-900/30 rounded-2xl p-4">
+                    <p class="text-[10px] font-black text-indigo-400 uppercase mb-2">Örnek</p>
+                    <p id="detailOrnekDe" class="text-sm text-slate-200 italic mb-1">Yok</p>
+                    <p id="detailOrnekTr" class="text-[11px] text-slate-400 font-medium">Yok</p>
+                </div>
+            </div>
+            <button onclick="speakGerman(document.getElementById('detailDe').innerText)" class="w-full mt-6 py-3 bg-slate-800 text-white rounded-xl text-xs font-bold"><i class="fa-solid fa-volume-high mr-2"></i> Telaffuz Et</button>
+        </div>
+    </div>
+
+    <div id="editWordModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[60] flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md p-6 shadow-2xl">
+            <h3 class="font-bold text-white text-sm mb-4">Kelime Düzenle</h3>
+            <div class="space-y-3">
+                <input type="text" id="editDeInput" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white" placeholder="Almanca">
+                <input type="text" id="editTrInput" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white" placeholder="Türkçe Anlamı">
+                <input type="text" id="editKalipInput" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white" placeholder="Kalıp">
+                <textarea id="editOrnekDeInput" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white" placeholder="Örnek (Almanca)"></textarea>
+                <textarea id="editOrnekTrInput" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white" placeholder="Örnek Çevirisi (Türkçe)"></textarea>
+            </div>
+            <div class="flex gap-2 mt-5">
+                <button id="cancelEditBtn" class="flex-1 py-2.5 bg-slate-850 text-slate-300 rounded-xl text-xs font-bold">İptal</button>
+                <button id="saveSingleWordBtn" class="flex-1 py-2.5 bg-indigo-600 text-white rounded-xl text-xs font-bold">Kaydet</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="importModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[60] flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-xl p-5 shadow-2xl">
+            <h2 class="font-black text-white mb-4">Toplu Kelime Ekle</h2>
+            <textarea id="importArea" rows="8" class="w-full bg-slate-950 border border-slate-850 rounded-2xl p-3 text-xs font-mono text-slate-300" placeholder="elma = der Apfel"></textarea>
+            <div class="flex gap-2 mt-4">
+                <button id="cancelImportBtn" class="flex-1 py-3 bg-slate-850 text-slate-300 rounded-xl text-xs font-bold">Vazgeç</button>
+                <button id="saveWordsBtn" class="flex-1 py-3 bg-indigo-600 text-white rounded-xl text-xs font-bold">Aktar</button>
+            </div>
+        </div>
     </div>
 
     <!-- JAVASCRIPT -->
     <script>
-        const STARTER_A1_WORDS = [
-            { de: "hallo", tr: "merhaba" }, { de: "ja / nein", tr: "evet / hayır" }, { de: "danke", tr: "teşekkürler" },
-            { de: "bitte", tr: "lütfen" }, { de: "entschuldigung", tr: "özür dilerim" }, { de: "das Buch", tr: "kitap" },
-            { de: "das Auto", tr: "araba" }, { de: "essen", tr: "yemek yemek" }, { de: "trinken", tr: "içmek" }, { de: "schlafen", tr: "uyumak" }
+        // 190 AKADEMİK FİİL
+        const RAW_190_VERBS = [
+            "abhängen von|Dativ|bağlı olmak|Ob die Gartenparty stattfindet, hängt vom Wetter ab.|Bahçe partisinin yapılıp yapılmayacağı hava durumuna bağlı.",
+            "abhalten von|Dativ|alıkoymak / engellemek|Jana ließ sich von ihrem Plan nicht abhalten.|Jana planından alıkonulmasına izin vermedi.",
+            "ablenken von|Dativ|dikkatini dağıtmak|Die sozialen Medien lenken ihn von der Arbeit ab.|Sosyal medya onun dikkatini işten dağıtıyor.",
+            "abmelden von|Dativ|kaydını sildirmek|Sie meldet sich vom Newsletter ab.|O, e-bülten aboneliğinden ayrılıyor.",
+            "anfangen mit|Dativ|başlamak|Hast du schon mit deinem Essay angefangen?|Makalene (yazmaya) başladın mı?",
+            "ankommen auf|Akkusativ|bağlı olmak (duruma)|Jetzt kommt es auf dich an.|Şimdi bu sana bağlı.",
+            "achten auf|Akkusativ|dikkat etmek|Die Lektorin achtet auf Groß- und Kleinschreibung.|Editör büyük ve küçük harf kullanımına dikkat ediyor.",
+            "anregen zu|Dativ|teşvik etmek|Der Artikel regt zum Nachdenken an.|Makale düşünmeye teşvik ediyor.",
+            "anspornen zu|Dativ|motive etmek|Der Coach spornt das Team zu Höchstleistungen an.|Koç takımı en yüksek performansa motive ediyor.",
+            "antworten auf|Akkusativ|cevap vermek|Hast du schon auf die E-Mail geantwortet?|E-postaya cevap verdin mi?",
+            "arbeiten an|Dativ|üzerinde çalışmak|Sie arbeitet an ihrer Hausarbeit.|Dönem ödevi üzerinde çalışıyor.",
+            "aufhören mit|Dativ|bırakmak / son vermek|Er hat mit dem Rauchen aufgehört.|Sigarayı bıraktı.",
+            "aufpassen auf|Akkusativ|göz kulak olmak|Kannst du morgen auf meinen Hund aufpassen?|Yarın köpeğime göz kulak olabilir misin?",
+            "sich aufregen über|Akkusativ|sinirlenmek|Der Trainer regt sich über das Ergebnis auf.|Antrenör sonuca sinirleniyor.",
+            "ausgeben für|Akkusativ|harcamak|Sie hat viel Geld für einen SUV ausgegeben.|O, bir SUV için çok para harcadı.",
+            "ausschließen von|Dativ|dışlamak|Der Verband schloss das Team vom Turnier aus.|Federasyon takımı turnuvadan dışladı.",
+            "aussehen nach|Dativ|gibi görünmek|Es sieht nach Regen aus.|Yağmur yağacak gibi görünüyor.",
+            "bauen auf|Akkusativ|güvenmek / bel bağlamak|Die Mannschaft baut auf dich.|Takım sana güveniyor.",
+            "basieren auf|Dativ|dayanmak (temel almak)|Der Roman basiert auf einer wahren Geschichte.|Roman gerçek bir hikayeye dayanıyor.",
+            "sich bedanken bei|Dativ|teşekkür etmek (kişiye)|Die Preisträgerin bedankte sich bei ihren Eltern.|Ödül sahibi ailesine teşekkür etti.",
+            "sich bedanken für|Akkusativ|teşekkür etmek (neden)|Sie bedankte sich für die Unterstützung.|Destek için teşekkür etti.",
+            "beginnen mit|Dativ|başlamak|Tom beginnt nächstes Jahr mit dem Studium.|Tom gelecek yıl üniversiteye başlıyor.",
+            "sich begnügen mit|Dativ|yetinmek|Pia begnügt sich mit einer kleinen Wohnung.|Pia küçük bir daireyle yetiniyor.",
+            "belegen mit|Dativ|kaplamak / kanıtlamak|Er belegt die Pizza mit Peperoni und Paprika.|Pizzayı biber ve kırmızı biberle kaplıyor.",
+            "sich bemühen um|Akkusativ|çabalamak|Emma bemüht sich um einen neuen Job.|Emma yeni bir iş için çabalıyor.",
+            "beneiden um|Akkusativ|kıskanmak / imrenmek|Sie beneidet ihren Bruder um seine Gelassenheit.|Kardeşini sakinliği için kıskanıyor.",
+            "berichten über|Akkusativ|hakkında bilgi vermek|Der Reporter berichtet über das Finale.|Muhabir final hakkında haber yapıyor.",
+            "berichten von|Dativ|-den bahsetmek|Lea berichtet von ihrem Semester in Griechenland.|Lea Yunanistan'daki döneminden bahsediyor.",
+            "beruhen auf|Dativ|dayanmak|Ein Faktenargument beruht auf Tatsachen.|Bir olgu argümanı gerçeklere dayanır.",
+            "sich beschäftigen mit|Dativ|ilgilenmek / meşgul olmak|Max beschäftigt sich mit Archäologie.|Max arkeolojiyle ilgileniyor.",
+            "sich beschweren bei|Dativ|şikayet etmek (kişiye)|Sie beschwert sich bei ihrer Chefin.|Patronuna şikayette bulunuyor.",
+            "sich beschweren über|Akkusativ|şikayet etmek (konu)|Sie beschwert sich über die veraltete Ausrüstung.|Eski ekipmandan şikayet ediyor.",
+            "besetzen mit|Dativ|doldurmak (kadro)|Der CEO besetzte die Stelle mit einer Expertin.|CEO pozisyonu bir uzmanla doldurdu.",
+            "bestehen auf|Dativ|ısrar etmek|Mark bestand auf seiner Meinung.|Mark kendi fikrinde ısrar etti.",
+            "bestehen aus|Dativ|-den oluşmak|Butter besteht vor allem aus Milchfett und Wasser.|Tereyağı çoğunlukla süt yağı ve sudan oluşur.",
+            "bestehen in|Dativ|ibaret olmak|Der Unterschied besteht in der Vorbereitung.|Fark hazırlıkta yatmaktadır.",
+            "bestrafen für|Akkusativ|cezalandırmak|Das Gericht bestrafte den Dieb für seine Tat.|Mahkeme hırsızı eyleminden dolayı cezalandırdı.",
+            "sich beteiligen an|Dativ|katılmak / pay almak|Sie beteiligt sich am Gespräch.|O, sohbete katılıyor.",
+            "betrügen um|Akkusativ|dolandırmak|Bernie Madoff betrog Anleger um ihr Geld.|Bernie Madoff yatırımcıları dolandırdı.",
+            "bewegen zu|Dativ|ikna etmek / sevk etmek|Die Eltern bewogen ihren Sohn zum Umdenken.|Aile, oğlunu fikrini değiştirmeye ikna etti.",
+            "sich bewerben bei|Dativ|başvurmak (kuruma)|Laura bewarb sich bei drei Stiftungen.|Laura üç vakfa başvurdu.",
+            "sich bewerben um|Akkusativ|başvurmak (pozisyona)|Sie bewarb sich um ein Stipendium.|Bir burs için başvurdu.",
+            "bezahlen mit|Dativ|ile ödemek|Er bezahlt immer mit Bargeld.|O her zaman nakit ile öder.",
+            "sich beziehen auf|Akkusativ|atıfta bulunmak|Der Dozent bezog sich auf eine Studie.|Öğretim görevlisi bir çalışmaya atıfta bulundu.",
+            "bieten für|Akkusativ|teklif vermek|Der Händler bot 600 Euro für das Gemälde.|Satıcı tablo için 600 Euro teklif etti.",
+            "bitten um|Akkusativ|rica etmek|Die Eigentümerin bat um Bedenkzeit.|Ev sahibi düşünmek için zaman istedi.",
+            "danken für|Akkusativ|teşekkür etmek|Sie dankte für das Angebot.|Teklif için teşekkür etti.",
+            "denken an|Akkusativ|düşünmek (aklına gelmek)|Luca denkt ständig an sein Studium.|Luca sürekli üniversite eğitimini düşünüyor.",
+            "denken von|Dativ|hakkında düşünmek (fikir)|Was denkt sie von mir?|Benim hakkımda ne düşünüyor?",
+            "diskutieren über|Akkusativ|üzerine tartışmak|Die Freunde diskutieren über Politik.|Arkadaşlar siyaset üzerine tartışıyor.",
+            "drängen zu|Dativ|zorlamak / teşvik etmek|Sie drängte ihn zu einer Entscheidung.|Onu bir karar vermeye zorladı.",
+            "sich drehen um|Akkusativ|etrafında dönmek (konu)|Für ihn dreht sich alles um Fußball.|Onun için her şey futbol etrafında döner.",
+            "drohen mit|Dativ|tehdit etmek|Er drohte mit einer Kündigung.|İstifa etmekle tehdit etti.",
+            "eilen mit|Dativ|acele etmek|Es eilt nicht mit dem Projekt.|Proje konusunda aceleye gerek yok.",
+            "einladen zu|Dativ|davet etmek|Wir laden dich zu unserer Party ein!|Seni partimize davet ediyoruz!",
+            "ekeln vor|Dativ|iğrenmek|Sie ekelt sich vor Würmern.|Solucanlardan iğreniyor.",
+            "sich erholen von|Dativ|dinlenmek / toparlanmak|Anna erholt sich von der Arbeit.|Anna işten sonra dinleniyor.",
+            "sich erinnern an|Akkusativ|hatırlamak|Erinnerst du dich an deinen ersten Schultag?|İlk okul gününü hatırlıyor musun?",
+            "erkennen an|Dativ|tanımak (bir özelliğinden)|Sie erkannte den Täter an einer Narbe im Gesicht.|Faili yüzündeki bir yaradan tanıdı.",
+            "sich erkundigen nach|Dativ|bilgi almak / sormak|David erkundigte sich nach dem Weg.|David yolu sordu.",
+            "erschrecken über|Akkusativ|korkmak (olan bir şeye)|Der Buchhalter erschrak über die Schulden.|Muhasebeci borçlardan korktu.",
+            "erzählen über|Akkusativ|hakkında anlatmak|Erzähl mir mehr über deine Hobbys!|Bana hobilerin hakkında daha fazla anlat!",
+            "erzählen von|Dativ|-den bahsetmek|Sie erzählte vor allem von ihren Reisen.|Özellikle seyahatlerinden bahsetti.",
+            "entbinden von|Dativ|muaf tutmak / azletmek|Der König entband den Diener von seinen Pflichten.|Kral, hizmetkarı görevlerinden muaf tuttu.",
+            "sich entscheiden für|Akkusativ|karar vermek (lehine)|Sie entschieden sich für eine Reise nach Tokio.|Tokyo'ya seyahat etmeye karar verdiler.",
+            "sich entschließen zu|Dativ|karar vermek / niyetlenmek|Sven entschloss sich zu einem Jurastudium.|Sven hukuk okumaya karar verdi.",
+            "sich entschuldigen bei|Dativ|özür dilemek (kişiden)|Caro entschuldigte sich bei ihrem Freund.|Caro erkek arkadaşından özür diledi.",
+            "sich entschuldigen für|Akkusativ|özür dilemek (sebep)|Sie entschuldigte sich für ihr Verhalten.|Davranışından dolayı özür diledi.",
+            "entwickeln zu|Dativ|haline gelmek / dönüşmek|Die Inflation entwickelt sich zu einem Problem.|Enflasyon bir soruna dönüşüyor.",
+            "fehlen an|Dativ|eksik olmak|Es fehlt uns an nichts.|Hiçbir eksiğimiz yok.",
+            "fliehen vor|Dativ|kaçmak|Der Bankräuber floh vor der Polizei.|Banka soyguncusu polisten kaçtı.",
+            "folgen aus|Dativ|sonuçlanmak|Die Konklusion folgt aus den Prämissen.|Sonuç, öncüllerden kaynaklanır.",
+            "folgern aus|Dativ|sonuç çıkarmak|Sie folgert aus den Daten, dass sie richtig liegt.|Verilerden haklı olduğu sonucunu çıkarıyor.",
+            "fragen nach|Dativ|sormak|Er fragte nach der Bedeutung von 'Rizz'.|'Rizz' kelimesinin anlamını sordu.",
+            "sich freuen an|Dativ|tadını çıkarmak|Nils freut sich an der Natur.|Nils doğanın tadını çıkarıyor.",
+            "sich freuen auf|Akkusativ|dört gözle beklemek|Er freut sich auf die Semesterferien.|Sömestr tatilini dört gözle bekliyor.",
+            "sich freuen über|Akkusativ|sevinmek (gerçekleşen şeye)|Er freut sich über das Geschenk.|Hediyeye seviniyor.",
+            "fühlen mit|Dativ|duygularını paylaşmak|Sie fühlte mit den Opfern des Hochwassers.|Sel kurbanlarıyla aynı duyguları paylaştı.",
+            "führen zu|Dativ|yol açmak|Das führt zu nichts.|Bu hiçbir şeye yol açmaz.",
+            "sich fürchten vor|Dativ|korkmak|Der Junge fürchtet sich vor Schlangen.|Çocuk yılanlardan korkuyor.",
+            "garantieren für|Akkusativ|garanti vermek|Die Firma garantiert für die Qualität der Ware.|Şirket ürünlerin kalitesini garanti ediyor.",
+            "gehen um|Akkusativ|söz konusu olmak|Es geht um alles.|Her şey söz konusu (ya hep ya hiç).",
+            "gehören zu|Dativ|ait olmak / dahil olmak|Sie gehörte zu den Besten des Jahrgangs.|O, yılın en iyilerine dahildi.",
+            "gelten für|Akkusativ|geçerli olmak|Das Angebot gilt nur für Neukunden.|Teklif sadece yeni müşteriler için geçerlidir.",
+            "gewinnen an|Dativ|kazanmak (değer/tecrübe)|Er gewann an Erfahrung.|O tecrübe kazandı.",
+            "sich gewöhnen an|Akkusativ|alışmak|Sie gewöhnte sich an das nasskalte Wetter.|Yağışlı ve soğuk havaya alıştı.",
+            "glauben an|Akkusativ|inanmak|Er glaubt an eine bessere Zukunft.|Daha iyi bir geleceğe inanıyor.",
+            "gratulieren zu|Dativ|tebrik etmek|Tim gratuliert seiner Schwester zum Geburtstag.|Tim kız kardeşinin doğum gününü tebrik ediyor.",
+            "grauen vor|Dativ|ürpermek / korkmak|Ihm graut vor der Prüfung.|Sınavdan dolayı ürperiyor.",
+            "grübeln über|Akkusativ|derin derin düşünmek|Sie grübelt über das Problem.|Problem üzerinde kara kara düşünüyor.",
+            "hängen an|Dativ|bağlı olmak (duygusal)|Er hängt an seinem alten Laptop.|Eski bilgisayarına bağlı (vazgeçemiyor).",
+            "halten für|Akkusativ|olarak görmek / saymak|Ich halte das für einen guten Plan.|Bunu iyi bir plan olarak görüyorum.",
+            "halten von|Dativ|hakkında bir fikri olmak|Was hältst du von der Idee?|Bu fikir hakkında ne düşünüyorsun?",
+            "halten zu|Dativ|desteklemek|Sie hält zu ihm.|O, onu destekliyor.",
+            "sich handeln um|Akkusativ|söz konusu olmak|Bei dem Hund handelt es sich um einen Dackel.|Söz konusu köpek bir sosis köpeğidir.",
+            "handeln von|Dativ|konu almak|Der Artikel handelt von Schwarz-Weiß-Denken.|Makale siyah-beyaz düşünceyi konu alıyor.",
+            "helfen bei|Dativ|yardım etmek|Er hilft seiner Nichte bei den Hausaufgaben.|Yeğenine ödevlerinde yardım ediyor.",
+            "helfen gegen|Akkusativ|karşı iyi gelmek|Was hilft gegen Heuschnupfen?|Saman nezlesine ne iyi gelir?",
+            "herstellen aus|Dativ|-den üretmek|Er stellte den Tisch aus alten Paletten her.|Masayı eski paletlerden yaptı.",
+            "hindern an|Dativ|engel olmak|Der Polizist hinderte die Täterin an der Flucht.|Polis failin kaçmasını engelledi.",
+            "hinweisen auf|Akkusativ|işaret etmek / dikkat çekmek|Der Lektor wies auf Fehler bei der Orthographie hin.|Editör yazım hatalarına dikkat çekti.",
+            "hoffen auf|Akkusativ|umut etmek|Die Veranstalter hoffen auf gutes Wetter.|Organizatörler iyi hava umut ediyor.",
+            "hören von|Dativ|haber almak|Ich habe schon lange nichts mehr von ihm gehört.|Ondan uzun zamandır haber almadım.",
+            "sich informieren über|Akkusativ|bilgi edinmek|Sie informiert sich über Pro- und Contra-Argumente.|Artı ve eksi argümanlar hakkında bilgi alıyor.",
+            "sich interessieren für|Akkusativ|ilgilenmek|Interessierst du dich für Sagen?|Efsanelerle ilgileniyor musun?",
+            "kämpfen für|Akkusativ|mücadele etmek|Die Anwältin kämpft für ihren Mandanten.|Avukat müvekkili için mücadele ediyor.",
+            "klagen über|Akkusativ|şikayet etmek / yakınmak|Leo klagt über das viele Lernen.|Leo çok çalışmaktan şikayet ediyor.",
+            "kommen zu|Dativ|sonuçlanmak|Es kam zu einer Diskussion.|Olay bir tartışmaya dönüştü.",
+            "sich konzentrieren auf|Akkusativ|odaklanmak|Sie konzentriert sich auf ihre Arbeit.|İşine odaklanıyor.",
+            "sich kümmern um|Akkusativ|ilgilenmek / bakmak|Kümmerst du dich kurz um die Gäste?|Kısaca misafirlerle ilgilenir misin?",
+            "lachen über|Akkusativ|gülmek|Er lachte über seinen Fehler.|Hatasına güldü.",
+            "leiden an|Dativ|hastalanmak (hastalık)|Sie leidet an einer Allergie.|Alerjiden muzdarip.",
+            "leiden unter|Dativ|acı çekmek (koşul/durum)|Nick leidet unter der Hitze.|Nick sıcaktan bunalıyor.",
+            "lernen aus|Dativ|ders çıkarmak|Aus Fehlern lernt man.|İnsan hatalardan ders çıkarır.",
+            "liegen an|Dativ|kaynaklanmak / bağlı olmak|Jetzt liegt es an dir.|Şimdi sana bağlı.",
+            "machen aus|Dativ|haline getirmek / yapmak|Er macht etwas aus sich.|Kendinden bir şeyler yaratıyor.",
+            "machen zu|Dativ|dönüştürmek|Die Stadt machte das Gebäude zu einem Museum.|Şehir binayı müzeye dönüştürdü.",
+            "meinen mit|Dativ|kastetmek|Sie meint es gut mit dir.|Senin iyiliğini istiyor.",
+            "nachdenken über|Akkusativ|üzerine düşünmek|Wir denken über den Vorschlag nach.|Öneri üzerine düşünüyoruz.",
+            "nennen nach|Dativ|adını vermek|Er nannte seine Tochter nach seiner Großmutter.|Kızına ninesinin adını verdi.",
+            "passen zu|Dativ|uymak / yakışmak|Der Pullover passt zu deiner Hose.|Kazak pantolonuna uyuyor.",
+            "raten zu|Dativ|tavsiye etmek|Die Bankberaterin riet zu Aktien.|Banka danışmanı hisse senedi tavsiye etti.",
+            "rechnen mit|Dativ|hesaba katmak / beklemek|Wir rechnen mit einer schnellen Entscheidung.|Hızlı bir karar bekliyoruz.",
+            "reden über|Akkusativ|hakkında konuşmak|Die Lehrerin redet über Satzglieder.|Öğretmen cümle öğeleri hakkında konuşuyor.",
+            "reden von|Dativ|-den bahsetmek|Er redet ständig von dir!|Sürekli senden bahsediyor!",
+            "retten vor|Dativ|kurtarmak|Sie konnte sich vor Angeboten kaum retten.|Kendini tekliflerden zor kurtarabildi.",
+            "riechen nach|Dativ|kokmak|Es roch nach gebratenen Champignons.|Kızarmış mantar kokuyordu.",
+            "richten nach|Dativ|uymak / göre hareket etmek|Ich richte mich nach dir.|Sana uyuyorum.",
+            "schicken an|Akkusativ|göndermek (kişiye)|Schick den Link bitte an meine E-Mail-Adresse!|Lütfen linki e-postama gönder!",
+            "schicken zu|Dativ|yanına göndermek|Der Schüler wurde zum Direktor geschickt.|Öğrenci müdürün yanına gönderildi.",
+            "schmecken nach|Dativ|tadında olmak|Die Plätzchen schmecken nach Zimt.|Kurabiyeler tarçın tadında.",
+            "schimpfen über|Akkusativ|söylenmek / azarlamak|Er schimpfte über die Politik.|Siyasete söylendi.",
+            "schließen aus|Dativ|sonuç çıkarmak|Er schloss aus den Daten, dass er recht hat.|Verilerden haklı olduğu sonucunu çıkardı.",
+            "schreiben an|Dativ|yazmak / üzerinde çalışmak|Sie schreibt an einer Kurzgeschichte.|Bir kısa hikaye yazıyor.",
+            "sich schützen vor|Dativ|korunmak|Die Menschen schützen sich vor dem Virus.|İnsanlar virüsten korunuyor.",
+            "sehen in|Dativ|olarak görmek|Er sieht in der Entlassung eine Chance.|Kovulmayı bir fırsat olarak görüyor.",
+            "sich sehnen nach|Dativ|hasret duymak / özlemek|Sie sehnt sich nach mehr Ruhe.|Daha fazla huzur özlüyor.",
+            "sein aus|Dativ|-den yapılmak|Der Tisch ist aus Holz.|Masa ahşaptan.",
+            "sein für|Akkusativ|lehine olmak / desteklemek|Ich bin für den Vorschlag.|Öneriyi destekliyorum.",
+            "sein gegen|Akkusativ|aleyhine olmak / karşı çıkmak|Ich bin gegen den Plan.|Plana karşıyım.",
+            "sorgen für|Akkusativ|sağlamak / bakmak|Er sorgt für seine kranke Schwester.|Hasta kız kardeşine bakıyor.",
+            "stehen um|Akkusativ|durumu olmak|Wie steht es um das Projekt?|Projenin durumu nedir?",
+            "stehen zu|Dativ|arkasında durmak|Die Mitarbeitenden stehen zu ihrem Chef.|Çalışanlar patronlarının arkasında duruyor.",
+            "stimmen für|Akkusativ|lehine oy vermek|Die Mitglieder stimmten für den Antrag.|Üyeler önerge lehine oy verdi.",
+            "stimmen gegen|Akkusativ|aleyhine oy vermek|Die Mitglieder stimmten gegen den Antrag.|Üyeler önerge aleyhine oy verdi.",
+            "sich stören an|Dativ|rahatsız olmak|Die Fans stören sich am Abbruch des Spiels.|Taraftarlar maçın iptalinden rahatsız oluyor.",
+            "stören bei|Dativ|rahatsız etmek|Der Lärm stört mich beim Lesen.|Gürültü okurken beni rahatsız ediyor.",
+            "sich stoßen an|Dativ|çarpmak|Er stößt sich oft an der Dachschräge.|Sık sık eğimli çatıya çarpıyor.",
+            "streiten mit|Dativ|kavga etmek (biriyle)|Karl streitet mit seiner Ex-Frau.|Karl eski eşiyle kavga ediyor.",
+            "streiten über|Akkusativ|kavga etmek (konu)|Sie streiten über Geld.|Para hakkında kavga ediyorlar.",
+            "stützen auf|Akkusativ|dayandırmak|Wir stützen unsere Beweisführung auf eine Studie.|Kanıtlamamızı bir çalışmaya dayandırıyoruz.",
+            "suchen nach|Dativ|aramak|Er sucht nach einer neuen Wohnung.|Yeni bir daire arıyor.",
+            "teilnehmen an|Dativ|katılmak|Er nimmt an einem Schach-Turnier teil.|Bir satranç turnuvasına katılıyor.",
+            "träumen von|Dativ|hayal etmek / rüya görmek|Sie träumt von einem Ferienhaus in Italien.|İtalya'da bir yazlık hayal ediyor.",
+            "sich treffen mit|Dativ|buluşmak|Er trifft sich mit seinen Freunden.|Arkadaşlarıyla buluşuyor.",
+            "trennen von|Dativ|ayrılmak|Sie hat sich von ihrem Freund getrennt.|Erkek arkadaşından ayrıldı.",
+            "überreden zu|Dativ|ikna etmek|Er überredete seinen Kumpel zu einem Film.|Arkadaşını bir filme ikna etti.",
+            "umgehen mit|Dativ|başa çıkmak / davranmak|Sie geht gut mit Stress um.|Stresle iyi başa çıkıyor.",
+            "sich unterhalten mit|Dativ|sohbet etmek (biriyle)|Phil unterhielt sich mit seinen Freunden.|Phil arkadaşlarıyla sohbet etti.",
+            "sich unterhalten über|Akkusativ|sohbet etmek (konu)|Sie unterhielten sich über ein Event.|Bir etkinlik hakkında sohbet ettiler.",
+            "sich verabreden mit|Dativ|sözleşmek|Kai hat sich mit Nina verabredet.|Kai, Nina ile sözleşti.",
+            "verbinden mit|Dativ|bağlamak|Der Computer ist mit dem Internet verbunden.|Bilgisayar internete bağlı.",
+            "vergleichen mit|Dativ|karşılaştırmak|Er verglich den Preis im Laden mit dem bei Amazon.|Mağazadaki fiyatı Amazon'daki ile karşılaştırdı.",
+            "verhalten gegenüber|Dativ|karşı davranmak|Sie verhält sich freundlich gegenüber allen.|Herkese karşı dostça davranıyor.",
+            "verhelfen zu|Dativ|yardımcı olmak|Sie hat ihm zu einem neuen Job verholfen.|Yeni bir iş bulmasına yardımcı oldu.",
+            "verkaufen an|Akkusativ|satmak (kişiye)|Er verkauft sein Sofa an die Nachmieterin.|Kanepesini sonraki kiracıya satıyor.",
+            "verkaufen für|Akkusativ|satmak (fiyata)|Er verkaufte es für 50 Euro.|50 Euro'ya sattı.",
+            "verlangen nach|Dativ|istemek / arzulamak|Der Gast verlangte nach einem zusätzlichen Teller.|Misafir fazladan bir tabak istedi.",
+            "verlangen von|Dativ|talep etmek|Sie verlangt eine Entschuldigung von dir.|Senden bir özür talep ediyor.",
+            "sich verlassen auf|Akkusativ|güvenmek|Ich verlasse mich auf dich.|Sana güveniyorum.",
+            "sich verlieben in|Akkusativ|aşık olmak|Sie hat sich in das Land und die Menschen verliebt.|Ülkeye ve insanlarına aşık oldu.",
+            "versichern gegen|Akkusativ|sigortalamak|Marie versichert ihr Gepäck gegen Verlust.|Marie bagajını kayba karşı sigortalıyor.",
+            "sich verstehen mit|Dativ|anlaşmak|Er versteht sich gut mit seiner Dozentin.|Öğretim görevlisi ile iyi anlaşıyor.",
+            "verstehen von|Dativ|anlamak (konudan)|Verstehst du was von rhetorischen Mitteln?|Retorik araçlardan anlar mısın?",
+            "verteilen an|Akkusativ|dağıtmak|Sie verteilte das Essen an die Obdachlosen.|Yemeği evsizlere dağıttı.",
+            "verwechseln mit|Dativ|karıştırmak|Ich verwechsle ständig effektiv mit effizient.|Efektif ile verimliyi sürekli karıştırıyorum.",
+            "vorlesen aus|Dativ|okumak (kaynaktan)|Die Autorin las aus ihrer Erzählung vor.|Yazar öyküsünden parçalar okudu.",
+            "sich vorbereiten auf|Akkusativ|hazırlanmak|Sie bereitet sich auf das Examen vor.|Sınava hazırlanıyor.",
+            "sich wagen an|Akkusativ|cesaret etmek|Wer wagt sich an diese Aufgabe?|Bu göreve kim cesaret edebilir?",
+            "warnen vor|Dativ|uyarmak|Der Richter warnte vor den Folgen eines Meineids.|Yargıç yalan yere yemin etmenin sonuçları konusunda uyardı.",
+            "warten auf|Akkusativ|beklemek|Lisa wartet auf den Bus.|Lisa otobüsü bekliyor.",
+            "sich wenden an|Akkusativ|başvurmak (yönelmek)|Wenden Sie sich bitte an Ihre Bankberaterin.|Lütfen banka danışmanınıza başvurun.",
+            "werden aus|Dativ|olmak (bir şeyden)|Aus der Idee wurde ein Unternehmen.|Fikir bir şirkete dönüştü.",
+            "werden zu|Dativ|haline gelmek|Die Geschichte wurde zu einer Legende.|Hikaye bir efsane haline geldi.",
+            "wissen von|Dativ|haberdar olmak|Weiß er von der Überraschungsparty?|Sürpriz partiden haberi var mı?",
+            "sich wundern über|Akkusativ|şaşırmak|Ich wundere mich über dein Verhalten.|Davranışına şaşıyorum.",
+            "zählen auf|Akkusativ|güvenmek / bel bağlamak|Wir zählen auf dich!|Sana güveniyoruz!",
+            "zählen zu|Akkusativ|dahil olmak / sayılmak|Er zählt zu den besten Spielern der Liga.|Ligin en iyi oyuncuları arasında sayılıyor.",
+            "zurückführen auf|Akkusativ|dayandırmak / bağlamak|Das ist auf ein Missverständnis zurückzuführen.|Bu, bir yanlış anlaşılmaya bağlanabilir.",
+            "zweifeln an|Dativ|şüphe duymak|Die Richterin zweifelte an der Aussage des Zeugen.|Yargıç, tanığın ifadesinden şüphe duydu."
         ];
 
-        const STARTER_A2_WORDS = [
-            { de: "die Einladung", tr: "davet" }, { de: "besuchen", tr: "ziyaret etmek" }, { de: "die Wohnung", tr: "daire" },
-            { de: "der Beruf", tr: "meslek" }, { de: "verdienen", tr: "para kazanmak" }, { de: "die Gesundheit", tr: "sağlık" },
-            { de: "reisen", tr: "seyahat etmek" }, { de: "bezahlen", tr: "ödemek" }, { de: "verstehen", tr: "anlamak" }, { de: "erklären", tr: "açıklamak" }
+        // ASPEKTE B1+
+        const RAW_ASPEKTE_WORDS = [
+            "die Leidenschaft|-|tutku / ihtiras|Er hat eine große Leidenschaft für die Forschung entwickelt.|O, araştırmaya karşı büyük bir tutku geliştirdi.",
+            "die Ernüchterung|-|hayal kırıklığı / aklı başa gelme|Nach der ersten Euphorie folgte schnell die Ernüchterung.|İlk coşkunun ardından hızla hayal kırıklığı (gerçeklerle yüzleşme) geldi.",
+            "verwirklichen|-|gerçekleştirmek (hayal/proje)|Er hat sich seinen Lebenstraum endlich verwirklicht.|O, hayatının hayalini sonunda gerçekleştirdi.",
+            "ehrgeizig|-|hırslı / azimli|Sie ist eine ehrgeizige Studentin mit klaren Zielen.|O, net hedefleri olan hırslı bir öğrencidir.",
+            "verantwortungsbewusst|-|sorumluluk sahibi|Wir suchen einen verantwortungsbewussten Mitarbeiter für dieses Projekt.|Bu proje için sorumluluk sahibi bir çalışan arıyoruz.",
+            "verschwiegen|-|ağzı sıkı / sır tutan|Ein guter Anwalt muss absolut verschwiegen sein.|İyi bir avukat kesinlikle sır tutan biri olmalıdır.",
+            "ehrenamtlich|-|gönüllü olarak|Viele Jugendliche engagieren sich heute ehrenamtlich.|Bugün birçok genç gönüllü olarak çalışmalara katılıyor.",
+            "die Übereinstimmung|-|uyum / mutabakat|Es gibt eine große Übereinstimmung in ihren Meinungen.|Onların fikirlerinde büyük bir uyum var.",
+            "der Standpunkt|-|bakış açısı / görüş|Von meinem Standpunkt aus ist diese Entscheidung falsch.|Benim bakış açıma göre bu karar yanlış.",
+            "widersprechen|Dativ|itiraz etmek / karşı çıkmak|Ich muss dir in diesem Punkt leider widersprechen.|Bu noktada sana maalesef itiraz etmek zorundayım.",
+            "nachhaltig|-|sürdürülebilir / kalıcı|Eine nachhaltige Entwicklung ist für unsere Zukunft essenziell.|Sürdürülebilir bir gelişim geleceğimiz için elzemdir.",
+            "die Zusammenarbeit|-|işbirliği|Die Zusammenarbeit zwischen den beiden Firmen war erfolgreich.|İki şirket arasındaki işbirliği başarılıydı.",
+            "verzichten auf|Akkusativ|-den vazgeçmek|Aus gesundheitlichen Gründen verzichtet sie auf Zucker.|Sağlık nedenlerinden dolayı o şekerden vazgeçiyor.",
+            "die Vorliebe|-|tercih / meyil|Er hat eine starke Vorliebe für klassische Musik.|Onun klasik müziğe karşı güçlü bir eğilimi var.",
+            "die Auswertung|-|değerlendirme (veri/analiz)|Die Auswertung der Daten wird einige Wochen dauern.|Verilerin değerlendirilmesi birkaç hafta sürecek.",
+            "der Gegensatz|-|zıtlık / tezat|Im Gegensatz zu dir finde ich den Film spannend.|Senin aksine ben filmi heyecan verici buluyorum.",
+            "die Ursache|-|sebep / neden|Die Ursache für den Klimawandel ist vielschichtig.|İklim değişikliğinin sebebi çok katmanlıdır.",
+            "die Randgruppe|-|marjinal / dışlanmış grup|Die Gesellschaft muss Randgruppen besser integrieren.|Toplum dışlanmış grupları daha iyi entegre etmelidir.",
+            "der Einsatz|-|çaba / katılım / müdahale|Dein persönlicher Einsatz für das Projekt ist bewundernswert.|Proje için kişisel çaban takdire şayan.",
+            "überleben|-|hayatta kalmak|Nur wenige Tiere können in dieser extremen Kälte überleben.|Sadece birkaç hayvan bu aşırı soğukta hayatta kalabilir.",
+            "die Leistung|-|performans / başarı|Ihre akademischen Leistungen sind hervorragend.|Onun akademik başarıları mükemmeldir.",
+            "überzeugt sein von|Dativ|ikna olmak / emin olmak|Ich bin von der Richtigkeit dieser Theorie überzeugt.|Ben bu teorinin doğruluğundan eminim.",
+            "der Fortschritt|-|ilerleme / gelişme|Die Medizin hat in den letzten Jahren große Fortschritte gemacht.|Tıp son yıllarda büyük ilerlemeler kaydetti.",
+            "verknüpfen mit|Dativ|ilişkilendirmek / bağlamak|Man sollte theoretisches Wissen mit der Praxis verknüpfen.|Teorik bilgi pratikle ilişkilendirilmelidir.",
+            "die Entfaltung|-|gelişim / açığa çıkma|Kinder brauchen Raum für ihre persönliche Entfaltung.|Çocukların kişisel gelişimleri için alana ihtiyacı vardır.",
+            "die Belohnung|-|ödül / mükafat|Als Belohnung für die harte Arbeit bekam er eine Beförderung.|Sıkı çalışmanın ödülü olarak terfi aldı.",
+            "die Anforderung|-|talep / gereklilik / beklenti|Die Anforderungen an neue Mitarbeiter sind sehr hoch gestiegen.|Yeni çalışanlardan beklentiler çok yükseldi.",
+            "auslösen|-|tetiklemek / yol açmak|Der Artikel hat eine intensive öffentliche Diskussion ausgelöst.|Makale hararetli bir kamusal tartışmayı tetikledi.",
+            "die Maßnahme|-|önlem / tedbir|Die Regierung muss sofortige Maßnahmen gegen die Krise ergreifen.|Hükümet krize karşı derhal önlemler almalıdır.",
+            "die Gesellschaft|-|toplum / topluluk|Wir leben in einer modernen und vielfältigen Gesellschaft.|Modern ve çeşitli bir toplumda yaşıyoruz.",
+            "vermeiden|-|kaçınmak / önlemek|Stress am Arbeitsplatz sollte möglichst vermieden werden.|İş yerindeki stresten mümkün olduğunca kaçınılmalıdır.",
+            "der Mangel|-|eksiklik / noksanlık|Ein Mangel an Schlaf kann zu gesundheitlichen Problemen führen.|Uyku eksikliği sağlık sorunlarına yol açabilir.",
+            "die Auswirkung|-|etki / sonuç|Die Auswirkungen des Gesetzes sind noch nicht absehbar.|Yasanın etkileri henüz öngörülebilir değil.",
+            "verringern|-|azaltmak / düşürmek|Wir müssen unseren CO2-Ausstoß drastisch verringern.|Karbon salınımımızı önemli ölçüde azaltmalıyız.",
+            "hervorheben|-|vurgulamak / öne çıkarmak|Der Redner hat die Wichtigkeit der Bildung hervorgehoben.|Konuşmacı eğitimin önemini vurguladı.",
+            "die Erkenntnis|-|bulgu / idrak / bilgi|Diese neue Erkenntnis verändert alles, was wir bisher wussten.|Bu yeni bulgu şu ana kadar bildiğimiz her şeyi değiştiriyor.",
+            "der Beitrag|-|katkı / aidat|Jeder Einzelne kann einen Beitrag zum Umweltschutz leisten.|Her birey çevre korumasına bir katkı sağlayabilir.",
+            "die Voraussetzung|-|ön koşul / şart|Gute Sprachkenntnisse sind eine Voraussetzung für diesen Job.|İyi dil becerileri bu iş için bir ön koşuldur.",
+            "die Vielfalt|-|çeşitlilik|Die kulturelle Vielfalt einer Stadt ist eine große Bereicherung.|Bir şehrin kültürel çeşitliliği büyük bir zenginliktir.",
+            "die Kompetenz|-|yetkinlik / yeterlilik|Soziale Kompetenz wird im Berufsleben immer wichtiger.|Sosyal yetkinlik iş hayatında giderek daha önemli hale geliyor.",
+            "die Erholung|-|dinlenme / toparlanma|Der Urlaub diente der körperlichen und geistigen Erholung.|Tatil fiziksel ve zihinsel dinlenmeye hizmet etti.",
+            "der Konsum|-|tüketim|Der übermäßige Konsum von Fleisch schadet der Umwelt.|Aşırı et tüketimi çevreye zarar verir.",
+            "die Ausbeutung|-|sömürü|Die Organisation kämpft gegen die Ausbeutung von Arbeitern.|Örgüt işçilerin sömürülmesine karşı savaşıyor.",
+            "die Beschaffung|-|tedarik / sağlama|Die Beschaffung von sauberen Trinkwasser ist ein globales Problem.|Temiz içme suyu tedariki küresel bir sorundur.",
+            "das Umweltproblem|-|çevre sorunu|Plastikmüll im Ozean ist ein ernstes Umweltproblem.|Okyanustaki plastik atıklar ciddi bir çevre sorunudur.",
+            "der Umweltschutz|-|çevre koruma|Umweltschutz geht uns alle an und erfordert gemeinsames Handeln.|Çevre koruma hepimizi ilgilendirir ve ortak hareket etmeyi gerektirir.",
+            "die Energiequelle|-|enerji kaynağı|Wir müssen alternative Energiequellen stärker nutzen.|Alternatif enerji kaynaklarını daha yoğun kullanmalıyız.",
+            "erneuerbar|-|yenilenebilir|Die Zukunft gehört den erneuerbaren Energien wie Wind und Sonne.|Gelecek rüzgar ve güneş gibi yenilenebilir enerjilerindir.",
+            "die Wasserknappheit|-|su kıtlığı|Durch den Klimawandel droht in vielen Regionen Wasserknappheit.|İklim değişikliği nedeniyle birçok bölgede su kıtlığı tehlikesi var.",
+            "die Verschmutzung|-|kirlilik|Die Verschmutzung der Luft in den Großstädten nimmt alarmierend zu.|Büyük şehirlerdeki hava kirliliği endişe verici şekilde artıyor.",
+            "der Zugang|-|erişim / giriş|Nicht jeder Mensch hat Zugang zu einer guten medizinischen Versorgung.|Her insanın iyi bir tıbbi bakıma erişimi yoktur.",
+            "die Verhandlung|-|müzakere / görüşme|Die diplomatischen Verhandlungen dauerten bis spät in die Nacht.|Diplomatik müzakereler gecenin geç saatlerine kadar sürdü.",
+            "abwechslungsreich|-|çeşitli / monoton olmayan|Sie wünscht sich einen abwechslungsreichen und spannenden Beruf.|O çeşitli ve heyecan verici bir meslek arzuluyor.",
+            "sich einsetzen für|Akkusativ|çabalamak / taraf olmak / savunmak|Die Aktivisten setzen sich für die Rechte der Tiere ein.|Aktivistler hayvan haklarını savunuyorlar.",
+            "die Gleichstellung|-|eşitlik (sosyal/yasal)|Die Gleichstellung von Mann und Frau ist noch nicht überall erreicht.|Kadın ve erkeğin yasal eşitliğine henüz her yerde ulaşılmadı.",
+            "zusammenfassen|-|özetlemek|Können Sie die wichtigsten Ergebnisse der Studie kurz zusammenfassen?|Çalışmanın en önemli sonuçlarını kısaca özetleyebilir misiniz?",
+            "offensichtlich|-|görünüşe göre / bariz|Es ist offensichtlich, dass dieses System so nicht funktioniert.|Bu sistemin böyle çalışmadığı barizdir.",
+            "das Missgeschick|-|aksilik / talihsizlik|Trotz kleiner Missgeschicke war die Veranstaltung ein Erfolg.|Küçük aksiliklere rağmen etkinlik bir başarıydı.",
+            "die Einschätzung|-|değerlendirme / tahmin|Nach meiner Einschätzung wird die Wirtschaft weiter wachsen.|Benim değerlendirmeme göre ekonomi büyümeye devam edecek.",
+            "die Anerkennung|-|tanınma / takdir|Er sucht in seinem Beruf vor allem gesellschaftliche Anerkennung.|O, mesleğinde her şeyden önce toplumsal takdir arıyor."
         ];
 
-        const STARTER_B1_WORDS = [
-            { de: "abhängen von", tr: "bir şeye bağlı olmak", kalip: "etwas hängt von etwas ab (+ Dativ)", ornek: "Unsere Reise hängt vom Wetter ab. (Seyahatimiz hava durumuna bağlı.)" },
-            { de: "sich bewerben um", tr: "bir işe/bursa başvurmak", kalip: "sich um eine Stelle bewerben (+ Akkusativ)", ornek: "Ich bewerbe mich um ein Stipendium. (Bir burs için başvuruyorum.)" },
-            { de: "teilnehmen an", tr: "bir şeye katılmak", kalip: "an einem Kurs/Projekt teilnehmen (+ Dativ)", ornek: "Er nimmt an dem neuen Sprachkurs teil. (O, yeni dil kursuna katılıyor.)" },
-            { de: "verzichten auf", tr: "bir şeyden vazgeçmek", kalip: "auf etwas verzichten (+ Akkusativ)", ornek: "Ich verzichte auf das Dessert, weil ich satt bin. (Tok olduğum için tatlıdan vazgeçiyorum.)" },
-            { de: "die Erfahrung", tr: "deneyim", kalip: "Erfahrung sammeln", ornek: "Im Praktikum habe ich viel Erfahrung gesammelt. (Stajda çok deneyim kazandım.)" }
-        ];
-
-        const STARTER_B2_WORDS = [
-            { de: "sich auseinandersetzen mit", tr: "derinlemesine ele almak", kalip: "sich intensiv mit einem Thema auseinandersetzen (+ Dativ)", ornek: "Im Studium muss man sich mit komplexen Texten auseinandersetzen. (Üniversite eğitiminde karmaşık metinlerle derinlemesine ilgilenmek gerekir.)" },
-            { de: "beitragen zu", tr: "katkıda bulunmak", kalip: "zu einer Lösung beitragen (+ Dativ)", ornek: "Jeder kann dazu beitragen, die Umwelt zu schützen. (Herkes çevreyi korumaya katkıda bulunabilir.)" },
-            { de: "führen zu", tr: "yol açmak / sebep olmak", kalip: "zu Problemen führen (+ Dativ)", ornek: "Der hohe Konsum führt zu großen Umweltproblemen. (Yüksek tüketim büyük çevre sorunlarına yol açıyor.)" },
-            { de: "hinweisen auf", tr: "işaret etmek", kalip: "auf eine Tatsache hinweisen (+ Akkusativ)", ornek: "Der Experte weist auf die Gefahren des Klimawandels hin. (Uzman, iklim değişikliğinin tehlikelerine dikkat çekiyor.)" },
-            { de: "die Herausforderung", tr: "meydan okuma", kalip: "eine Herausforderung annehmen", ornek: "Das TestDaF-Examen ist eine große Herausforderung. (TestDaF sınavı büyük bir zorluktur.)" },
-            { de: "gewährleisten", tr: "garanti etmek", kalip: "die Sicherheit gewährleisten", ornek: "Die Universität muss eine gute Ausbildung gewährleisten. (Üniversite iyi bir eğitim sağlamayı garanti etmelidir.)" },
-            { de: "die Maßnahme", tr: "önlem / tedbir", kalip: "Maßnahmen ergreifen", ornek: "Die Regierung muss sofort strengere Maßnahmen ergreifen. (Hükümet derhal daha sıkı önlemler almalıdır.)" },
-            { de: "überzeugen von", tr: "ikna etmek", kalip: "jemanden von etwas überzeugen (+ Dativ)", ornek: "Er hat mich von seinen Plänen überzeugt. (Beni planları konusunda ikna etti.)" },
-            { de: "zur Verfügung stehen", tr: "kullanıma hazır olmak", kalip: "für etwas zur Verfügung stehen", ornek: "Die Bibliothek steht den Studenten rund um die Uhr zur Verfügung. (Kütüphane öğrencilere 7/24 hizmet vermektedir.)" },
-            { de: "berücksichtigen", tr: "dikkate almak", kalip: "etwas bei einer Entscheidung berücksichtigen", ornek: "Man muss alle Faktoren berücksichtigen. (Tüm faktörler dikkate alınmalıdır.)" }
-        ];
-
-        let allWords = [];          
-        let remainingPool = [];     
-        let activePairs = [];       
-        let currentDrillWords = []; 
-        
-        let selectedDeId = null;
-        let selectedTrId = null;
-        let selectedDeElement = null;
-        let selectedTrElement = null;
-
+        let allWords = []; let basePool = []; let remainingPool = []; let activePairs = [];
+        let selectedDeId = null; let selectedTrId = null; let selectedDeElement = null; let selectedTrElement = null;
         let score = 0; let streak = 0; let maxStreak = 0;
-        let selectedLevel = 'B2';
-        let isSoundEnabled = true;
-        let activeTheme = 'slate';
-        let editingWordId = null;
-        
-        // HATA ÖNLEYİCİ GÜVENLİK KATMANI: Oyun başlatılmadan kartların render edilmesini engeller.
+        let selectedLevel = '190_Fiil'; 
+        let isSoundEnabled = true; let activeTheme = 'slate'; let editingWordId = null;
         let isGameInitialized = false; 
 
-        const deColumn = document.getElementById('deColumn');
-        const trColumn = document.getElementById('trColumn');
+        let currentRound = 1; let totalRounds = 1;
+        let lastStations = { '190_Fiil': 1, 'Aspekte_B1': 1 };
+        let activeGroupNum = 1;
+
+        let isDrillMode = false; let drillPhase = 0; 
+        let drillFullList = []; let drillMatchingRounds = 5; let kbCurrentWord = null;
+
+        const deColumn = document.getElementById('deColumn'); const trColumn = document.getElementById('trColumn');
 
         function generateId() { return Math.random().toString(36).substring(2, 9); }
-        function shuffle(array) {
-            let currentIndex = array.length, randomIndex;
-            while (currentIndex != 0) {
-                randomIndex = Math.floor(Math.random() * currentIndex); currentIndex--;
-                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
-            }
-            return array;
-        }
-
-        // --- ARTİKEL RENKLENDİRME ---
+        function shuffle(array) { let c = array.length, r; while (c != 0) { r = Math.floor(Math.random() * c); c--; [array[c], array[r]] = [array[r], array[c]]; } return array; }
+        
         function formatGermanWord(word) {
             const match = word.match(/^(der|die|das)\s+(.*)/i);
             if (match) {
-                const article = match[1].toLowerCase();
-                let colorClass = "";
-                if (article === "der") colorClass = "text-blue-400 font-black";
-                else if (article === "die") colorClass = "text-rose-400 font-black";
-                else if (article === "das") colorClass = "text-emerald-400 font-black";
+                const article = match[1].toLowerCase(); let colorClass = "";
+                if (article === "der") colorClass = "text-blue-400 font-black"; else if (article === "die") colorClass = "text-rose-400 font-black"; else if (article === "das") colorClass = "text-emerald-400 font-black";
                 return `<span class="${colorClass}">${match[1]}</span> ${match[2]}`;
             }
             return word;
@@ -475,149 +672,484 @@
 
         function setTheme(themeName) {
             activeTheme = themeName; localStorage.setItem('schatz_theme', themeName);
-            const currentTheme = themes[activeTheme] || themes.slate;
-            document.getElementById('appBody').className = `${currentTheme.bg} ${currentTheme.text} min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white`;
-            document.getElementById('appHeader').className = `border-b ${currentTheme.header} backdrop-blur-md sticky top-0 z-40 px-4 py-3 transition-all duration-300`;
+            const t = themes[activeTheme] || themes.slate;
+            document.getElementById('appBody').className = `${t.bg} ${t.text} min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white`;
+            document.getElementById('appHeader').className = `border-b ${t.header} backdrop-blur-md sticky top-0 z-40 px-4 py-3 transition-all duration-300`;
             document.getElementById('themeDropdown').classList.add('hidden');
-            updateTabsUI();
-            
-            // Eğer oyun başladıysa ve sahnede kart varsa yeniden çiz
-            if (isGameInitialized && activePairs.length > 0) {
-                renderBoard();
-            }
+            updateTabsUI(); 
+            if (isGameInitialized && activePairs.length > 0 && drillPhase !== 2) renderBoard();
         }
 
         document.getElementById('soundToggleBtn').addEventListener('click', () => {
             isSoundEnabled = !isSoundEnabled; localStorage.setItem('schatz_sound', isSoundEnabled);
             document.getElementById('soundIcon').className = isSoundEnabled ? "fa-solid fa-volume-high text-indigo-400" : "fa-solid fa-volume-xmark text-slate-500";
-            document.getElementById('soundToggleBtn').classList.toggle('border-indigo-500/30', isSoundEnabled);
+            showToast(isSoundEnabled ? "Ses açıldı." : "Ses kapatıldı.", true);
         });
 
         function speakGerman(text) {
             if (isSoundEnabled && 'speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
-                const cleanText = text.replace(/<[^>]*>?/gm, ''); 
-                const u = new SpeechSynthesisUtterance(cleanText); u.lang = 'de-DE'; u.rate = 0.85; window.speechSynthesis.speak(u);
+                const u = new SpeechSynthesisUtterance(text.replace(/<[^>]*>?/gm, '')); u.lang = 'de-DE'; u.rate = 0.85; window.speechSynthesis.speak(u);
             }
         }
 
         function showToast(message, isSuccess = true) {
-            const t = document.getElementById('toast');
-            document.getElementById('toastMsg').textContent = message;
+            const t = document.getElementById('toast'); document.getElementById('toastMsg').textContent = message;
             document.getElementById('toastIcon').className = isSuccess ? "fa-solid fa-circle-check text-emerald-400" : "fa-solid fa-circle-exclamation text-rose-400";
             t.style.opacity = "1"; t.style.transform = "translate(-50%, 0)";
             setTimeout(() => { t.style.opacity = "0"; t.style.transform = "translate(-50%, 1rem)"; }, 2500);
         }
 
         function loadDatabase() {
-            const saved = localStorage.getItem('schatz_db_v1');
-            if (saved) {
-                allWords = JSON.parse(saved);
-                if(allWords.length === 0) resetToFactoryDefaults();
-            } else resetToFactoryDefaults();
+            // v10: Sıfırdan temiz kurulum için
+            const saved = localStorage.getItem('schatz_db_v10');
+            if (saved) { 
+                allWords = JSON.parse(saved); 
+                if(allWords.length === 0) resetToFactoryDefaults(); 
+            } else {
+                resetToFactoryDefaults();
+            }
+
+            const savedLastStations = localStorage.getItem('schatz_last_stations_v10');
+            if(savedLastStations) { lastStations = JSON.parse(savedLastStations); }
+            
             updateBadges();
         }
 
-        function saveDatabase() { localStorage.setItem('schatz_db_v1', JSON.stringify(allWords)); updateBadges(); }
+        function saveDatabase() { 
+            localStorage.setItem('schatz_db_v10', JSON.stringify(allWords)); 
+            localStorage.setItem('schatz_last_stations_v10', JSON.stringify(lastStations));
+            updateBadges(); 
+        }
 
         function resetToFactoryDefaults() {
-            const t = [];
-            const add = (list, lvl) => list.forEach(w => t.push({ id: generateId(), de: w.de, tr: w.tr, level: lvl, status: 'learning', errorCount: 0, kalip: w.kalip || '', ornek: w.ornek || '' }));
-            add(STARTER_A1_WORDS, 'A1'); add(STARTER_A2_WORDS, 'A2'); add(STARTER_B1_WORDS, 'B1'); add(STARTER_B2_WORDS, 'B2');
+            const t = []; 
+            RAW_190_VERBS.forEach((row, index) => {
+                const p = row.split('|'); const verbParts = p[0].split(' '); const prepExtracted = verbParts[verbParts.length - 1]; 
+                const groupNum = Math.floor(index / 20) + 1;
+                t.push({ id: generateId(), de: p[0], tr: p[2], level: '190_Fiil', group: groupNum, status: 'learning', errorCount: 0, kalip: `${p[0]} + ${p[1]}`, ornekDe: p[3], ornekTr: p[4], prep: prepExtracted, kasus: p[1] });
+            });
+            RAW_ASPEKTE_WORDS.forEach((row, index) => {
+                const p = row.split('|'); 
+                const groupNum = Math.floor(index / 20) + 1;
+                t.push({ id: generateId(), de: p[0], tr: p[2], level: 'Aspekte_B1', group: groupNum, status: 'learning', errorCount: 0, kalip: p[1] !== '-' ? p[1] : '', ornekDe: p[3], ornekTr: p[4], kasus: p[1] });
+            });
             allWords = t; saveDatabase();
         }
 
         function updateBadges() {
-            const m = allWords.filter(w => w.status === 'mistake').length;
-            const c = allWords.filter(w => w.level === 'custom').length;
-            document.getElementById('mistakeBadge').className = m > 0 ? "absolute -top-1.5 -right-1 bg-rose-500 text-white text-[9px] px-1.5 py-0.5 rounded-full font-black" : "hidden";
-            document.getElementById('mistakeBadge').textContent = m;
-            document.getElementById('customBadge').className = c > 0 ? "absolute -top-1.5 -right-1 bg-amber-500 text-slate-950 text-[9px] px-1.5 py-0.5 rounded-full font-black" : "hidden";
-            document.getElementById('customBadge').textContent = c;
+            const m = allWords.filter(w => w.status === 'mistake').length; const c = allWords.filter(w => w.level === 'custom').length;
+            document.getElementById('mistakeBadge').className = m > 0 ? "absolute -top-1.5 -right-1 bg-rose-500 text-white text-[9px] px-1.5 py-0.5 rounded-full font-black" : "hidden"; document.getElementById('mistakeBadge').textContent = m;
+            document.getElementById('customBadge').className = c > 0 ? "absolute -top-1.5 -right-1 bg-amber-500 text-slate-950 text-[9px] px-1.5 py-0.5 rounded-full font-black" : "hidden"; document.getElementById('customBadge').textContent = c;
         }
 
-        // --- YEDEKLEME İŞLEMLERİ ---
-        document.getElementById('exportBackupBtn').addEventListener('click', () => {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(allWords));
-            const dl = document.createElement('a'); dl.setAttribute("href", dataStr); dl.setAttribute("download", "schATZ_yedek.json");
-            document.body.appendChild(dl); dl.click(); dl.remove();
-            showToast("Yedek başarıyla indirildi!", true);
-        });
+        function getTotalGroupsForLevel(level) {
+            let max = 0;
+            allWords.forEach(w => { if(w.level === level && w.group > max) max = w.group; });
+            return max;
+        }
 
-        document.getElementById('importBackupBtn').addEventListener('click', () => document.getElementById('backupFileInput').click());
+        function getStationProgress(level, groupNum) {
+            const groupWords = allWords.filter(w => w.level === level && w.group === groupNum);
+            if(groupWords.length === 0) return 0;
+            const knownWords = groupWords.filter(w => w.status === 'known').length;
+            return Math.round((knownWords / groupWords.length) * 100);
+        }
 
-        document.getElementById('backupFileInput').addEventListener('change', (e) => {
-            const file = e.target.files[0]; if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(evt) {
-                try {
-                    const data = JSON.parse(evt.target.result);
-                    if (Array.isArray(data) && data.length > 0 && data[0].hasOwnProperty('de')) {
-                        allWords = data; saveDatabase(); renderLibraryTable(); updateBadges(); initGame('B2');
-                        showToast("Yedek başarıyla yüklendi!", true); document.getElementById('libraryModal').classList.add('hidden');
-                    } else showToast("Hatalı JSON formatı!", false);
-                } catch (err) { showToast("Dosya okunamadı!", false); }
-            };
-            reader.readAsText(file); e.target.value = '';
-        });
+        function updateMainStationCard() {
+            const wrapper = document.getElementById('stationTargetWrapper');
+            if (selectedLevel === '190_Fiil' || selectedLevel === 'Aspekte_B1') {
+                wrapper.classList.remove('hidden');
+                activeGroupNum = lastStations[selectedLevel] || 1;
+                const pct = getStationProgress(selectedLevel, activeGroupNum);
+                
+                let start = (activeGroupNum - 1) * 20 + 1;
+                let end = activeGroupNum * 20;
+                const totalWordsInLevel = allWords.filter(w => w.level === selectedLevel).length;
+                if (end > totalWordsInLevel) end = totalWordsInLevel;
+                
+                let titlePrefix = selectedLevel === '190_Fiil' ? '190 Fiil' : 'Aspekte B1+';
+                document.getElementById('mainStationSubtitle').textContent = `${titlePrefix} Haritası`;
+                document.getElementById('mainStationTitle').textContent = `${activeGroupNum}. İstasyon (${start}-${end})`;
+                document.getElementById('mainStationPct').textContent = `%${pct}`;
+                document.getElementById('mainStationProgressBar').style.width = `${pct}%`;
+                
+                if(pct === 100) {
+                    document.getElementById('mainStationPct').className = "text-[10px] font-bold text-amber-400 bg-amber-950/50 px-1.5 py-0.5 rounded-md border border-amber-900/50";
+                    document.getElementById('mainStationProgressBar').className = "bg-gradient-to-r from-amber-500 to-yellow-300 h-1.5 rounded-full transition-all duration-700";
+                } else {
+                    document.getElementById('mainStationPct').className = "text-[10px] font-bold text-emerald-400 bg-emerald-950/50 px-1.5 py-0.5 rounded-md border border-emerald-900/50";
+                    document.getElementById('mainStationProgressBar').className = "bg-gradient-to-r from-indigo-500 to-emerald-400 h-1.5 rounded-full transition-all duration-700";
+                }
+            } else {
+                wrapper.classList.add('hidden');
+            }
+        }
 
-        // -- OYUN MOTORU --
-        function initGame(level = 'B2') {
-            if(level === 'drill') {
-                if(currentDrillWords.length === 5) { startDrillMode(currentDrillWords); return; }
-                else { level = 'B2'; }
+        window.renderStationsMap = () => {
+            const container = document.getElementById('stationsListContainer'); 
+            container.innerHTML = '';
+            
+            let totalGroups = getTotalGroupsForLevel(selectedLevel);
+            if (totalGroups === 0) totalGroups = 1;
+
+            let activeG = lastStations[selectedLevel] || 1;
+            let titlePrefix = selectedLevel === '190_Fiil' ? '190 Akademik Fiil' : 'Aspekte B1+ Kelimeleri';
+            document.getElementById('modalMapSubtitle').textContent = titlePrefix;
+
+            for(let i = 1; i <= totalGroups; i++) {
+                const pct = getStationProgress(selectedLevel, i);
+                let start = (i - 1) * 20 + 1; let end = i * 20;
+                const totalWordsInLevel = allWords.filter(w => w.level === selectedLevel).length;
+                if (end > totalWordsInLevel) end = totalWordsInLevel;
+                
+                const isCurrent = (i === activeG);
+                const isCompleted = (pct === 100);
+                
+                let iconHtml = ""; let bgClass = ""; let borderClass = "";
+                
+                if (isCompleted) {
+                    iconHtml = `<div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/30 text-lg"><i class="fa-solid fa-crown"></i></div>`;
+                    bgClass = "bg-slate-900/50"; borderClass = "border-amber-500/30";
+                } else if (isCurrent) {
+                    iconHtml = `<div class="w-10 h-10 rounded-xl bg-indigo-500 text-white flex items-center justify-center shadow-lg shadow-indigo-500/40 text-lg"><i class="fa-solid fa-rocket animate-bounce"></i></div>`;
+                    bgClass = "bg-indigo-950/30 border-indigo-500"; borderClass = "border-indigo-500";
+                } else {
+                    iconHtml = `<div class="w-10 h-10 rounded-xl bg-slate-800 text-slate-500 flex items-center justify-center border border-slate-700 text-lg"><i class="fa-solid fa-lock"></i></div>`;
+                    bgClass = "bg-slate-900"; borderClass = "border-slate-800";
+                }
+
+                const btn = document.createElement('button');
+                btn.className = `w-full flex items-center gap-4 p-3 rounded-2xl border ${borderClass} ${bgClass} text-left transition-transform hover:scale-[1.02] active:scale-[0.98]`;
+                btn.onclick = () => { selectStation(i); };
+                
+                btn.innerHTML = `
+                    ${iconHtml}
+                    <div class="flex-1">
+                        <div class="flex justify-between items-center mb-1">
+                            <h4 class="font-bold text-white text-sm">${i}. İstasyon <span class="text-xs text-slate-400 font-normal ml-1">(${start}-${end})</span></h4>
+                            <span class="text-[10px] font-bold ${isCompleted ? 'text-amber-400' : 'text-slate-400'}">%${pct}</span>
+                        </div>
+                        <div class="w-full bg-slate-950 rounded-full h-1">
+                            <div class="${isCompleted ? 'bg-amber-400' : 'bg-indigo-500'} h-1 rounded-full" style="width: ${pct}%"></div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(btn);
+            }
+        };
+
+        function selectStation(groupNum) {
+            lastStations[selectedLevel] = groupNum;
+            saveDatabase();
+            document.getElementById('stationsModal').classList.add('hidden');
+            score = 0; streak = 0; maxStreak = 0;
+            initGame(selectedLevel);
+        }
+
+        function initGame(level = '190_Fiil') {
+            isDrillMode = false; drillPhase = 0; 
+            document.getElementById('keyboardGameArea').classList.add('hidden');
+            document.getElementById('matchingGameArea').classList.remove('hidden');
+            
+            selectedLevel = level; let levelWords = [];
+
+            if(level === '190_Fiil' || level === 'Aspekte_B1') {
+                activeGroupNum = lastStations[level] || 1; 
+                levelWords = allWords.filter(w => w.level === level && w.group === activeGroupNum);
+                totalRounds = 5;
+            } else {
+                totalRounds = 1;
+                if (level === 'mistake') { 
+                    levelWords = allWords.filter(w => w.status === 'mistake'); 
+                    if (levelWords.length < 5) { showToast("Hata havuzunda en az 5 kelime olmalı!", false); initGame('190_Fiil'); return; } 
+                } else if (level === 'custom') { 
+                    levelWords = allWords.filter(w => w.level === 'custom'); 
+                    if (levelWords.length < 5) { showToast("Özel listede en az 5 kelime olmalı!", false); initGame('190_Fiil'); return; } 
+                } 
             }
 
-            selectedLevel = level;
-            let levelWords = [];
-            if (level === 'mistake') {
-                levelWords = allWords.filter(w => w.status === 'mistake');
-                if (levelWords.length < 5) { showToast("Hata havuzunda en az 5 kelime olmalı!", false); initGame('B2'); return; }
-            } else if (level === 'custom') {
-                levelWords = allWords.filter(w => w.level === 'custom');
-                if (levelWords.length < 5) { showToast("Özel listede en az 5 kelime olmalı!", false); document.getElementById('importModal').classList.remove('hidden'); return; }
+            // GÜVENLİK: Eğer seçili grupta kelime kalmadıysa veya hata olduysa 1. Gruba zorla.
+            if(levelWords.length === 0) {
+                activeGroupNum = 1; lastStations[level] = 1; saveDatabase();
+                levelWords = allWords.filter(w => w.level === level && w.group === 1);
+            }
+
+            currentRound = 1;
+            basePool = JSON.parse(JSON.stringify(levelWords)); 
+            remainingPool = shuffle([...basePool]);
+            activePairs = []; 
+            for (let i = 0; i < 5; i++) if (remainingPool.length > 0) activePairs.push(remainingPool.pop());
+
+            isGameInitialized = true; resetSelection(); renderBoard(); updateStatsUI(); updateTabsUI();
+            updateMainStationCard();
+        }
+
+        // OTOMATİK SONRAKİ İSTASYONA GEÇİŞ
+        document.getElementById('restartGameBtn').onclick = () => { 
+            document.getElementById('congratsModal').classList.add('hidden'); 
+            if(selectedLevel === '190_Fiil' || selectedLevel === 'Aspekte_B1') {
+                let nextGroup = activeGroupNum + 1;
+                let total = getTotalGroupsForLevel(selectedLevel);
+                if(nextGroup <= total) {
+                    selectStation(nextGroup);
+                } else {
+                    initGame(selectedLevel); 
+                }
             } else {
-                levelWords = allWords.filter(w => w.level === level && w.status !== 'known');
-                if (levelWords.length < 5) {
-                    showToast("Bu seviyedeki kelimeleri bitirdiniz. Sıfırlanıyor.", true);
-                    allWords.forEach(w => { if (w.level === level) w.status = 'learning'; }); saveDatabase();
-                    levelWords = allWords.filter(w => w.level === level);
+                initGame(selectedLevel); 
+            }
+        };
+
+        // ODAK MODU MODAL İŞLEMLERİ
+        document.getElementById('openDrillTabBtn').addEventListener('click', () => { 
+            document.getElementById('drillSetupModal').classList.remove('hidden'); 
+            const mc = document.getElementById('manualInputsContainer');
+            if(mc.innerHTML === '') {
+                for(let i=1; i<=5; i++) {
+                    mc.innerHTML += `
+                        <div class="flex gap-2 items-center bg-slate-900 border border-slate-800 p-2 rounded-xl">
+                            <span class="w-5 h-5 rounded-full bg-slate-800 text-slate-500 flex items-center justify-center text-[10px] font-black shrink-0">${i}</span>
+                            <input type="text" id="manDe${i}" placeholder="Almanca (örn: das Auto)" class="w-full bg-transparent border-b border-slate-700 pb-1 text-xs focus:outline-none focus:border-orange-500">
+                            <input type="text" id="manTr${i}" placeholder="Türkçe" class="w-full bg-transparent border-b border-slate-700 pb-1 text-xs focus:outline-none focus:border-orange-500">
+                        </div>`;
                 }
             }
+            populateDrillSelect();
+            const mistakeCount = allWords.filter(w => w.status === 'mistake').length;
+            const ms = document.getElementById('drillMistakeSlider');
+            if(mistakeCount < 3) {
+                document.getElementById('mistakeInfoText').innerHTML = `Şu an sadece <span class="text-orange-400 font-black">${mistakeCount}</span> hatalı kelimen var. En az 3 olmalı.`;
+                document.getElementById('btnStartMistake').classList.add('opacity-50', 'pointer-events-none');
+                ms.disabled = true;
+            } else {
+                document.getElementById('mistakeInfoText').innerHTML = `Şu an tam <span class="text-orange-400 font-black">${mistakeCount}</span> kelimede hata yapmışsın. Üzerine gidelim!`;
+                ms.disabled = false; ms.max = mistakeCount > 15 ? 15 : mistakeCount;
+                document.getElementById('btnStartMistake').classList.remove('opacity-50', 'pointer-events-none');
+            }
+            switchDrillTab('manual'); 
+        });
 
-            remainingPool = JSON.parse(JSON.stringify(levelWords)); shuffle(remainingPool);
+        window.switchDrillTab = (tab) => {
+            ['manual', 'select', 'mistake'].forEach(t => {
+                document.getElementById(`drillSec-${t}`).classList.add('hidden');
+                document.getElementById(`tabBtn-${t}`).className = "flex-1 py-2 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-slate-200";
+            });
+            document.getElementById(`drillSec-${tab}`).classList.remove('hidden');
+            if(tab==='manual') document.getElementById(`drillSec-${tab}`).classList.add('block');
+            else document.getElementById(`drillSec-${tab}`).classList.add('flex');
+            document.getElementById(`tabBtn-${tab}`).className = "flex-1 py-2 rounded-xl text-xs font-bold transition-all bg-slate-800 text-white shadow-sm border border-slate-700";
+        };
+
+        window.startManualDrill = () => {
+            let words = []; let addedCount = 0;
+            for(let i=1; i<=5; i++) {
+                const de = document.getElementById(`manDe${i}`).value.trim(); const tr = document.getElementById(`manTr${i}`).value.trim();
+                if(!de || !tr) { showToast(`Lütfen ${i}. satırı tam doldurun!`, false); return; }
+                const existing = allWords.find(w => w.de.toLowerCase() === de.toLowerCase());
+                if(!existing) {
+                    const newObj = { id: generateId(), de: de, tr: tr, level: 'custom', status: 'learning', errorCount: 0, kalip:'', ornekDe:'', ornekTr:'' };
+                    allWords.push(newObj); addedCount++; words.push(newObj);
+                } else { words.push(existing); }
+            }
+            if(addedCount > 0) saveDatabase();
+            document.getElementById('drillSetupModal').classList.add('hidden');
+            startDrillProcess(words);
+        };
+
+        function populateDrillSelect() {
+            const listContainer = document.getElementById('drillSelectList'); listContainer.innerHTML = '';
+            const sortedWords = [...allWords].sort((a,b) => a.de.localeCompare(b.de));
+            sortedWords.forEach(w => {
+                const div = document.createElement('label');
+                div.className = "drill-select-item flex items-center justify-between p-3 rounded-lg hover:bg-slate-800/50 cursor-pointer border border-transparent transition-colors custom-checkbox";
+                
+                let extraTag = "";
+                if(w.kasus && w.kasus !== '-') {
+                    let kColor = w.kasus.includes('Akkusativ') ? 'text-rose-400' : (w.kasus.includes('Dativ') ? 'text-blue-400' : 'text-amber-400');
+                    extraTag = `<span class="text-[9px] font-bold ${kColor} bg-slate-900 px-1.5 py-0.5 rounded ml-1">${w.prep ? w.prep + ' + ' : ''}${w.kasus}</span>`;
+                }
+
+                div.innerHTML = `
+                    <div class="flex items-center gap-3 w-full">
+                        <input type="checkbox" value="${w.id}" class="hidden" onchange="updateDrillSelectCount()">
+                        <div class="w-5 h-5 rounded border border-slate-600 flex items-center justify-center transition-colors">
+                            <i class="fa-solid fa-check text-[10px] text-white opacity-0 transition-opacity"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-xs font-bold text-slate-200">${formatGermanWord(w.de)} ${extraTag}</p>
+                            <p class="text-[10px] text-slate-400">${w.tr}</p>
+                        </div>
+                    </div>
+                `;
+                listContainer.appendChild(div);
+            });
+            updateDrillSelectCount();
+        }
+
+        window.filterDrillSelect = () => {
+            const q = document.getElementById('drillSearchInput').value.toLowerCase();
+            document.querySelectorAll('.drill-select-item').forEach(item => {
+                const text = item.innerText.toLowerCase();
+                item.style.display = text.includes(q) ? 'flex' : 'none';
+            });
+        };
+
+        window.updateDrillSelectCount = () => {
+            const count = document.querySelectorAll('#drillSelectList input:checked').length;
+            document.getElementById('selectCountDisplay').textContent = `${count} Seçildi`;
+        };
+
+        window.startSelectedDrill = () => {
+            const checkedIds = Array.from(document.querySelectorAll('#drillSelectList input:checked')).map(cb => cb.value);
+            if(checkedIds.length < 3) { showToast("En az 3 kelime seçmelisin!", false); return; }
+            const words = allWords.filter(w => checkedIds.includes(w.id));
+            document.getElementById('drillSetupModal').classList.add('hidden');
+            startDrillProcess(words);
+        };
+
+        window.startMistakeDrill = () => {
+            const count = parseInt(document.getElementById('drillMistakeSlider').value);
+            let pool = shuffle(allWords.filter(w => w.status === 'mistake'));
+            const words = pool.slice(0, count);
+            document.getElementById('drillSetupModal').classList.add('hidden');
+            startDrillProcess(words);
+        };
+
+        function startDrillProcess(wordsArray) {
+            isDrillMode = true; drillPhase = 1; selectedLevel = 'drill';
+            drillMatchingRounds = 5; currentRound = 1; 
+            document.getElementById('keyboardGameArea').classList.add('hidden');
+            document.getElementById('matchingGameArea').classList.remove('hidden');
+            document.getElementById('stationTargetWrapper').classList.add('hidden');
+            
+            score = 0; streak = 0; maxStreak = 0;
+            drillFullList = JSON.parse(JSON.stringify(wordsArray));
+            remainingPool = shuffle([...drillFullList]);
             activePairs = []; for (let i = 0; i < 5; i++) if (remainingPool.length > 0) activePairs.push(remainingPool.pop());
-
-            isGameInitialized = true;
-            resetSelection(); renderBoard(); updateStatsUI(); updateTabsUI();
+            isGameInitialized = true; updateTabsUI(); resetSelection(); renderBoard(); updateStatsUI();
+            showToast(`AŞAMA 1: Eşleştirme (Tur 1/${drillMatchingRounds}) Başladı!`, true);
         }
 
-        function startDrillMode(wordsArray) {
-            selectedLevel = 'drill'; currentDrillWords = wordsArray; remainingPool = [];
-            for(let i=0; i<10; i++) wordsArray.forEach(w => { remainingPool.push({ id: w.id, de: w.de, tr: w.tr }); });
-            shuffle(remainingPool);
-            activePairs = []; for (let i = 0; i < 5; i++) if (remainingPool.length > 0) activePairs.push(remainingPool.pop());
-
-            score = 0; streak = 0; maxStreak = 0; isGameInitialized = true;
-            resetSelection(); renderBoard(); updateStatsUI(); updateTabsUI();
+        function startDrillPhase2() {
+            drillPhase = 2; 
+            document.getElementById('matchingGameArea').classList.add('hidden');
+            document.getElementById('keyboardGameArea').classList.remove('hidden');
+            remainingPool = shuffle([...drillFullList]);
+            activePairs = []; 
+            updateStatsUI();
+            loadNextKeyboardWord();
+            showToast("Harika! Şimdi Aşama 2: Yazma Pratiği.", true);
         }
 
-        function resetSelection() {
-            selectedDeId = null; selectedTrId = null; selectedDeElement = null; selectedTrElement = null;
+        function loadNextKeyboardWord() {
+            if(remainingPool.length === 0) {
+                document.getElementById('congratsIcon').innerHTML = '<i class="fa-solid fa-fire text-orange-500 animate-pulse"></i>';
+                document.getElementById('congratsIcon').className = "w-16 h-16 bg-orange-500/10 text-orange-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-4";
+                document.getElementById('congratsTitle').textContent = "Pratik Tamamlandı!";
+                document.getElementById('congratsDesc').textContent = "Kelimeleri defalarca eşleştirdin ve artikelleriyle doğru yazdın. Kas hafızasına eklendi!";
+                document.getElementById('finalScore').textContent = score; document.getElementById('finalStreak').textContent = maxStreak;
+                document.getElementById('congratsModal').classList.remove('hidden');
+                return;
+            }
+            kbCurrentWord = remainingPool.pop();
+            updateStatsUI();
+            
+            document.getElementById('kbTargetWord').textContent = kbCurrentWord.tr;
+            document.getElementById('kbInput').value = "";
+            document.getElementById('kbInput').classList.remove('border-rose-500', 'border-emerald-500');
+            document.getElementById('kbInput').classList.add('border-slate-700');
+            document.getElementById('kbHintText').style.opacity = "0";
+            document.getElementById('kbInput').focus();
+
+            const total = drillFullList.length; 
+            const done = total - remainingPool.length - 1;
+            let dotsHTML = "";
+            for(let i=0; i<total; i++) {
+                if(i < done) dotsHTML += `<div class="w-2 h-2 rounded-full bg-emerald-500"></div>`;
+                else if(i === done) dotsHTML += `<div class="w-3 h-3 rounded-full bg-orange-500 animate-pulse"></div>`;
+                else dotsHTML += `<div class="w-2 h-2 rounded-full bg-slate-700"></div>`;
+            }
+            document.getElementById('kbProgressDots').innerHTML = dotsHTML;
         }
+
+        document.getElementById('kbPassBtn').addEventListener('click', () => {
+            if (!kbCurrentWord) return;
+            remainingPool.unshift(kbCurrentWord);
+            streak = 0; showToast("Kelime sona ertelendi.", false);
+            loadNextKeyboardWord();
+        });
+
+        document.getElementById('kbSubmitBtn').addEventListener('click', checkKeyboardInput);
+        document.getElementById('kbInput').addEventListener('keypress', (e) => { if(e.key === 'Enter') checkKeyboardInput(); });
+        
+        document.getElementById('kbHintBtn').addEventListener('click', () => {
+            const parts = kbCurrentWord.de.split(' ');
+            let hint = "İpucu: "; parts.forEach(p => hint += p.charAt(0) + "... ");
+            document.getElementById('kbHintText').textContent = hint; document.getElementById('kbHintText').style.opacity = "1";
+            score -= 5; updateStatsUI();
+        });
+
+        function checkKeyboardInput() {
+            const inputEl = document.getElementById('kbInput');
+            const userVal = inputEl.value.trim().toLowerCase();
+            const correctVal = kbCurrentWord.de.trim().toLowerCase();
+
+            if(userVal === correctVal) {
+                speakGerman(kbCurrentWord.de);
+                score += 20; inputEl.classList.replace('border-slate-700', 'border-emerald-500'); inputEl.classList.replace('border-rose-500', 'border-emerald-500');
+                if(!isDrillMode) updateWordStatus(kbCurrentWord.id, 'known');
+                setTimeout(() => { loadNextKeyboardWord(); }, 600);
+            } else {
+                streak = 0; inputEl.classList.replace('border-slate-700', 'border-rose-500'); inputEl.classList.add('animate-shake');
+                document.getElementById('kbHintText').textContent = "Hatalı! (Artikelini/Edatını kontrol et)";
+                document.getElementById('kbHintText').style.opacity = "1"; document.getElementById('kbHintText').classList.replace('text-indigo-400', 'text-rose-400');
+                remainingPool.unshift(kbCurrentWord);
+                setTimeout(() => { inputEl.classList.remove('animate-shake'); }, 400);
+            }
+            updateStatsUI();
+        }
+
+        function resetSelection() { selectedDeId = null; selectedTrId = null; selectedDeElement = null; selectedTrElement = null; }
 
         function renderBoard() {
             deColumn.innerHTML = ''; trColumn.innerHTML = '';
-            
-            // Güvenlik Katmanı: Oyun başlamadan ekran çizmeyi durdur
             if (!isGameInitialized) return;
 
             if (activePairs.length === 0) {
-                document.getElementById('finalScore').textContent = score;
-                document.getElementById('finalStreak').textContent = maxStreak;
-                document.getElementById('congratsDesc').textContent = selectedLevel === 'drill' 
-                    ? "Matkap Modu tamamlandı! Bu 5 kelime beynine kazındı!" 
-                    : "Bu gruptaki tüm kelimeleri başarıyla eşleştirerek öğrendin!";
+                if (isDrillMode && drillPhase === 1) { 
+                    currentRound++;
+                    if(currentRound <= drillMatchingRounds) {
+                        showToast(`Harika! Tur ${currentRound}/${drillMatchingRounds} başlıyor...`, true);
+                        remainingPool = shuffle([...drillFullList]);
+                        for (let i = 0; i < 5; i++) if (remainingPool.length > 0) activePairs.push(remainingPool.pop());
+                        renderBoard(); updateStatsUI(); return;
+                    } else { startDrillPhase2(); return; }
+                } else if (selectedLevel === '190_Fiil' || selectedLevel === 'Aspekte_B1') {
+                    if (currentRound < totalRounds) {
+                        currentRound++;
+                        showToast(`Müthiş! Tur ${currentRound}/${totalRounds} başlıyor, kas hafızasına yazılıyor...`, true);
+                        remainingPool = shuffle([...basePool]);
+                        for (let i = 0; i < 5; i++) if (remainingPool.length > 0) activePairs.push(remainingPool.pop());
+                        renderBoard(); updateStatsUI(); return;
+                    } else {
+                        document.getElementById('congratsIcon').innerHTML = '<i class="fa-solid fa-crown text-amber-400 animate-bounce"></i>';
+                        document.getElementById('congratsIcon').className = "w-16 h-16 bg-amber-500/10 text-emerald-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 border border-amber-500/30";
+                        document.getElementById('congratsTitle').textContent = `${activeGroupNum}. İstasyon Tamamlandı!`;
+                        document.getElementById('congratsDesc').textContent = "Bu gruptaki tüm kelimeleri 5 kez peş peşe eşleştirerek başarıyla öğrendin. Yüzden arttı!";
+                        document.getElementById('finalScore').textContent = score; document.getElementById('finalStreak').textContent = maxStreak;
+                        document.getElementById('congratsModal').classList.remove('hidden');
+                        
+                        updateMainStationCard();
+                        return;
+                    }
+                }
+                
+                document.getElementById('congratsIcon').innerHTML = '<i class="fa-solid fa-trophy animate-bounce"></i>';
+                document.getElementById('congratsIcon').className = "w-16 h-16 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-4";
+                document.getElementById('congratsTitle').textContent = "Tebrikler, Müthişsin!";
+                document.getElementById('congratsDesc').textContent = "Bu gruptaki tüm kelimeleri başarıyla eşleştirerek öğrendin!";
+                document.getElementById('finalScore').textContent = score; document.getElementById('finalStreak').textContent = maxStreak;
                 document.getElementById('congratsModal').classList.remove('hidden');
                 return;
             }
@@ -630,7 +1162,26 @@
             deCards.forEach(card => {
                 const btn = document.createElement('button');
                 btn.className = `w-full min-h-[58px] px-4 py-3.5 border rounded-2xl text-left text-xs font-bold shadow-sm active:scale-[0.98] transition-all flex items-center justify-between cursor-pointer select-none animate-pop ${cardStyle}`;
-                btn.innerHTML = `<span>${formatGermanWord(card.word)}</span><i class="fa-solid fa-volume-low text-[10px] text-slate-400"></i>`;
+                
+                const wordObj = allWords.find(w => w.id === card.id);
+                
+                let prepTag = "";
+                if (wordObj && (wordObj.level === '190_Fiil' || wordObj.level === 'Aspekte_B1') && wordObj.kasus && wordObj.kasus !== '-') {
+                    let kColor = wordObj.kasus.includes('Akkusativ') ? 'text-rose-400 border-rose-900/50 bg-rose-950/30' : (wordObj.kasus.includes('Dativ') ? 'text-blue-400 border-blue-900/50 bg-blue-950/30' : 'text-amber-400 border-amber-900/50 bg-amber-950/30');
+                    prepTag = ` <span class="ml-2 px-1.5 py-0.5 text-[9px] rounded-md font-black uppercase tracking-wider border ${kColor} hidden sm:inline-block">${wordObj.prep ? '+ ' + wordObj.kasus : wordObj.kasus}</span>`;
+                }
+
+                let extraHtml = "";
+                if((selectedLevel === '190_Fiil' || selectedLevel === 'Aspekte_B1') && !isDrillMode) {
+                    extraHtml = `
+                    <div class="flex items-center gap-2" onclick="event.stopPropagation()">
+                        <button onclick="showExampleModal('${card.id}')" class="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 hover:bg-indigo-500 hover:text-white transition-colors flex items-center justify-center" title="Örnek Cümleyi Göster">
+                            <i class="fa-solid fa-exclamation text-[10px]"></i>
+                        </button>
+                    </div>`;
+                }
+
+                btn.innerHTML = `<span>${formatGermanWord(card.word)}${prepTag}</span>${extraHtml ? extraHtml : '<i class="fa-solid fa-volume-low text-[10px] text-slate-400"></i>'}`;
                 btn.addEventListener('click', (e) => { e.stopPropagation(); selectDeCard(card.id, btn); });
                 deColumn.appendChild(btn);
             });
@@ -644,11 +1195,30 @@
             });
         }
 
+        window.showExampleModal = (id) => {
+            const w = allWords.find(x => x.id === id); if(!w) return;
+            document.getElementById('exVerb').innerHTML = formatGermanWord(w.de);
+            
+            if(w.kasus && w.kasus !== '-') {
+                let kColor = w.kasus.includes('Akkusativ') ? 'text-rose-400 border-rose-900/50 bg-rose-950/30' : (w.kasus.includes('Dativ') ? 'text-blue-400 border-blue-900/50 bg-blue-950/30' : 'text-amber-400 border-amber-900/50 bg-amber-950/30');
+                document.getElementById('exPrep').className = `text-[10px] font-black mb-4 uppercase tracking-widest inline-block px-3 py-1 rounded-full border ${kColor}`;
+                document.getElementById('exPrep').textContent = w.kalip || w.kasus || "-";
+                document.getElementById('exPrep').style.display = "inline-block";
+            } else {
+                document.getElementById('exPrep').style.display = "none";
+            }
+            
+            document.getElementById('exSentenceDe').textContent = w.ornekDe || w.ornek || "Örnek cümle yok.";
+            document.getElementById('exSentenceTr').textContent = w.ornekTr ? `"${w.ornekTr}"` : "";
+            
+            document.getElementById('exSpeakBtn').onclick = () => { speakGerman(w.ornekDe || w.ornek); };
+            document.getElementById('exampleModal').classList.remove('hidden');
+        };
+
         function selectDeCard(id, el) {
             if (selectedDeElement === el) { resetSelection(); resetHighlights(); return; }
             resetHighlights('de'); selectedDeId = id; selectedDeElement = el;
-            el.classList.replace(activeTheme==='light'?'border-slate-200':'border-slate-800/80', 'border-indigo-500');
-            el.classList.add('bg-indigo-950/20', 'ring-2', 'ring-indigo-500/30');
+            el.classList.replace(activeTheme==='light'?'border-slate-200':'border-slate-800/80', 'border-indigo-500'); el.classList.add('bg-indigo-950/20', 'ring-2', 'ring-indigo-500/30');
             const item = activePairs.find(p => p.id === id); if (item) speakGerman(item.de);
             checkMatch();
         }
@@ -656,53 +1226,44 @@
         function selectTrCard(id, el) {
             if (selectedTrElement === el) { selectedTrId = null; selectedTrElement = null; resetHighlights('tr'); return; }
             resetHighlights('tr'); selectedTrId = id; selectedTrElement = el;
-            el.classList.replace(activeTheme==='light'?'border-slate-200':'border-slate-800/80', 'border-indigo-500');
-            el.classList.add('bg-indigo-950/20', 'ring-2', 'ring-indigo-500/30');
+            el.classList.replace(activeTheme==='light'?'border-slate-200':'border-slate-800/80', 'border-indigo-500'); el.classList.add('bg-indigo-950/20', 'ring-2', 'ring-indigo-500/30');
             checkMatch();
         }
 
         function resetHighlights(col = 'all') {
             const style = activeTheme === 'light' ? 'border-slate-200' : 'border-slate-800/80';
-            const clean = c => c.querySelectorAll('button').forEach(b => {
-                b.classList.remove('border-indigo-500','bg-indigo-950/20','ring-2','ring-indigo-500/30','animate-shake','border-rose-500','bg-rose-950/20','ring-rose-500/30');
-                b.classList.add(style);
-            });
-            if (col === 'de' || col === 'all') clean(deColumn);
-            if (col === 'tr' || col === 'all') clean(trColumn);
+            const clean = c => c.querySelectorAll('button').forEach(b => { b.classList.remove('border-indigo-500','bg-indigo-950/20','ring-2','ring-indigo-500/30','animate-shake','border-rose-500','bg-rose-950/20','ring-rose-500/30'); b.classList.add(style); });
+            if (col === 'de' || col === 'all') clean(deColumn); if (col === 'tr' || col === 'all') clean(trColumn);
         }
 
         function checkMatch() {
             if (!selectedDeId || !selectedTrId) return;
 
-            const deBtn = selectedDeElement; const trBtn = selectedTrElement;
-            const matchedId = selectedDeId;
+            const deBtn = selectedDeElement; const trBtn = selectedTrElement; const matchedId = selectedDeId;
 
             if (selectedDeId === selectedTrId) {
                 score += 10; streak += 1; if (streak > maxStreak) maxStreak = streak;
-                if(selectedLevel !== 'drill') updateWordStatus(selectedDeId, 'known');
+                
+                if(!isDrillMode) {
+                    if (selectedLevel === '190_Fiil' || selectedLevel === 'Aspekte_B1') {
+                        if(currentRound === totalRounds) { updateWordStatus(selectedDeId, 'known'); }
+                    } else {
+                        updateWordStatus(selectedDeId, 'known');
+                    }
+                }
 
-                [deBtn, trBtn].forEach(b => {
-                    b.classList.remove('border-indigo-500', 'bg-indigo-950/20', 'ring-2');
-                    b.classList.add('border-emerald-500', 'bg-emerald-950/20', 'ring-2', 'ring-emerald-500/20');
-                });
+                [deBtn, trBtn].forEach(b => { b.classList.remove('border-indigo-500', 'bg-indigo-950/20', 'ring-2'); b.classList.add('border-emerald-500', 'bg-emerald-950/20', 'ring-2', 'ring-emerald-500/20'); });
 
                 setTimeout(() => {
                     const idx = activePairs.findIndex(p => p.id === matchedId);
-                    if (idx !== -1) {
-                        if (remainingPool.length > 0) activePairs[idx] = remainingPool.pop();
-                        else activePairs.splice(idx, 1);
-                    }
+                    if (idx !== -1) { if (remainingPool.length > 0) activePairs[idx] = remainingPool.pop(); else activePairs.splice(idx, 1); }
                     resetSelection(); renderBoard(); updateStatsUI();
                 }, 350);
 
             } else {
-                streak = 0;
-                if(selectedLevel !== 'drill') updateWordStatus(selectedDeId, 'mistake');
+                streak = 0; if(!isDrillMode) updateWordStatus(selectedDeId, 'mistake');
 
-                [deBtn, trBtn].forEach(b => {
-                    b.classList.remove('border-indigo-500', 'bg-indigo-950/20', 'ring-2');
-                    b.classList.add('border-rose-500', 'bg-rose-950/20', 'ring-2', 'ring-rose-500/30', 'animate-shake');
-                });
+                [deBtn, trBtn].forEach(b => { b.classList.remove('border-indigo-500', 'bg-indigo-950/20', 'ring-2'); b.classList.add('border-rose-500', 'bg-rose-950/20', 'ring-2', 'ring-rose-500/30', 'animate-shake'); });
 
                 setTimeout(() => { resetSelection(); resetHighlights(); }, 450);
             }
@@ -711,181 +1272,125 @@
 
         function updateWordStatus(id, newStatus) {
             const idx = allWords.findIndex(w => w.id === id);
-            if (idx !== -1) {
-                if (newStatus === 'mistake') { allWords[idx].status = 'mistake'; allWords[idx].errorCount += 1; }
-                else if (newStatus === 'known') { allWords[idx].status = selectedLevel === 'mistake' ? 'learning' : 'known'; }
-                saveDatabase();
-            }
+            if (idx !== -1) { if (newStatus === 'mistake') { allWords[idx].status = 'mistake'; allWords[idx].errorCount += 1; } else if (newStatus === 'known') { allWords[idx].status = selectedLevel === 'mistake' ? 'learning' : 'known'; } saveDatabase(); }
         }
 
-        function updateStatsUI() {
-            document.getElementById('scoreEl').textContent = score;
-            document.getElementById('streakEl').textContent = streak;
-            document.getElementById('poolCountEl').textContent = remainingPool.length;
+        function updateStatsUI() { 
+            document.getElementById('scoreEl').textContent = score; 
+            document.getElementById('streakEl').textContent = streak; 
+            
+            if(isDrillMode && drillPhase === 1) {
+                 document.getElementById('poolLabel').textContent = "Eşleştirme Turu";
+                 document.getElementById('poolCountEl').textContent = `${currentRound}/${drillMatchingRounds}`;
+            } else if (isDrillMode && drillPhase === 2) {
+                 document.getElementById('poolLabel').textContent = "Kalan Kelime";
+                 document.getElementById('poolCountEl').textContent = remainingPool.length + 1;
+            } else if (selectedLevel === '190_Fiil' || selectedLevel === 'Aspekte_B1') {
+                 document.getElementById('poolLabel').textContent = `Tur ${currentRound}/5 Kalan`;
+                 document.getElementById('poolCountEl').textContent = remainingPool.length;
+            } else {
+                 document.getElementById('poolLabel').textContent = "Havuzda Kalan";
+                 document.getElementById('poolCountEl').textContent = remainingPool.length;
+            }
         }
 
         function updateTabsUI() {
             document.getElementById('levelTabs').querySelectorAll('.lvl-tab').forEach(b => {
-                const lvl = b.dataset.level || b.id.replace('openDrillTabBtn', 'drill');
-                if (lvl === selectedLevel) b.className = `lvl-tab px-4 py-2.5 rounded-xl text-xs font-black transition-all text-white border relative shadow-md scale-105 ${lvl==='drill'?'bg-orange-600 border-orange-500':'bg-indigo-600 border-indigo-500'}`;
+                const lvl = b.dataset.level || (b.id === 'openDrillTabBtn' ? 'drill' : '');
+                if (lvl === selectedLevel) b.className = `lvl-tab px-5 py-3 rounded-xl text-xs font-black transition-all text-white border relative shadow-md scale-105 ${lvl==='drill'?'bg-orange-600 border-orange-500':'bg-indigo-600 border-indigo-500'}`;
                 else b.className = activeTheme === 'light' 
-                    ? `lvl-tab px-4 py-2.5 rounded-xl text-xs font-bold transition-all bg-white hover:text-slate-950 border border-slate-200 relative shadow-sm ${lvl==='drill'?'text-orange-500':'text-slate-600'}`
-                    : `lvl-tab px-4 py-2.5 rounded-xl text-xs font-bold transition-all bg-slate-900 hover:text-slate-200 border border-slate-800 relative ${lvl==='drill'?'text-orange-400 hover:bg-orange-950/20':'text-slate-400'}`;
+                    ? `lvl-tab px-5 py-3 rounded-xl text-xs font-bold transition-all bg-white hover:text-slate-950 border border-slate-200 relative shadow-sm ${lvl==='drill'?'text-orange-500':'text-slate-600'}`
+                    : `lvl-tab px-5 py-3 rounded-xl text-xs font-bold transition-all bg-slate-900 hover:text-slate-200 border border-slate-800 relative ${lvl==='drill'?'text-orange-400 hover:bg-orange-950/20':'text-slate-400'}`;
             });
         }
 
         document.getElementById('levelTabs').addEventListener('click', (e) => {
             const btn = e.target.closest('.lvl-tab'); if (!btn) return;
-            if (btn.id === 'openDrillTabBtn') { document.getElementById('drillModal').classList.remove('hidden'); return; }
+            if (btn.id === 'openDrillTabBtn') return; 
             score = 0; streak = 0; initGame(btn.dataset.level);
         });
 
-        document.getElementById('restartGameBtn').addEventListener('click', () => {
-            document.getElementById('congratsModal').classList.add('hidden');
-            score = 0; streak = 0; maxStreak = 0; initGame(selectedLevel);
-        });
-
-        // --- YOĞUN PRATİK UI OLUŞTURMA ---
-        const drillContainer = document.getElementById('drillInputsContainer');
-        for(let i=1; i<=5; i++) {
-            drillContainer.innerHTML += `
-                <div class="flex gap-3 items-center bg-slate-950/50 p-3 rounded-2xl border border-slate-800">
-                    <span class="w-6 h-6 rounded-full bg-orange-950 text-orange-500 flex items-center justify-center text-[10px] font-black shrink-0">${i}</span>
-                    <input type="text" id="drillDe${i}" placeholder="Almanca Kelime (Örn: der Apfel)" class="w-full bg-transparent border-b border-slate-700 pb-1 text-xs text-slate-200 focus:outline-none focus:border-orange-500 placeholder:text-slate-600">
-                    <input type="text" id="drillTr${i}" placeholder="Türkçe Anlamı" class="w-full bg-transparent border-b border-slate-700 pb-1 text-xs text-slate-200 focus:outline-none focus:border-orange-500 placeholder:text-slate-600">
-                </div>
-            `;
-        }
-
-        document.getElementById('closeDrillBtn').addEventListener('click', () => document.getElementById('drillModal').classList.add('hidden'));
-
-        document.getElementById('startDrillBtn').addEventListener('click', () => {
-            let words = [];
-            for(let i=1; i<=5; i++) {
-                const de = document.getElementById(`drillDe${i}`).value.trim();
-                const tr = document.getElementById(`drillTr${i}`).value.trim();
-                if(!de || !tr) { showToast(`Lütfen ${i}. satırı tam doldurun!`, false); return; }
-                words.push({ id: generateId(), de: de, tr: tr });
-            }
-
-            let addedCount = 0;
-            words.forEach(dw => {
-                const existing = allWords.find(w => w.de.toLowerCase() === dw.de.toLowerCase());
-                if(!existing) {
-                    allWords.push({ id: dw.id, de: dw.de, tr: dw.tr, level: 'custom', status: 'learning', errorCount: 0, kalip:'', ornek:'' });
-                    addedCount++;
-                } else {
-                    dw.id = existing.id; 
-                }
-            });
-            if(addedCount > 0) saveDatabase();
-
-            document.getElementById('drillModal').classList.add('hidden');
-            showToast("🔥 Matkap Modu Başladı! 5 Kelime, 50 Soru.", true);
-            startDrillMode(words);
-        });
-
-        // --- KLASÖR İŞLEMLERİ ---
+        // --- KLASÖR & MODALLAR ---
         document.getElementById('libraryBtn').addEventListener('click', () => { document.getElementById('libraryModal').classList.remove('hidden'); renderLibraryTable(); });
         document.getElementById('closeLibraryBtn').addEventListener('click', () => document.getElementById('libraryModal').classList.add('hidden'));
 
         function renderLibraryTable() {
-            const tbody = document.getElementById('libTableBody'); tbody.innerHTML = '';
-            const query = document.getElementById('libSearchInput').value.toLowerCase().trim();
-            const filter = document.querySelector('.lib-filter-tab.bg-indigo-600').dataset.filter;
-            
-            let filtered = allWords;
-            if (filter !== 'all') filtered = filter === 'mistake' ? allWords.filter(w => w.status === 'mistake') : allWords.filter(w => w.level === filter);
-            if (query) filtered = filtered.filter(w => w.de.toLowerCase().includes(query) || w.tr.toLowerCase().includes(query));
-
-            if (filtered.length === 0) { tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-slate-500 font-medium">Kayıt bulunamadı.</td></tr>`; return; }
-
+            const tbody = document.getElementById('libTableBody'); tbody.innerHTML = ''; const query = document.getElementById('libSearchInput').value.toLowerCase().trim();
+            let filtered = allWords; if (query) filtered = filtered.filter(w => w.de.toLowerCase().includes(query) || w.tr.toLowerCase().includes(query));
+            if (filtered.length === 0) { tbody.innerHTML = `<tr><td colspan="4" class="py-4 text-center">Kayıt yok.</td></tr>`; return; }
             filtered.forEach(w => {
-                const tr = document.createElement('tr'); tr.className = "hover:bg-slate-850/40 transition-all border-b border-slate-850/20";
-                let st = `<span class="px-2.5 py-1 bg-slate-800 text-slate-400 rounded-full text-[9px] font-extrabold uppercase">Öğreniliyor</span>`;
-                if (w.status === 'known') st = `<span class="px-2.5 py-1 bg-emerald-950 text-emerald-400 border border-emerald-900/30 rounded-full text-[9px] font-extrabold uppercase">Öğrenildi</span>`;
-                else if (w.status === 'mistake') st = `<span class="px-2.5 py-1 bg-rose-950 text-rose-400 border border-rose-900/30 rounded-full text-[9px] font-extrabold uppercase">Hata (${w.errorCount})</span>`;
+                const tr = document.createElement('tr'); tr.className = "border-b border-slate-850/20 hover:bg-slate-800/30";
                 
-                const hasD = w.kalip || w.ornek;
+                let badge = `<span class="bg-slate-800 px-1.5 py-0.5 rounded text-[9px] text-slate-400">${w.level}</span>`;
+                if(w.level === '190_Fiil') badge = `<span class="bg-indigo-900/50 border border-indigo-500/30 px-1.5 py-0.5 rounded text-[9px] text-indigo-300 font-bold">İstasyon ${w.group}</span>`;
+                if(w.level === 'Aspekte_B1') badge = `<span class="bg-purple-900/50 border border-purple-500/30 px-1.5 py-0.5 rounded text-[9px] text-purple-300 font-bold">İstasyon ${w.group}</span>`;
+
                 tr.innerHTML = `
-                    <td class="py-3 px-4 text-slate-200 font-mono text-sm">${formatGermanWord(w.de)}</td>
-                    <td class="py-3 px-4 text-slate-400 text-xs">${w.tr}</td>
-                    <td class="py-3 px-4"><span class="px-2 py-0.5 bg-indigo-950/50 text-indigo-300 border border-indigo-900/40 rounded-lg text-[10px] font-extrabold">${w.level}</span></td>
-                    <td class="py-3 px-4">${st}</td>
-                    <td class="py-3 px-4 text-right flex items-center justify-end gap-1.5">
-                        <button onclick="openWordDetails('${w.id}')" class="p-2 rounded-xl transition-all ${hasD?'text-amber-400 hover:bg-amber-950/30':'text-slate-500 hover:bg-slate-800'}" title="İncele"><i class="fa-solid fa-eye"></i></button>
-                        <button onclick="openEditWordModal('${w.id}')" class="p-2 hover:bg-slate-800 text-indigo-400 rounded-xl transition-all"><i class="fa-solid fa-pen"></i></button>
-                        <button onclick="deleteWord('${w.id}')" class="p-2 hover:bg-rose-950/30 text-rose-400 rounded-xl transition-all"><i class="fa-solid fa-trash-can"></i></button>
+                    <td class="py-3 px-4 font-mono text-sm">${formatGermanWord(w.de)}</td><td class="py-3 px-4 text-xs text-slate-300">${w.tr}</td><td class="py-3 px-4">${badge}</td>
+                    <td class="py-3 px-4 text-right flex gap-2 justify-end">
+                        <button onclick="openWordDetails('${w.id}')" class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-amber-400 transition-colors"><i class="fa-solid fa-eye"></i></button>
                     </td>`;
                 tbody.appendChild(tr);
             });
         }
-        
         document.getElementById('libSearchInput').addEventListener('input', renderLibraryTable);
-        document.getElementById('libFilterTabs').addEventListener('click', (e) => {
-            if(!e.target.dataset.filter) return;
-            document.querySelectorAll('.lib-filter-tab').forEach(b => b.className = b.dataset.filter === e.target.dataset.filter ? "lib-filter-tab px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-indigo-600 text-white" : "lib-filter-tab px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-slate-900 text-slate-400");
-            renderLibraryTable();
-        });
-
-        // --- DETAY, DÜZENLEME, SİLME ---
-        window.openWordDetails = id => {
-            const w = allWords.find(x => x.id === id); if(!w) return;
-            document.getElementById('detailLevel').textContent = w.level + " SEVİYESİ";
+        
+        window.openWordDetails = id => { 
+            const w = allWords.find(x => x.id === id); if(!w) return; 
             document.getElementById('detailDe').innerHTML = formatGermanWord(w.de); 
-            document.getElementById('detailTr').textContent = w.tr;
-            document.getElementById('detailKalip').textContent = w.kalip || "Özel kalıp girilmemiş.";
-            if(w.ornek) { const p = w.ornek.split('('); document.getElementById('detailOrnek').textContent = p[0]; document.getElementById('detailOrnekTr').textContent = p[1]?"("+p[1]:""; }
-            else { document.getElementById('detailOrnek').textContent = "Örnek cümle bulunmuyor."; document.getElementById('detailOrnekTr').textContent = ""; }
-            document.getElementById('wordDetailsModal').classList.remove('hidden');
+            document.getElementById('detailTr').textContent = w.tr; 
+            document.getElementById('detailKalip').textContent = w.kalip || w.kasus || "Yok."; 
+            document.getElementById('detailOrnekDe').textContent = w.ornekDe || w.ornek || "Yok."; 
+            document.getElementById('detailOrnekTr').textContent = w.ornekTr || ""; 
+            document.getElementById('wordDetailsModal').classList.remove('hidden'); 
         };
-        window.closeWordDetails = () => document.getElementById('wordDetailsModal').classList.add('hidden');
-
-        window.deleteWord = id => {
-            if (confirm("Silmek istediğinize emin misiniz?")) { allWords = allWords.filter(w => w.id !== id); saveDatabase(); renderLibraryTable(); showToast("Silindi", true); initGame(selectedLevel==='drill'?'B2':selectedLevel); }
+        window.deleteWord = id => { if (confirm("Emin misiniz?")) { allWords = allWords.filter(w => w.id !== id); saveDatabase(); renderLibraryTable(); } };
+        window.openEditWordModal = id => { 
+            const w = allWords.find(x => x.id === id); 
+            if(w){ 
+                editingWordId = id; 
+                document.getElementById('editDeInput').value = w.de; 
+                document.getElementById('editTrInput').value = w.tr; 
+                document.getElementById('editKalipInput').value = w.kalip; 
+                document.getElementById('editOrnekDeInput').value = w.ornekDe || w.ornek || ""; 
+                document.getElementById('editOrnekTrInput').value = w.ornekTr || ""; 
+                document.getElementById('editWordModal').classList.remove('hidden'); 
+            } 
         };
-
-        window.openEditWordModal = id => {
-            const w = allWords.find(x => x.id === id);
-            if(w){ editingWordId = id; document.getElementById('editDeInput').value = w.de; document.getElementById('editTrInput').value = w.tr; document.getElementById('editKalipInput').value = w.kalip; document.getElementById('editOrnekInput').value = w.ornek; document.getElementById('editWordModal').classList.remove('hidden'); }
-        };
-        document.getElementById('cancelEditBtn').addEventListener('click', () => document.getElementById('editWordModal').classList.add('hidden'));
-        document.getElementById('saveSingleWordBtn').addEventListener('click', () => {
-            const i = allWords.findIndex(w => w.id === editingWordId);
-            if(i > -1){ allWords[i].de = document.getElementById('editDeInput').value; allWords[i].tr = document.getElementById('editTrInput').value; allWords[i].kalip = document.getElementById('editKalipInput').value; allWords[i].ornek = document.getElementById('editOrnekInput').value; saveDatabase(); document.getElementById('editWordModal').classList.add('hidden'); renderLibraryTable(); showToast("Güncellendi", true); if(selectedLevel !== 'drill') initGame(selectedLevel); }
+        
+        document.getElementById('saveSingleWordBtn').addEventListener('click', () => { 
+            const i = allWords.findIndex(w => w.id === editingWordId); 
+            if(i > -1){ 
+                allWords[i].de = document.getElementById('editDeInput').value; 
+                allWords[i].tr = document.getElementById('editTrInput').value; 
+                allWords[i].kalip = document.getElementById('editKalipInput').value; 
+                allWords[i].ornekDe = document.getElementById('editOrnekDeInput').value; 
+                allWords[i].ornekTr = document.getElementById('editOrnekTrInput').value; 
+                saveDatabase(); document.getElementById('editWordModal').classList.add('hidden'); renderLibraryTable(); 
+            } 
         });
+        document.getElementById('cancelEditBtn').addEventListener('click', () => document.getElementById('editWordModal').classList.add('hidden'));
 
-        // --- TOPLU EKLEME & RESET ---
         document.getElementById('importShortcutBtn').addEventListener('click', () => { document.getElementById('libraryModal').classList.add('hidden'); document.getElementById('importModal').classList.remove('hidden'); });
-        document.getElementById('closeImportBtn').addEventListener('click', () => document.getElementById('importModal').classList.add('hidden'));
         document.getElementById('cancelImportBtn').addEventListener('click', () => document.getElementById('importModal').classList.add('hidden'));
         document.getElementById('saveWordsBtn').addEventListener('click', () => {
             const lines = document.getElementById('importArea').value.split('\n'); let a = 0;
-            lines.forEach(l => {
-                let p = l.split(l.includes('=')?'=':'|');
-                if(p.length>=2 && p[0].trim() && !allWords.some(w=>w.de.toLowerCase()===p[0].trim().toLowerCase())){
-                    allWords.push({id:generateId(), de:p[0].trim(), tr:p[1].trim(), level:'custom', status:'learning', errorCount:0, kalip:'', ornek:''}); a++;
-                }
-            });
-            if(a>0){ saveDatabase(); document.getElementById('importModal').classList.add('hidden'); showToast(`${a} kelime eklendi`, true); initGame('custom'); }
+            lines.forEach(l => { let p = l.split(l.includes('=')?'=':'|'); if(p.length>=2 && p[0].trim()){ allWords.push({id:generateId(), de:p[0].trim(), tr:p[1].trim(), level:'custom', status:'learning', errorCount:0, kalip:'', ornekDe:'', ornekTr:''}); a++; } });
+            if(a>0){ saveDatabase(); document.getElementById('importModal').classList.add('hidden'); initGame('custom'); }
         });
+        document.getElementById('resetDatabaseBtn').addEventListener('click', () => { if(confirm("Sıfırlansın mı?")){ resetToFactoryDefaults(); document.getElementById('libraryModal').classList.add('hidden'); initGame('190_Fiil'); } });
 
-        document.getElementById('resetDatabaseBtn').addEventListener('click', () => { if(confirm("Tüm özel veriler silinecek ve sistem sıfırlanacak. Onaylıyor musunuz?")){ resetToFactoryDefaults(); document.getElementById('libraryModal').classList.add('hidden'); showToast("Sıfırlandı", true); initGame('B2'); } });
-
-        // --- THEME ---
         document.getElementById('themeMenuBtn').addEventListener('click', (e) => { e.stopPropagation(); document.getElementById('themeDropdown').classList.toggle('hidden'); });
         document.addEventListener('click', () => document.getElementById('themeDropdown').classList.add('hidden'));
 
         window.addEventListener('DOMContentLoaded', () => {
-            // Tema yükleniyor ama renderBoard henüz çalışmıyor (isGameInitialized hala false)
             setTheme(localStorage.getItem('schatz_theme') || 'slate');
             
-            const s = localStorage.getItem('schatz_sound'); if(s!==null) isSoundEnabled = (s==='true');
+            const s = localStorage.getItem('schatz_sound'); 
+            if(s !== null) { isSoundEnabled = (s === 'true'); } else { isSoundEnabled = true; }
             document.getElementById('soundIcon').className = isSoundEnabled ? "fa-solid fa-volume-high text-indigo-400" : "fa-solid fa-volume-xmark text-slate-500";
             
-            loadDatabase(); 
-            // Tüm veriler hazırlandıktan sonra oyunu ve ekran çizimini başlatır
-            initGame('B2'); 
+            loadDatabase(); initGame('190_Fiil'); 
         });
     </script>
 </body>
