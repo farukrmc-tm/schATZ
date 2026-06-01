@@ -24,9 +24,77 @@
         
         .custom-checkbox input:checked + div { background-color: #f97316; border-color: #f97316; }
         .custom-checkbox input:checked + div i { opacity: 1; }
+
+        /* -------------------------------------
+           KUSURSUZ TEMA MOTORU (CSS OVERRIDES)
+           ------------------------------------- */
+
+        /* 1. Klasik Aydınlık (Light Theme) */
+        body.theme-light { background-color: #f8fafc; color: #0f172a; }
+        body.theme-light .bg-slate-950 { background-color: #f8fafc !important; }
+        body.theme-light .bg-slate-900 { background-color: #ffffff !important; }
+        body.theme-light .bg-slate-800 { background-color: #f1f5f9 !important; }
+        
+        /* Şeffaflık ve Filtreler (Light) */
+        body.theme-light .bg-slate-900\/20, 
+        body.theme-light .bg-slate-950\/30,
+        body.theme-light .bg-slate-950\/40, 
+        body.theme-light .bg-slate-950\/50, 
+        body.theme-light .bg-slate-900\/50 { background-color: #f1f5f9 !important; }
+        body.theme-light .bg-slate-950\/80,
+        body.theme-light .bg-slate-900\/80,
+        body.theme-light .bg-slate-950\/90, 
+        body.theme-light .bg-slate-950\/95 { background-color: rgba(255, 255, 255, 0.9) !important; }
+        
+        /* Kenarlıklar (Light) */
+        body.theme-light .border-slate-900, 
+        body.theme-light .border-slate-800, 
+        body.theme-light .border-slate-800\/80, 
+        body.theme-light .border-slate-700,
+        body.theme-light .border-slate-850 { border-color: #e2e8f0 !important; }
+        
+        /* Yazılar (Light) */
+        body.theme-light .text-slate-100, 
+        body.theme-light .text-slate-200 { color: #0f172a !important; }
+        body.theme-light .text-slate-300 { color: #334155 !important; }
+        body.theme-light .text-slate-400 { color: #475569 !important; }
+        body.theme-light .text-slate-500 { color: #64748b !important; }
+        body.theme-light h1, body.theme-light h2, body.theme-light h3, body.theme-light h4 { color: #0f172a !important; }
+        
+        /* Etkileşim Renkleri ve Modallar (Light) */
+        body.theme-light input, body.theme-light textarea { background-color: #ffffff !important; border-color: #cbd5e1 !important; color: #0f172a !important; }
+        body.theme-light input::placeholder, body.theme-light textarea::placeholder { color: #94a3b8 !important; }
+        body.theme-light .from-slate-900 { --tw-gradient-from: #ffffff !important; }
+        body.theme-light .to-indigo-950 { --tw-gradient-to: #e0e7ff !important; }
+        body.theme-light button.bg-slate-900:hover { background-color: #f8fafc !important; }
+        
+        /* Oyun İçi Eşleştirme (Aydınlık Moda Özel Doğru/Yanlış Parlaması) */
+        body.theme-light .bg-indigo-950\/20 { background-color: #e0e7ff !important; border-color: #818cf8 !important; }
+        body.theme-light .bg-emerald-950\/20 { background-color: #d1fae5 !important; border-color: #34d399 !important; }
+        body.theme-light .bg-rose-950\/20 { background-color: #ffe4e6 !important; border-color: #fb7185 !important; }
+
+        /* 2. Asil Mor (Purple Dark Theme) */
+        body.theme-purple { background-color: #0f0a1c; color: #f5f3ff; }
+        body.theme-purple .bg-slate-950 { background-color: #0f0a1c !important; }
+        body.theme-purple .bg-slate-900 { background-color: #1b1230 !important; }
+        body.theme-purple .bg-slate-800 { background-color: #2d1b4e !important; }
+        body.theme-purple .border-slate-900, body.theme-purple .border-slate-800\/80 { border-color: #1b1230 !important; }
+        body.theme-purple .border-slate-800 { border-color: #2d1b4e !important; }
+        body.theme-purple .from-slate-900 { --tw-gradient-from: #1b1230 !important; }
+        body.theme-purple .to-indigo-950 { --tw-gradient-to: #2e1065 !important; }
+
+        /* 3. Zümrüt Ormanı (Emerald Dark Theme) */
+        body.theme-emerald { background-color: #022c22; color: #ecfdf5; }
+        body.theme-emerald .bg-slate-950 { background-color: #022c22 !important; }
+        body.theme-emerald .bg-slate-900 { background-color: #064e3b !important; }
+        body.theme-emerald .bg-slate-800 { background-color: #065f46 !important; }
+        body.theme-emerald .border-slate-900, body.theme-emerald .border-slate-800\/80 { border-color: #064e3b !important; }
+        body.theme-emerald .border-slate-800 { border-color: #065f46 !important; }
+        body.theme-emerald .from-slate-900 { --tw-gradient-from: #064e3b !important; }
+        body.theme-emerald .to-indigo-950 { --tw-gradient-to: #065f46 !important; }
     </style>
 </head>
-<body id="appBody" class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
+<body id="appBody" class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white theme-slate">
 
     <!-- ÜST BAR -->
     <header id="appHeader" class="border-b border-slate-900 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40 px-4 py-3 transition-colors duration-300">
@@ -189,7 +257,7 @@
 
     <!-- !!! MODALLAR !!! -->
 
-    <!-- HOŞ GELDİN / ÖĞRETİCİ MODALI (YENİ) -->
+    <!-- HOŞ GELDİN / ÖĞRETİCİ MODALI -->
     <div id="welcomeModal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-[100] flex items-center justify-center p-4 hidden">
         <div class="bg-slate-900 border border-slate-700 rounded-3xl w-full max-w-md p-8 shadow-2xl relative animate-pop text-center">
             <div class="w-20 h-20 bg-indigo-600 text-white rounded-2xl flex items-center justify-center text-4xl mx-auto mb-6 shadow-xl shadow-indigo-500/30 transform -rotate-3">
@@ -705,21 +773,11 @@
             return word;
         }
 
-        const themes = {
-            slate: { bg: "bg-slate-950", text: "text-slate-100", header: "bg-slate-900/40 border-slate-800/80" },
-            emerald: { bg: "bg-zinc-950", text: "text-emerald-50", header: "bg-emerald-950/20 border-emerald-900/30" },
-            purple: { bg: "bg-neutral-950", text: "text-purple-50", header: "bg-purple-950/20 border-purple-900/30" },
-            light: { bg: "bg-slate-50", text: "text-slate-900", header: "bg-white border-slate-200 shadow-sm" }
-        };
-
         function setTheme(themeName) {
             activeTheme = themeName; localStorage.setItem('schatz_theme', themeName);
-            const t = themes[activeTheme] || themes.slate;
-            document.getElementById('appBody').className = `${t.bg} ${t.text} min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white`;
-            document.getElementById('appHeader').className = `border-b ${t.header} backdrop-blur-md sticky top-0 z-40 px-4 py-3 transition-all duration-300`;
+            document.body.className = `bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white theme-${themeName}`;
             document.getElementById('themeDropdown').classList.add('hidden');
             updateTabsUI(); 
-            if (isGameInitialized && activePairs.length > 0 && drillPhase !== 2) renderBoard();
         }
 
         document.getElementById('soundToggleBtn').addEventListener('click', () => {
@@ -753,7 +811,6 @@
         }
 
         function loadDatabase() {
-            // v11: Temiz veritabanı. Modallar kopyasız ve öğretici özelliği eklendi.
             const saved = localStorage.getItem('schatz_db_v11');
             if (saved) { 
                 allWords = JSON.parse(saved); 
@@ -1210,7 +1267,7 @@
                 return;
             }
 
-            let cardStyle = activeTheme === 'light' ? "bg-white border-slate-200 text-slate-800" : "bg-slate-900 border-slate-800/80 text-slate-200";
+            let cardStyle = "bg-slate-900 border-slate-800/80 text-slate-200";
 
             const deCards = activePairs.map(p => ({ id: p.id, word: p.de })); shuffle(deCards);
             const trCards = activePairs.map(p => ({ id: p.id, word: p.tr })); shuffle(trCards);
@@ -1274,7 +1331,8 @@
         function selectDeCard(id, el) {
             if (selectedDeElement === el) { resetSelection(); resetHighlights(); return; }
             resetHighlights('de'); selectedDeId = id; selectedDeElement = el;
-            el.classList.replace(activeTheme==='light'?'border-slate-200':'border-slate-800/80', 'border-indigo-500'); el.classList.add('bg-indigo-950/20', 'ring-2', 'ring-indigo-500/30');
+            el.classList.add('border-indigo-500', 'bg-indigo-950/20', 'ring-2', 'ring-indigo-500/30');
+            el.classList.remove('border-slate-800/80');
             const item = activePairs.find(p => p.id === id); if (item) speakGerman(item.de);
             checkMatch();
         }
@@ -1282,13 +1340,16 @@
         function selectTrCard(id, el) {
             if (selectedTrElement === el) { selectedTrId = null; selectedTrElement = null; resetHighlights('tr'); return; }
             resetHighlights('tr'); selectedTrId = id; selectedTrElement = el;
-            el.classList.replace(activeTheme==='light'?'border-slate-200':'border-slate-800/80', 'border-indigo-500'); el.classList.add('bg-indigo-950/20', 'ring-2', 'ring-indigo-500/30');
+            el.classList.add('border-indigo-500', 'bg-indigo-950/20', 'ring-2', 'ring-indigo-500/30');
+            el.classList.remove('border-slate-800/80');
             checkMatch();
         }
 
         function resetHighlights(col = 'all') {
-            const style = activeTheme === 'light' ? 'border-slate-200' : 'border-slate-800/80';
-            const clean = c => c.querySelectorAll('button').forEach(b => { b.classList.remove('border-indigo-500','bg-indigo-950/20','ring-2','ring-indigo-500/30','animate-shake','border-rose-500','bg-rose-950/20','ring-rose-500/30'); b.classList.add(style); });
+            const clean = c => c.querySelectorAll('button').forEach(b => { 
+                b.classList.remove('border-indigo-500','bg-indigo-950/20','ring-2','ring-indigo-500/30','animate-shake','border-rose-500','bg-rose-950/20','ring-rose-500/30', 'border-emerald-500', 'bg-emerald-950/20', 'ring-emerald-500/20'); 
+                b.classList.add('border-slate-800/80'); 
+            });
             if (col === 'de' || col === 'all') clean(deColumn); if (col === 'tr' || col === 'all') clean(trColumn);
         }
 
@@ -1308,7 +1369,10 @@
                     }
                 }
 
-                [deBtn, trBtn].forEach(b => { b.classList.remove('border-indigo-500', 'bg-indigo-950/20', 'ring-2'); b.classList.add('border-emerald-500', 'bg-emerald-950/20', 'ring-2', 'ring-emerald-500/20'); });
+                [deBtn, trBtn].forEach(b => { 
+                    b.classList.remove('border-indigo-500', 'bg-indigo-950/20', 'ring-2', 'ring-indigo-500/30'); 
+                    b.classList.add('border-emerald-500', 'bg-emerald-950/20', 'ring-2', 'ring-emerald-500/20'); 
+                });
 
                 setTimeout(() => {
                     const idx = activePairs.findIndex(p => p.id === matchedId);
@@ -1319,7 +1383,10 @@
             } else {
                 streak = 0; if(!isDrillMode) updateWordStatus(selectedDeId, 'mistake');
 
-                [deBtn, trBtn].forEach(b => { b.classList.remove('border-indigo-500', 'bg-indigo-950/20', 'ring-2'); b.classList.add('border-rose-500', 'bg-rose-950/20', 'ring-2', 'ring-rose-500/30', 'animate-shake'); });
+                [deBtn, trBtn].forEach(b => { 
+                    b.classList.remove('border-indigo-500', 'bg-indigo-950/20', 'ring-2', 'ring-indigo-500/30'); 
+                    b.classList.add('border-rose-500', 'bg-rose-950/20', 'ring-2', 'ring-rose-500/30', 'animate-shake'); 
+                });
 
                 setTimeout(() => { resetSelection(); resetHighlights(); }, 450);
             }
@@ -1354,9 +1421,7 @@
             document.getElementById('levelTabs').querySelectorAll('.lvl-tab').forEach(b => {
                 const lvl = b.dataset.level || (b.id === 'openDrillTabBtn' ? 'drill' : '');
                 if (lvl === selectedLevel) b.className = `lvl-tab px-5 py-3 rounded-xl text-xs font-black transition-all text-white border relative shadow-md scale-105 ${lvl==='drill'?'bg-orange-600 border-orange-500':'bg-indigo-600 border-indigo-500'}`;
-                else b.className = activeTheme === 'light' 
-                    ? `lvl-tab px-5 py-3 rounded-xl text-xs font-bold transition-all bg-white hover:text-slate-950 border border-slate-200 relative shadow-sm ${lvl==='drill'?'text-orange-500':'text-slate-600'}`
-                    : `lvl-tab px-5 py-3 rounded-xl text-xs font-bold transition-all bg-slate-900 hover:text-slate-200 border border-slate-800 relative ${lvl==='drill'?'text-orange-400 hover:bg-orange-950/20':'text-slate-400'}`;
+                else b.className = `lvl-tab px-5 py-3 rounded-xl text-xs font-bold transition-all bg-slate-900 hover:text-slate-200 border border-slate-800 relative ${lvl==='drill'?'text-orange-400 hover:bg-orange-950/20':'text-slate-400'}`;
             });
         }
 
@@ -1448,7 +1513,6 @@
             
             loadDatabase(); initGame('190_Fiil'); 
 
-            // ÖĞRETİCİ (TUTORIAL) GÖSTERİM KONTROLÜ
             setTimeout(() => {
                 if(!localStorage.getItem('schatz_tutorial_seen_v11')) {
                     document.getElementById('welcomeModal').classList.remove('hidden');
