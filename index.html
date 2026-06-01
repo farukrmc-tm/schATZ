@@ -42,6 +42,9 @@
             </div>
             
             <div class="flex items-center gap-2">
+                <button id="infoBtn" class="p-2.5 bg-slate-900/80 border border-slate-800 hover:border-indigo-500/40 rounded-xl text-slate-300 hover:text-indigo-400 transition-all active:scale-95" title="Nasıl Kullanılır?">
+                    <i class="fa-solid fa-circle-info"></i>
+                </button>
                 <button id="soundToggleBtn" class="p-2.5 bg-slate-900/80 border border-slate-800 hover:border-indigo-500/40 rounded-xl text-slate-300 hover:text-indigo-400 transition-all active:scale-95" title="Sesi Aç/Kapat">
                     <i id="soundIcon" class="fa-solid fa-volume-high"></i>
                 </button>
@@ -99,7 +102,6 @@
                     <i class="fa-solid fa-star mr-1.5 text-[10px]"></i> Özel Liste
                     <span id="customBadge" class="absolute -top-1.5 -right-1 bg-amber-500 text-slate-950 text-[9px] px-1.5 py-0.5 rounded-full font-black hidden">0</span>
                 </button>
-                <!-- ODAK MODU BUTONU -->
                 <button id="openDrillTabBtn" class="lvl-tab px-5 py-3 rounded-xl text-xs font-black transition-all bg-orange-600/20 text-orange-400 hover:bg-orange-600 hover:text-white border border-orange-500/50 relative shadow-lg shadow-orange-500/10">
                     <i class="fa-solid fa-fire mr-1.5 text-[10px] animate-pulse"></i> Yoğun Pratik
                 </button>
@@ -185,7 +187,48 @@
 
     </main>
 
-    <!-- !!! MODALLAR (SADECE BİRER KERE YAZILDI - KOPYALARI SİLİNDİ) !!! -->
+    <!-- !!! MODALLAR !!! -->
+
+    <!-- HOŞ GELDİN / ÖĞRETİCİ MODALI (YENİ) -->
+    <div id="welcomeModal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-[100] flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-700 rounded-3xl w-full max-w-md p-8 shadow-2xl relative animate-pop text-center">
+            <div class="w-20 h-20 bg-indigo-600 text-white rounded-2xl flex items-center justify-center text-4xl mx-auto mb-6 shadow-xl shadow-indigo-500/30 transform -rotate-3">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <h2 class="text-2xl font-black text-slate-100 mb-2">schATZ'a Hoş Geldin! 🚀</h2>
+            <p class="text-sm text-slate-400 mb-6 font-medium">B2/C1 Akademik Kelimeleri kalıcı olarak öğrenmek için buradasın. Peki nasıl oynanır?</p>
+            
+            <div class="space-y-4 text-left mb-8">
+                <div class="bg-slate-950/50 border border-slate-800 rounded-2xl p-4 flex gap-4 items-start">
+                    <div class="w-8 h-8 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center shrink-0 font-black mt-0.5">1</div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm mb-1">Eşleştirme Yap</h4>
+                        <p class="text-xs text-slate-400">Sol sütundan bir <span class="text-indigo-400 font-bold">Almanca kelimeye</span> tıkla, ardından sağ sütundan doğru <span class="text-emerald-400 font-bold">Türkçe anlamını</span> bularak eşleştir.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-slate-950/50 border border-slate-800 rounded-2xl p-4 flex gap-4 items-start">
+                    <div class="w-8 h-8 rounded-full bg-orange-500/20 text-orange-400 flex items-center justify-center shrink-0 font-black mt-0.5">2</div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm mb-1">Klavye Pratiği</h4>
+                        <p class="text-xs text-slate-400">Kelimeleri 5 tur başarıyla eşleştirdiğinde Aşama 2 başlar. Öğrendiğin kelimeleri <span class="text-orange-400 font-bold">artikeli ve edatıyla</span> birlikte kendin yazarsın.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-slate-950/50 border border-slate-800 rounded-2xl p-4 flex gap-4 items-start">
+                    <div class="w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 font-black mt-0.5"><i class="fa-solid fa-lightbulb"></i></div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm mb-1">Akademik Kullanım</h4>
+                        <p class="text-xs text-slate-400">Oyun sırasında Almanca kelimelerin yanındaki <span class="text-amber-400 font-bold">Ünlem (!)</span> ikonuna basarsan, kelimenin <span class="text-slate-200 font-bold">TestDaF kalıbını ve örnek cümlesini</span> görebilirsin.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <button id="closeWelcomeBtn" class="w-full py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-black text-lg transition-all active:scale-95 shadow-lg shadow-indigo-600/20">
+                Anladım, Başla! 💪
+            </button>
+        </div>
+    </div>
 
     <!-- İSTASYON HARİTASI MODALI -->
     <div id="stationsModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[70] flex items-center justify-center p-4 hidden">
@@ -296,7 +339,6 @@
                 <div><span class="block text-[10px] text-slate-500 font-extrabold uppercase">Kazanılan Skor</span><span id="finalScore" class="text-lg font-black text-indigo-400">0</span></div>
                 <div><span class="block text-[10px] text-slate-500 font-extrabold uppercase">Maksimum Kombo</span><span id="finalStreak" class="text-lg font-black text-emerald-400">0</span></div>
             </div>
-            <!-- YENİ MANTIK: Tıklandığında sonraki istasyona geçer -->
             <button id="restartGameBtn" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold transition-all active:scale-95">Tamam</button>
         </div>
     </div>
@@ -618,7 +660,7 @@
             "die Beschaffung|-|tedarik / sağlama|Die Beschaffung von sauberen Trinkwasser ist ein globales Problem.|Temiz içme suyu tedariki küresel bir sorundur.",
             "das Umweltproblem|-|çevre sorunu|Plastikmüll im Ozean ist ein ernstes Umweltproblem.|Okyanustaki plastik atıklar ciddi bir çevre sorunudur.",
             "der Umweltschutz|-|çevre koruma|Umweltschutz geht uns alle an und erfordert gemeinsames Handeln.|Çevre koruma hepimizi ilgilendirir ve ortak hareket etmeyi gerektirir.",
-            "die Energiequelle|-|enerji kaynağı|Wir müssen alternative Energiequellen stärker nutzen.|Alternatif enerji kaynaklarını daha yoğun kullanmalıyız.",
+            "die Energiequelle|-|enerji kaynağı|Wir müssen alternative Energiequellen stärker nutzen.|Alternatif Energiequellen daha yoğun kullanmalıyız.",
             "erneuerbar|-|yenilenebilir|Die Zukunft gehört den erneuerbaren Energien wie Wind und Sonne.|Gelecek rüzgar ve güneş gibi yenilenebilir enerjilerindir.",
             "die Wasserknappheit|-|su kıtlığı|Durch den Klimawandel droht in vielen Regionen Wasserknappheit.|İklim değişikliği nedeniyle birçok bölgede su kıtlığı tehlikesi var.",
             "die Verschmutzung|-|kirlilik|Die Verschmutzung der Luft in den Großstädten nimmt alarmierend zu.|Büyük şehirlerdeki hava kirliliği endişe verici şekilde artıyor.",
@@ -686,6 +728,16 @@
             showToast(isSoundEnabled ? "Ses açıldı." : "Ses kapatıldı.", true);
         });
 
+        // BİLGİ BUTONU (INFO) VE ÖĞRETİCİ (TUTORIAL) MANTIĞI
+        document.getElementById('infoBtn').addEventListener('click', () => {
+            document.getElementById('welcomeModal').classList.remove('hidden');
+        });
+        
+        document.getElementById('closeWelcomeBtn').addEventListener('click', () => {
+            document.getElementById('welcomeModal').classList.add('hidden');
+            localStorage.setItem('schatz_tutorial_seen_v11', 'true');
+        });
+
         function speakGerman(text) {
             if (isSoundEnabled && 'speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
@@ -701,8 +753,8 @@
         }
 
         function loadDatabase() {
-            // v10: Sıfırdan temiz kurulum için
-            const saved = localStorage.getItem('schatz_db_v10');
+            // v11: Temiz veritabanı. Modallar kopyasız ve öğretici özelliği eklendi.
+            const saved = localStorage.getItem('schatz_db_v11');
             if (saved) { 
                 allWords = JSON.parse(saved); 
                 if(allWords.length === 0) resetToFactoryDefaults(); 
@@ -710,15 +762,15 @@
                 resetToFactoryDefaults();
             }
 
-            const savedLastStations = localStorage.getItem('schatz_last_stations_v10');
+            const savedLastStations = localStorage.getItem('schatz_last_stations_v11');
             if(savedLastStations) { lastStations = JSON.parse(savedLastStations); }
             
             updateBadges();
         }
 
         function saveDatabase() { 
-            localStorage.setItem('schatz_db_v10', JSON.stringify(allWords)); 
-            localStorage.setItem('schatz_last_stations_v10', JSON.stringify(lastStations));
+            localStorage.setItem('schatz_db_v11', JSON.stringify(allWords)); 
+            localStorage.setItem('schatz_last_stations_v11', JSON.stringify(lastStations));
             updateBadges(); 
         }
 
@@ -869,7 +921,6 @@
                 } 
             }
 
-            // GÜVENLİK: Eğer seçili grupta kelime kalmadıysa veya hata olduysa 1. Gruba zorla.
             if(levelWords.length === 0) {
                 activeGroupNum = 1; lastStations[level] = 1; saveDatabase();
                 levelWords = allWords.filter(w => w.level === level && w.group === 1);
@@ -885,7 +936,7 @@
             updateMainStationCard();
         }
 
-        // OTOMATİK SONRAKİ İSTASYONA GEÇİŞ
+        // BİTİŞ MODALI -> SONRAKİ İSTASYONA OTOMATİK GEÇİŞ
         document.getElementById('restartGameBtn').onclick = () => { 
             document.getElementById('congratsModal').classList.add('hidden'); 
             if(selectedLevel === '190_Fiil' || selectedLevel === 'Aspekte_B1') {
@@ -1050,6 +1101,9 @@
                 document.getElementById('congratsDesc').textContent = "Kelimeleri defalarca eşleştirdin ve artikelleriyle doğru yazdın. Kas hafızasına eklendi!";
                 document.getElementById('finalScore').textContent = score; document.getElementById('finalStreak').textContent = maxStreak;
                 document.getElementById('congratsModal').classList.remove('hidden');
+                
+                // Override butonu Yoğun Pratikte Ana Ekrana dönmesi için
+                document.getElementById('restartGameBtn').onclick = () => { document.getElementById('congratsModal').classList.add('hidden'); initGame('190_Fiil'); };
                 return;
             }
             kbCurrentWord = remainingPool.pop();
@@ -1136,7 +1190,7 @@
                         document.getElementById('congratsIcon').innerHTML = '<i class="fa-solid fa-crown text-amber-400 animate-bounce"></i>';
                         document.getElementById('congratsIcon').className = "w-16 h-16 bg-amber-500/10 text-emerald-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 border border-amber-500/30";
                         document.getElementById('congratsTitle').textContent = `${activeGroupNum}. İstasyon Tamamlandı!`;
-                        document.getElementById('congratsDesc').textContent = "Bu gruptaki tüm kelimeleri 5 kez peş peşe eşleştirerek başarıyla öğrendin. Yüzden arttı!";
+                        document.getElementById('congratsDesc').textContent = "Bu gruptaki tüm kelimeleri 5 kez peş peşe eşleştirerek başarıyla öğrendin. Sıradaki istasyona geçmeye hazırsın!";
                         document.getElementById('finalScore').textContent = score; document.getElementById('finalStreak').textContent = maxStreak;
                         document.getElementById('congratsModal').classList.remove('hidden');
                         
@@ -1151,6 +1205,8 @@
                 document.getElementById('congratsDesc').textContent = "Bu gruptaki tüm kelimeleri başarıyla eşleştirerek öğrendin!";
                 document.getElementById('finalScore').textContent = score; document.getElementById('finalStreak').textContent = maxStreak;
                 document.getElementById('congratsModal').classList.remove('hidden');
+                
+                document.getElementById('restartGameBtn').onclick = () => { document.getElementById('congratsModal').classList.add('hidden'); initGame(selectedLevel); };
                 return;
             }
 
@@ -1391,6 +1447,13 @@
             document.getElementById('soundIcon').className = isSoundEnabled ? "fa-solid fa-volume-high text-indigo-400" : "fa-solid fa-volume-xmark text-slate-500";
             
             loadDatabase(); initGame('190_Fiil'); 
+
+            // ÖĞRETİCİ (TUTORIAL) GÖSTERİM KONTROLÜ
+            setTimeout(() => {
+                if(!localStorage.getItem('schatz_tutorial_seen_v11')) {
+                    document.getElementById('welcomeModal').classList.remove('hidden');
+                }
+            }, 500);
         });
     </script>
 </body>
