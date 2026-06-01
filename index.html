@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Outfit', sans-serif; transition: background-color 0.4s, color 0.4s; overflow-x: hidden; }
+        body { font-family: 'Outfit', sans-serif; transition: background-color 0.4s ease, color 0.4s ease; overflow-x: hidden; }
         
         /* TEMEL ANİMASYONLAR */
         @keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-8px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-6px); } 80% { transform: translateX(4px); } }
@@ -24,20 +24,20 @@
         /* EŞLEŞTİRME BAŞARISI (MATCH SUCCESS) */
         @keyframes matchSuccess { 
             0% { transform: scale(1); opacity: 1; } 
-            30% { transform: scale(1.05); box-shadow: 0 0 25px rgba(16, 185, 129, 0.6); opacity: 1; background-color: #10b981; color: white; border-color: #10b981; } 
+            40% { transform: scale(1.05); box-shadow: 0 0 20px rgba(16, 185, 129, 0.5); opacity: 1; } 
             100% { transform: scale(0.8); opacity: 0; } 
         }
-        .animate-match-success { animation: matchSuccess 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important; z-index: 10; position: relative; }
+        .animate-match-success { animation: matchSuccess 0.4s ease-in forwards !important; z-index: 10; position: relative; }
 
         /* SÜZÜLME (FLOAT) */
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
         .animate-float { animation: float 3s ease-in-out infinite; }
 
-        /* CANLI ZÜMRÜT ARKA PLAN (AMBIENT BLOBS) */
-        .ambient-blob { position: fixed; border-radius: 50%; filter: blur(90px); opacity: 0.35; z-index: -1; animation: moveBlobs 25s infinite alternate ease-in-out; pointer-events: none; }
-        .blob-1 { top: -10%; left: -10%; width: 40vw; height: 40vw; background: rgba(16, 185, 129, 0.3); animation-delay: 0s; } /* Zümrüt */
-        .blob-2 { bottom: -20%; right: -10%; width: 50vw; height: 50vw; background: rgba(6, 182, 212, 0.2); animation-delay: -5s; } /* Camgöbeği */
-        .blob-3 { top: 40%; left: 60%; width: 30vw; height: 30vw; background: rgba(20, 184, 166, 0.2); animation-delay: -10s; } /* Turkuaz */
+        /* CANLI ARKA PLAN (AMBIENT BLOBS) */
+        .ambient-blob { position: fixed; border-radius: 50%; filter: blur(90px); opacity: 0.35; z-index: -1; animation: moveBlobs 25s infinite alternate ease-in-out; pointer-events: none; transition: background 1s ease; }
+        .blob-1 { top: -10%; left: -10%; width: 40vw; height: 40vw; background: rgba(16, 185, 129, 0.3); animation-delay: 0s; }
+        .blob-2 { bottom: -20%; right: -10%; width: 50vw; height: 50vw; background: rgba(6, 182, 212, 0.2); animation-delay: -5s; }
+        .blob-3 { top: 40%; left: 60%; width: 30vw; height: 30vw; background: rgba(20, 184, 166, 0.2); animation-delay: -10s; }
         @keyframes moveBlobs { 
             0% { transform: translate(0, 0) scale(1); } 
             33% { transform: translate(5vw, -5vh) scale(1.1); } 
@@ -57,96 +57,69 @@
         .custom-checkbox input:checked + div { background-color: #10b981; border-color: #10b981; }
         .custom-checkbox input:checked + div i { opacity: 1; }
 
-        /* YENİ NESİL OYUN KARTLARI (Tüm Temalar İçin Merkezi Yönetim) */
-        .game-card {
-            background-color: #0f172a; 
-            border-color: rgba(30, 41, 59, 0.8); 
-            color: #e2e8f0;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-        }
-        .game-card:hover {
-            border-color: rgba(16, 185, 129, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.1);
-        }
-        .game-card.selected {
-            background-color: rgba(16, 185, 129, 0.15) !important;
-            border-color: #10b981 !important;
-            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2) !important;
-            transform: translateY(-2px);
-        }
-        .game-card.error {
-            background-color: rgba(244, 63, 94, 0.15) !important;
-            border-color: #f43f5e !important;
-            box-shadow: 0 0 0 2px rgba(244, 63, 94, 0.2) !important;
-        }
+        /* -----------------------------------------
+           KUSURSUZ TEMA MOTORU (CSS OVERRIDES)
+           Arka plan geçişlerinin takılmaması için
+           !important emirleri güçlendirildi.
+        ----------------------------------------- */
 
-        /* -------------------------------------------------------------
-           KUSURSUZ TEMA MOTORU
-           ------------------------------------------------------------- */
+        /* 1. Orijinal Gece Mavisi (Slate) */
+        body.theme-slate, body.theme-slate.bg-slate-950 { background-color: #020617 !important; color: #f1f5f9 !important; }
+        body.theme-slate .blob-1 { background: rgba(99, 102, 241, 0.3) !important; }
+        body.theme-slate .blob-2 { background: rgba(168, 85, 247, 0.2) !important; }
+        body.theme-slate .blob-3 { background: rgba(16, 185, 129, 0.2) !important; }
 
-        /* --- 1. KLASİK AYDINLIK (GERÇEK BEYAZ MOD) --- */
-        body.theme-light { background-color: #f4f6f8; color: #1e293b; }
-        
-        /* Arka Planlar & Paneller */
-        body.theme-light .bg-slate-950, body.theme-light .bg-slate-900\/20, body.theme-light .bg-slate-950\/50, body.theme-light .bg-slate-900\/40 { background-color: #f4f6f8 !important; }
-        body.theme-light .bg-slate-900, body.theme-light .bg-slate-950\/80, body.theme-light .bg-slate-950\/90 { background-color: #ffffff !important; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-        body.theme-light .bg-slate-800 { background-color: #e2e8f0 !important; }
-        
-        /* Kenarlıklar */
-        body.theme-light .border-slate-900, body.theme-light .border-slate-800, body.theme-light .border-slate-800\/80, body.theme-light .border-slate-700 { border-color: #cbd5e1 !important; }
-        
-        /* Yazılar & Kontrast (Neon renkleri koyulaştır) */
-        body.theme-light .text-slate-100, body.theme-light .text-slate-200, body.theme-light h1, body.theme-light h2, body.theme-light h3 { color: #0f172a !important; }
+        /* 2. Klasik Aydınlık (Light Theme) */
+        body.theme-light, body.theme-light.bg-slate-950 { background-color: #f8fafc !important; color: #0f172a !important; }
+        body.theme-light .bg-slate-950 { background-color: #f8fafc !important; }
+        body.theme-light .bg-slate-900 { background-color: #ffffff !important; }
+        body.theme-light .bg-slate-800 { background-color: #f1f5f9 !important; }
+        body.theme-light .bg-slate-900\/20, body.theme-light .bg-slate-950\/30, body.theme-light .bg-slate-950\/40, body.theme-light .bg-slate-950\/50, body.theme-light .bg-slate-900\/50 { background-color: #f1f5f9 !important; }
+        body.theme-light .bg-slate-950\/80, body.theme-light .bg-slate-900\/80, body.theme-light .bg-slate-950\/90, body.theme-light .bg-slate-950\/95 { background-color: rgba(255, 255, 255, 0.9) !important; }
+        body.theme-light .border-slate-900, body.theme-light .border-slate-800, body.theme-light .border-slate-800\/80, body.theme-light .border-slate-700, body.theme-light .border-slate-850 { border-color: #e2e8f0 !important; }
+        body.theme-light .text-slate-100, body.theme-light .text-slate-200 { color: #0f172a !important; }
         body.theme-light .text-slate-300 { color: #334155 !important; }
         body.theme-light .text-slate-400 { color: #475569 !important; }
         body.theme-light .text-slate-500 { color: #64748b !important; }
-        
-        body.theme-light .text-emerald-400 { color: #059669 !important; } /* Okunabilir Zümrüt */
-        body.theme-light .text-cyan-400 { color: #0891b2 !important; } /* Okunabilir Camgöbeği */
-        body.theme-light .text-amber-400 { color: #d97706 !important; } /* Okunabilir Kehribar */
-        body.theme-light .text-indigo-400 { color: #4f46e5 !important; }
-        body.theme-light .text-rose-400 { color: #e11d48 !important; }
-
-        /* Inputlar */
+        body.theme-light h1, body.theme-light h2, body.theme-light h3, body.theme-light h4 { color: #0f172a !important; }
         body.theme-light input, body.theme-light textarea { background-color: #ffffff !important; border-color: #cbd5e1 !important; color: #0f172a !important; }
         body.theme-light input::placeholder, body.theme-light textarea::placeholder { color: #94a3b8 !important; }
-        
-        /* Oyun Kartları (Aydınlık) */
-        body.theme-light .game-card { background-color: #ffffff; border-color: #cbd5e1; color: #1e293b; }
-        body.theme-light .game-card:hover { border-color: #10b981; box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.15); }
-        body.theme-light .game-card.selected { background-color: #ecfdf5 !important; border-color: #10b981 !important; box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2) !important; }
-        body.theme-light .game-card.error { background-color: #fff1f2 !important; border-color: #f43f5e !important; box-shadow: 0 0 0 2px rgba(244, 63, 94, 0.2) !important; }
-
-        /* Aydınlık Mod Özel Efektleri */
-        body.theme-light .ambient-blob { opacity: 0.15; filter: blur(100px); mix-blend-mode: multiply; }
         body.theme-light .from-slate-900 { --tw-gradient-from: #ffffff !important; }
-        body.theme-light .to-emerald-950 { --tw-gradient-to: #ecfdf5 !important; }
+        body.theme-light .to-emerald-950 { --tw-gradient-to: #d1fae5 !important; }
+        body.theme-light button.bg-slate-900:hover { background-color: #f8fafc !important; }
+        body.theme-light .bg-cyan-950\/20 { background-color: #cffafe !important; border-color: #06b6d4 !important; }
+        body.theme-light .bg-emerald-950\/20 { background-color: #d1fae5 !important; border-color: #10b981 !important; }
+        body.theme-light .bg-rose-950\/20 { background-color: #ffe4e6 !important; border-color: #fb7185 !important; }
+        body.theme-light .ambient-blob { opacity: 0.2; filter: blur(90px); }
+        body.theme-light .blob-1 { background: rgba(16, 185, 129, 0.2) !important; }
+        body.theme-light .blob-2 { background: rgba(56, 189, 248, 0.2) !important; }
+        body.theme-light .blob-3 { background: rgba(249, 115, 22, 0.1) !important; }
 
-
-        /* --- 2. ZÜMRÜT ORMANI (EMERALD DARK) --- */
-        body.theme-emerald { background-color: #022c22; color: #ecfdf5; }
-        body.theme-emerald .bg-slate-950, body.theme-emerald .bg-slate-900\/20, body.theme-emerald .bg-slate-950\/50 { background-color: rgba(2, 44, 34, 0.8) !important; }
-        body.theme-emerald .bg-slate-900, body.theme-emerald .bg-slate-950\/80 { background-color: #064e3b !important; }
+        /* 3. Zümrüt Ormanı (Emerald Dark Theme) */
+        body.theme-emerald, body.theme-emerald.bg-slate-950 { background-color: #022c22 !important; color: #ecfdf5 !important; }
+        body.theme-emerald .bg-slate-950 { background-color: #022c22 !important; }
+        body.theme-emerald .bg-slate-900 { background-color: #064e3b !important; }
         body.theme-emerald .bg-slate-800 { background-color: #065f46 !important; }
-        body.theme-emerald .border-slate-900, body.theme-emerald .border-slate-800, body.theme-emerald .border-slate-800\/80 { border-color: #065f46 !important; }
+        body.theme-emerald .border-slate-900, body.theme-emerald .border-slate-800\/80 { border-color: #064e3b !important; }
+        body.theme-emerald .border-slate-800 { border-color: #065f46 !important; }
         body.theme-emerald .from-slate-900 { --tw-gradient-from: #064e3b !important; }
-        body.theme-emerald .to-emerald-950 { --tw-gradient-to: #022c22 !important; }
-        
-        body.theme-emerald .game-card { background-color: #064e3b; border-color: #065f46; color: #ecfdf5; }
+        body.theme-emerald .to-emerald-950 { --tw-gradient-to: #065f46 !important; }
+        body.theme-emerald .blob-1 { background: rgba(16, 185, 129, 0.3) !important; }
+        body.theme-emerald .blob-2 { background: rgba(6, 182, 212, 0.2) !important; }
+        body.theme-emerald .blob-3 { background: rgba(20, 184, 166, 0.2) !important; }
 
-
-        /* --- 3. ASİL MOR (PURPLE DARK) --- */
-        body.theme-purple { background-color: #17102e; color: #f5f3ff; }
-        body.theme-purple .bg-slate-950, body.theme-purple .bg-slate-900\/20, body.theme-purple .bg-slate-950\/50 { background-color: rgba(23, 16, 46, 0.8) !important; }
-        body.theme-purple .bg-slate-900, body.theme-purple .bg-slate-950\/80 { background-color: #281b4e !important; }
-        body.theme-purple .bg-slate-800 { background-color: #3b286d !important; }
-        body.theme-purple .border-slate-900, body.theme-purple .border-slate-800, body.theme-purple .border-slate-800\/80 { border-color: #3b286d !important; }
-        body.theme-purple .from-slate-900 { --tw-gradient-from: #281b4e !important; }
-        body.theme-purple .to-emerald-950 { --tw-gradient-to: #17102e !important; }
-
-        body.theme-purple .game-card { background-color: #281b4e; border-color: #3b286d; color: #f5f3ff; }
-
+        /* 4. Asil Mor (Purple Dark Theme) */
+        body.theme-purple, body.theme-purple.bg-slate-950 { background-color: #0f0a1c !important; color: #f5f3ff !important; }
+        body.theme-purple .bg-slate-950 { background-color: #0f0a1c !important; }
+        body.theme-purple .bg-slate-900 { background-color: #1b1230 !important; }
+        body.theme-purple .bg-slate-800 { background-color: #2d1b4e !important; }
+        body.theme-purple .border-slate-900, body.theme-purple .border-slate-800\/80 { border-color: #1b1230 !important; }
+        body.theme-purple .border-slate-800 { border-color: #2d1b4e !important; }
+        body.theme-purple .from-slate-900 { --tw-gradient-from: #1b1230 !important; }
+        body.theme-purple .to-emerald-950 { --tw-gradient-to: #064e3b !important; }
+        body.theme-purple .blob-1 { background: rgba(168, 85, 247, 0.3) !important; }
+        body.theme-purple .blob-2 { background: rgba(236, 72, 153, 0.2) !important; }
+        body.theme-purple .blob-3 { background: rgba(139, 92, 246, 0.2) !important; }
     </style>
 </head>
 <body id="appBody" class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-emerald-500 selection:text-white theme-slate relative">
@@ -160,24 +133,26 @@
     <header id="appHeader" class="border-b border-slate-900 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40 px-4 py-3 transition-colors duration-300">
         <div class="max-w-5xl mx-auto flex items-center justify-between">
             <div class="flex items-center gap-3 group cursor-pointer" onclick="location.reload()">
+                <!-- ZÜMRÜT LOGO -->
                 <div class="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-xl shadow-lg shadow-emerald-500/30 group-hover:scale-110 transition-transform">
                     <i class="fa-solid fa-gem text-white text-lg animate-pulse"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl font-black leading-none bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent tracking-wide drop-shadow-sm">schATZ</h1>
+                    <!-- ZÜMRÜT GRADIENT YAZI -->
+                    <h1 class="text-xl font-black leading-none bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent tracking-wide">schATZ</h1>
                     <p class="text-[10px] text-slate-400 font-bold tracking-wider uppercase">B2/C1 Akademik İstasyon</p>
                 </div>
             </div>
             
             <div class="flex items-center gap-2">
-                <button id="infoBtn" class="p-2.5 bg-slate-900/80 border border-slate-800 hover:border-emerald-500/40 hover:bg-slate-800 rounded-xl text-slate-300 hover:text-emerald-400 transition-all active:scale-95 shadow-sm" title="Nasıl Kullanılır?">
+                <button id="infoBtn" class="p-2.5 bg-slate-900/80 border border-slate-800 hover:border-emerald-500/40 hover:bg-slate-800 rounded-xl text-slate-300 hover:text-emerald-400 transition-all active:scale-95" title="Nasıl Kullanılır?">
                     <i class="fa-solid fa-circle-info"></i>
                 </button>
-                <button id="soundToggleBtn" class="p-2.5 bg-slate-900/80 border border-slate-800 hover:border-emerald-500/40 hover:bg-slate-800 rounded-xl text-slate-300 hover:text-emerald-400 transition-all active:scale-95 shadow-sm" title="Sesi Aç/Kapat">
+                <button id="soundToggleBtn" class="p-2.5 bg-slate-900/80 border border-slate-800 hover:border-emerald-500/40 hover:bg-slate-800 rounded-xl text-slate-300 hover:text-emerald-400 transition-all active:scale-95" title="Sesi Aç/Kapat">
                     <i id="soundIcon" class="fa-solid fa-volume-high"></i>
                 </button>
                 <div class="relative">
-                    <button id="themeMenuBtn" class="p-2.5 bg-slate-900/80 border border-slate-800 hover:border-emerald-500/40 hover:bg-slate-800 rounded-xl text-slate-300 hover:text-emerald-400 transition-all active:scale-95 shadow-sm" title="Tema Değiştir">
+                    <button id="themeMenuBtn" class="p-2.5 bg-slate-900/80 border border-slate-800 hover:border-emerald-500/40 hover:bg-slate-800 rounded-xl text-slate-300 hover:text-emerald-400 transition-all active:scale-95" title="Tema Değiştir">
                         <i class="fa-solid fa-palette"></i>
                     </button>
                     <div id="themeDropdown" class="absolute right-0 mt-2 w-44 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-1.5 hidden z-50 animate-pop">
@@ -219,14 +194,14 @@
                 <button data-level="190_Fiil" class="lvl-tab px-5 py-3 rounded-xl text-xs font-black transition-all bg-emerald-600 text-white border border-emerald-500 shadow-md">
                     <i class="fa-solid fa-list-check mr-1.5"></i> 190 Akademik Fiil
                 </button>
-                <button data-level="Aspekte_B1" class="lvl-tab px-5 py-3 rounded-xl text-xs font-bold transition-all bg-slate-900 text-slate-400 border border-slate-800 shadow-sm hover:scale-[1.02]">
+                <button data-level="Aspekte_B1" class="lvl-tab px-5 py-3 rounded-xl text-xs font-bold transition-all bg-slate-900 text-slate-400 border border-slate-800">
                     <i class="fa-solid fa-book-bookmark mr-1.5"></i> Aspekte B1+
                 </button>
-                <button data-level="mistake" class="lvl-tab px-5 py-3 rounded-xl text-xs font-bold transition-all bg-slate-900 text-rose-400 border border-rose-950/40 relative shadow-sm hover:scale-[1.02]">
+                <button data-level="mistake" class="lvl-tab px-5 py-3 rounded-xl text-xs font-bold transition-all bg-slate-900 text-rose-400 border border-rose-950/40 relative">
                     <i class="fa-solid fa-triangle-exclamation mr-1.5 text-[10px]"></i> Hatalılar
                     <span id="mistakeBadge" class="absolute -top-1.5 -right-1 bg-rose-500 text-white text-[9px] px-1.5 py-0.5 rounded-full font-black shadow-sm hidden">0</span>
                 </button>
-                <button data-level="custom" class="lvl-tab px-5 py-3 rounded-xl text-xs font-bold transition-all bg-slate-900 text-amber-400 border border-amber-950/40 relative shadow-sm hover:scale-[1.02]">
+                <button data-level="custom" class="lvl-tab px-5 py-3 rounded-xl text-xs font-bold transition-all bg-slate-900 text-amber-400 border border-amber-950/40 relative">
                     <i class="fa-solid fa-star mr-1.5 text-[10px]"></i> Özel Liste
                     <span id="customBadge" class="absolute -top-1.5 -right-1 bg-amber-500 text-slate-950 text-[9px] px-1.5 py-0.5 rounded-full font-black shadow-sm hidden">0</span>
                 </button>
@@ -773,7 +748,7 @@
             "die Auswertung|-|değerlendirme (veri/analiz)|Die Auswertung der Daten wird einige Wochen dauern.|Verilerin değerlendirilmesi birkaç hafta sürecek.",
             "der Gegensatz|-|zıtlık / tezat|Im Gegensatz zu dir finde ich den Film spannend.|Senin aksine ben filmi heyecan verici buluyorum.",
             "die Ursache|-|sebep / neden|Die Ursache für den Klimawandel ist vielschichtig.|İklim değişikliğinin sebebi çok katmanlıdır.",
-            "die Randgruppe|-|marjinal / dışlanmış grup|Die Gesellschaft muss Randgruppen besser integrieren.|Toplum dışlanmış grupları daha iyi entegre etmelidir.",
+            "die Randgruppe|-|marjinal / dışlanmış grup|Die Gesellschaft muss Randgruppen besser integrating.|Toplum dışlanmış grupları daha iyi entegre etmelidir.",
             "der Einsatz|-|çaba / katılım / müdahale|Dein persönlicher Einsatz für das Projekt ist bewundernswert.|Proje için kişisel çaban takdire şayan.",
             "überleben|-|hayatta kalmak|Nur wenige Tiere können in dieser extremen Kälte überleben.|Sadece birkaç hayvan bu aşırı soğukta hayatta kalabilir.",
             "die Leistung|-|performans / başarı|Ihre akademischen Leistungen sind hervorragend.|Onun akademik başarıları mükemmeldir.",
@@ -796,13 +771,13 @@
             "die Voraussetzung|-|ön koşul / şart|Gute Sprachkenntnisse sind eine Voraussetzung für diesen Job.|İyi dil becerileri bu iş için bir ön koşuldur.",
             "die Vielfalt|-|çeşitlilik|Die kulturelle Vielfalt einer Stadt ist eine große Bereicherung.|Bir şehrin kültürel çeşitliliği büyük bir zenginliktir.",
             "die Kompetenz|-|yetkinlik / yeterlilik|Soziale Kompetenz wird im Berufsleben immer wichtiger.|Sosyal yetkinlik iş hayatında giderek daha önemli hale geliyor.",
-            "die Erholung|-|dinlenme / toparlanma|Der Urlaub diente der körperlichen und geistigen Erholung.|Tatil fiziksel und zihinsel dinlenmeye hizmet etti.",
+            "die Erholung|-|dinlenme / toparlanma|Der Urlaub diente der körperlichen und geistigen Erholung.|Tatil fiziksel ve zihinsel dinlenmeye hizmet etti.",
             "der Konsum|-|tüketim|Der übermäßige Konsum von Fleisch schadet der Umwelt.|Aşırı et tüketimi çevreye zarar verir.",
             "die Ausbeutung|-|sömürü|Die Organisation kämpft gegen die Ausbeutung von Arbeitern.|Örgüt işçilerin sömürülmesine karşı savaşıyor.",
             "die Beschaffung|-|tedarik / sağlama|Die Beschaffung von sauberen Trinkwasser ist ein globales Problem.|Temiz içme suyu tedariki küresel bir sorundur.",
             "das Umweltproblem|-|çevre sorunu|Plastikmüll im Ozean ist ein ernstes Umweltproblem.|Okyanustaki plastik atıklar ciddi bir çevre sorunudur.",
             "der Umweltschutz|-|çevre koruma|Umweltschutz geht uns alle an und erfordert gemeinsames Handeln.|Çevre koruma hepimizi ilgilendirir ve ortak hareket etmeyi gerektirir.",
-            "die Energiequelle|-|enerji kaynağı|Wir müssen alternative Energiequellen stärker nutzen.|Alternatif Energiequellen daha yoğun kullanmalıyız.",
+            "die Energiequelle|-|enerji kaynağı|Wir müssen alternative Energiequellen stärker nutzen.|Alternatif enerji kaynaklarını daha yoğun kullanmalıyız.",
             "erneuerbar|-|yenilenebilir|Die Zukunft gehört den erneuerbaren Energien wie Wind und Sonne.|Gelecek rüzgar ve güneş gibi yenilenebilir enerjilerindir.",
             "die Wasserknappheit|-|su kıtlığı|Durch den Klimawandel droht in vielen Regionen Wasserknappheit.|İklim değişikliği nedeniyle birçok bölgede su kıtlığı tehlikesi var.",
             "die Verschmutzung|-|kirlilik|Die Verschmutzung der Luft in den Großstädten nimmt alarmierend zu.|Büyük şehirlerdeki hava kirliliği endişe verici şekilde artıyor.",
@@ -1324,7 +1299,7 @@
                 return;
             }
 
-            let cardStyle = "game-card w-full min-h-[58px] px-4 py-3.5 border rounded-2xl text-left text-xs font-bold shadow-sm transition-all duration-300 flex items-center justify-between cursor-pointer select-none animate-slide-up";
+            let cardStyle = "game-card w-full min-h-[58px] px-4 py-3.5 border rounded-2xl text-left text-xs font-bold transition-all duration-300 flex items-center justify-between cursor-pointer select-none animate-slide-up";
 
             const deCards = activePairs.map(p => ({ id: p.id, word: p.de })); shuffle(deCards);
             const trCards = activePairs.map(p => ({ id: p.id, word: p.tr })); shuffle(trCards);
@@ -1359,7 +1334,7 @@
 
             trCards.forEach((card, index) => {
                 const btn = document.createElement('button');
-                btn.className = `w-full min-h-[58px] px-4 py-3.5 border rounded-2xl text-left text-xs font-bold shadow-sm transition-all duration-300 flex items-center justify-start cursor-pointer select-none animate-slide-up game-card`;
+                btn.className = `w-full min-h-[58px] px-4 py-3.5 border rounded-2xl text-left text-xs font-bold transition-all duration-300 flex items-center justify-start cursor-pointer select-none animate-slide-up game-card`;
                 btn.style.animationDelay = `${index * 0.05}s`;
                 btn.textContent = card.word;
                 btn.addEventListener('click', () => selectTrCard(card.id, btn));
@@ -1407,7 +1382,7 @@
         }
 
         function resetHighlights(col = 'all') {
-            const clean = c => c.querySelectorAll('button').forEach(b => { 
+            const clean = c => c.querySelectorAll('button.game-card').forEach(b => { 
                 b.classList.remove('selected', 'error', 'animate-shake'); 
             });
             if (col === 'de' || col === 'all') clean(deColumn); if (col === 'tr' || col === 'all') clean(trColumn);
@@ -1428,7 +1403,7 @@
                 }
 
                 [deBtn, trBtn].forEach(b => { 
-                    b.classList.remove('selected', 'hover:-translate-y-0.5'); 
+                    b.classList.remove('selected'); 
                     b.classList.add('animate-match-success'); 
                 });
 
