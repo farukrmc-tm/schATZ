@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         /* -------------------------------------------------------------
-           CSS TEMA MOTORU (SADECE AYDINLIK VE PASTEL RENKLER)
+           CSS TEMA MOTORU (FERAH VE AYDINLIK RENKLER)
            ------------------------------------------------------------- */
         :root {
             --success-color: #10b981;
@@ -64,7 +64,7 @@
             --border-main: #bbf7d0;
             --text-main: #0f172a;
             --text-muted: #64748b;
-            --accent-primary: #10b981; /* Emerald 500 */
+            --accent-primary: #10b981;
             --accent-hover: #059669;
             --accent-light: rgba(16, 185, 129, 0.1);
             --blob-1: rgba(52, 211, 153, 0.4);
@@ -124,7 +124,7 @@
         .custom-checkbox input:checked + div { background-color: var(--accent-primary); border-color: var(--accent-primary); }
         .custom-checkbox input:checked + div i { opacity: 1; }
 
-        /* ARTIKEL RENKLERİ (Açık temada daha net okunması için tonlar koyulaştırıldı) */
+        /* ARTIKEL RENKLERİ */
         .art-der { color: #2563eb !important; } /* blue-600 */
         .art-die { color: #e11d48 !important; } /* rose-600 */
         .art-das { color: #d97706 !important; } /* amber-600 */
@@ -161,7 +161,7 @@
                     <button id="themeMenuBtn" class="p-2.5 t-panel t-muted hover:t-accent hover:scale-105 rounded-xl transition-all shadow-sm" title="Tema Değiştir">
                         <i class="fa-solid fa-palette"></i>
                     </button>
-                    <!-- SADECE 3 FERAHA TEMA -->
+                    <!-- FERAHA TEMALAR MENÜSÜ -->
                     <div id="themeDropdown" class="absolute right-0 mt-2 w-44 t-panel rounded-2xl shadow-2xl p-1.5 hidden z-50 animate-pop">
                         <button onclick="setTheme('blue')" class="w-full text-left px-3 py-2.5 text-xs rounded-xl hover:bg-[var(--bg-main)] flex items-center gap-2.5 t-text font-bold transition-colors">
                             <span class="w-4 h-4 rounded-full bg-[#f0f9ff] border border-[#0ea5e9]"></span> 🌊 Açık Mavi
@@ -279,10 +279,10 @@
                 <input type="text" id="kbInput" autocomplete="off" placeholder="Örn: abhängen von" class="w-full t-input rounded-2xl px-5 py-4 text-center text-lg font-bold transition-all placeholder:font-normal">
                 
                 <div class="flex gap-2 mt-4">
-                    <button id="kbHintBtn" title="İpucu Al (-5 Puan)" class="px-5 py-3.5 bg-[var(--bg-main)] t-muted border border-[var(--border-main)] hover:t-bg-accent rounded-xl font-bold transition-all hover:scale-105 active:scale-95 shadow-sm">
+                    <button id="kbHintBtn" title="İpucu Al (-5 Puan)" class="px-5 py-3.5 t-panel hover:t-bg-accent rounded-xl font-bold transition-all hover:scale-105 active:scale-95 shadow-md">
                         <i class="fa-solid fa-lightbulb"></i>
                     </button>
-                    <button id="kbPassBtn" title="Kelimeyi Sona At" class="px-5 py-3.5 bg-[var(--bg-main)] t-muted border border-[var(--border-main)] hover:t-bg-accent rounded-xl font-bold transition-all hover:scale-105 active:scale-95 flex items-center gap-1.5 shadow-sm">
+                    <button id="kbPassBtn" title="Kelimeyi Sona At" class="px-5 py-3.5 t-panel hover:t-bg-accent rounded-xl font-bold transition-all hover:scale-105 active:scale-95 flex items-center gap-1.5 shadow-md">
                         Pas <i class="fa-solid fa-forward-step"></i>
                     </button>
                     <button id="kbSubmitBtn" class="flex-1 py-3.5 t-bg-accent rounded-xl font-black transition-all hover:scale-[1.02] active:scale-95 shadow-lg">
@@ -298,7 +298,7 @@
 
     <!-- ZARİF GELİŞTİRİCİ BİLGİSİ (Hap Tasarım / Pill) -->
     <div class="flex justify-center pb-6 mt-auto relative z-10">
-        <div class="flex items-center gap-3 px-5 py-2 t-panel rounded-full shadow-md text-xs t-muted transition-all">
+        <div class="flex items-center gap-3 px-5 py-2 t-panel rounded-full shadow-md text-xs t-muted transition-all hover:border-[var(--accent-primary)]">
             <span>Geliştirici: <b class="t-text">Ömer Faruk Kırmacı</b></span>
             <div class="w-px h-3 bg-[var(--border-main)]"></div>
             <div class="flex items-center gap-2.5">
@@ -344,7 +344,7 @@
                     <div class="w-8 h-8 rounded-full bg-[var(--accent-light)] t-accent flex items-center justify-center shrink-0 font-black mt-0.5"><i class="fa-solid fa-book-open"></i></div>
                     <div>
                         <h4 class="font-bold t-text text-sm mb-1">Akademik Kullanım</h4>
-                        <p class="text-xs t-muted">Oyun sırasında kelimelerin yanındaki <span class="t-text font-bold border border-[var(--border-main)] bg-white px-1 py-0.5 rounded text-[8px] uppercase">Örnek</span> butonuna basarsan, kelimenin <span class="t-accent font-bold">TestDaF kalıbını ve örnek cümlesini</span> görebilirsin.</p>
+                        <p class="text-xs t-muted">Oyun sırasında kelimelerin yanındaki <span class="t-text font-bold border border-[var(--border-main)] bg-[var(--bg-card)] px-1 py-0.5 rounded text-[8px] uppercase shadow-sm">Örnek</span> butonuna basarsan, kelimenin <span class="t-accent font-bold">TestDaF kalıbını ve örnek cümlesini</span> görebilirsin.</p>
                     </div>
                 </div>
             </div>
@@ -499,7 +499,6 @@
         </div>
     </div>
 
-    <!-- DİĞER MODALLAR BURADA DEVAM EDİYOR (Görünmez Kısımlar, Formlar vb.) -->
     <div id="editWordModal" class="fixed inset-0 t-modal-overlay z-[60] flex items-center justify-center p-4 hidden">
         <div class="t-panel rounded-2xl w-full max-w-md p-6 shadow-2xl animate-pop">
             <h3 class="font-bold t-text text-sm mb-4">Kelime Düzenle</h3>
@@ -565,7 +564,7 @@
             "sich beschweren über|Akkusativ|şikayet etmek (konu)|Sie beschwert sich über die veraltete Ausrüstung.|Eski ekipmandan şikayet ediyor.",
             "besetzen mit|Dativ|doldurmak (kadro)|Der CEO besetzte die Stelle mit einer Expertin.|CEO pozisyonu bir uzmanla doldurdu.",
             "bestehen auf|Dativ|ısrar etmek|Mark bestand auf seiner Meinung.|Mark kendi fikrinde ısrar etti.",
-            "bestehen aus|Dativ|-den oluşmak|Butter besteht vor allem aus Milchfett und Wasser.|Tereyağı çoğunlukla süt yağı und sudan oluşur.",
+            "bestehen aus|Dativ|-den oluşmak|Butter besteht vor allem aus Milchfett und Wasser.|Tereyağı çoğunlukla süt yağı ve sudan oluşur.",
             "bestehen in|Dativ|ibaret olmak|Der Unterschied besteht in der Vorbereitung.|Fark hazırlıkta yatmaktadır.",
             "bestrafen für|Akkusativ|cezalandırmak|Das Gericht bestrafte den Dieb für seine Tat.|Mahkeme hırsızı eyleminden dolayı cezalandırdı.",
             "sich beteiligen an|Dativ|katılmak / pay almak|Sie beteiligt sich am Gespräch.|O, sohbete katılıyor.",
@@ -815,18 +814,27 @@
             return word;
         }
 
-        /* YENİ NESİL TEMA MOTORU */
+        /* -------------------------------------------------------------
+           KUSURSUZ TEMA DEĞİŞTİRME FONKSİYONU
+           ------------------------------------------------------------- */
         window.setTheme = (themeName) => {
             activeTheme = themeName; 
-            localStorage.setItem('schatz_theme', themeName);
-            document.body.className = `min-h-screen flex flex-col antialiased selection:bg-[var(--accent-primary)] selection:text-white theme-${themeName} relative`;
+            localStorage.setItem('schatz_theme_v19', themeName);
+            
+            document.body.classList.remove('theme-blue', 'theme-pink', 'theme-green', 'theme-purple', 'theme-slate');
+            document.body.classList.add(`theme-${themeName}`);
+            
             document.getElementById('themeDropdown').classList.add('hidden');
+            updateTabsUI(); 
         };
 
         document.getElementById('themeMenuBtn').addEventListener('click', (e) => { 
-            e.stopPropagation(); document.getElementById('themeDropdown').classList.toggle('hidden'); 
+            e.stopPropagation(); 
+            document.getElementById('themeDropdown').classList.toggle('hidden'); 
         });
-        document.addEventListener('click', () => document.getElementById('themeDropdown').classList.add('hidden'));
+        document.addEventListener('click', () => { 
+            document.getElementById('themeDropdown').classList.add('hidden'); 
+        });
 
         document.getElementById('soundToggleBtn').addEventListener('click', () => {
             isSoundEnabled = !isSoundEnabled; localStorage.setItem('schatz_sound', isSoundEnabled);
@@ -837,7 +845,7 @@
         document.getElementById('infoBtn').addEventListener('click', () => document.getElementById('welcomeModal').classList.remove('hidden'));
         document.getElementById('closeWelcomeBtn').addEventListener('click', () => {
             document.getElementById('welcomeModal').classList.add('hidden');
-            localStorage.setItem('schatz_tutorial_seen_v18', 'true');
+            localStorage.setItem('schatz_tutorial_seen_v19', 'true');
         });
 
         function speakGerman(text) {
@@ -856,10 +864,10 @@
 
         function loadDatabase() {
             try {
-                const saved = localStorage.getItem('schatz_db_v18');
+                const saved = localStorage.getItem('schatz_db_v19');
                 if (saved) { allWords = JSON.parse(saved); if(allWords.length === 0) resetToFactoryDefaults(); } 
                 else { resetToFactoryDefaults(); }
-                const savedLastStations = localStorage.getItem('schatz_last_stations_v18');
+                const savedLastStations = localStorage.getItem('schatz_last_stations_v19');
                 if(savedLastStations) { lastStations = JSON.parse(savedLastStations); }
             } catch (e) {
                 resetToFactoryDefaults();
@@ -868,8 +876,8 @@
         }
 
         function saveDatabase() { 
-            localStorage.setItem('schatz_db_v18', JSON.stringify(allWords)); 
-            localStorage.setItem('schatz_last_stations_v18', JSON.stringify(lastStations));
+            localStorage.setItem('schatz_db_v19', JSON.stringify(allWords)); 
+            localStorage.setItem('schatz_last_stations_v19', JSON.stringify(lastStations));
             updateBadges(); 
         }
 
@@ -1172,7 +1180,7 @@
         function loadNextKeyboardWord() {
             if(remainingPool.length === 0) {
                 document.getElementById('congratsIcon').innerHTML = '<i class="fa-solid fa-fire text-orange-500 animate-float"></i>';
-                document.getElementById('congratsIcon').className = "w-20 h-20 bg-orange-500/10 text-orange-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 relative z-10 shadow-xl";
+                document.getElementById('congratsIcon').className = "w-20 h-20 bg-orange-500/10 text-orange-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 relative z-10 shadow-xl border border-orange-500/30";
                 document.getElementById('congratsTitle').textContent = "Pratik Tamamlandı!";
                 document.getElementById('congratsDesc').textContent = "Kelimeleri defalarca eşleştirdin ve artikelleriyle doğru yazdın. Kas hafızasına eklendi!";
                 document.getElementById('finalScore').textContent = score; document.getElementById('finalStreak').textContent = maxStreak;
@@ -1300,7 +1308,7 @@
                 if((selectedLevel === '190_Fiil' || selectedLevel === 'Aspekte_B1') && !isDrillMode) {
                     extraHtml = `
                     <div class="flex items-center gap-2" onclick="event.stopPropagation()">
-                        <button onclick="showExampleModal('${card.id}')" class="px-2.5 py-1.5 rounded-lg bg-[var(--bg-main)] t-accent border border-[var(--border-main)] hover:t-bg-accent transition-all flex items-center gap-1.5 hover:scale-105 shadow-sm" title="Örnek Cümleyi Göster">
+                        <button onclick="showExampleModal('${card.id}')" class="px-2.5 py-1.5 rounded-lg t-panel t-muted hover:t-bg-accent transition-all flex items-center gap-1.5 hover:scale-105 shadow-sm" title="Örnek Cümleyi Göster">
                             <i class="fa-solid fa-book-open text-[10px]"></i>
                             <span class="text-[9px] font-black tracking-widest uppercase">Örnek</span>
                         </button>
@@ -1430,7 +1438,7 @@
             document.getElementById('levelTabs').querySelectorAll('.lvl-tab').forEach(b => {
                 const lvl = b.dataset.level || (b.id === 'openDrillTabBtn' ? 'drill' : '');
                 if (lvl === selectedLevel) {
-                    b.className = `lvl-tab px-5 py-3 rounded-xl text-xs font-black transition-all t-bg-accent shadow-lg scale-105 hover:-translate-y-0.5`;
+                    b.className = `lvl-tab px-5 py-3 rounded-xl text-xs font-black transition-all t-bg-accent shadow-lg scale-105 hover:-translate-y-0.5 border border-transparent`;
                 } else {
                     b.className = `lvl-tab px-5 py-3 rounded-xl text-xs font-bold transition-all t-panel t-muted hover:t-accent hover:border-[var(--accent-primary)] hover:scale-[1.02] shadow-sm`;
                 }
@@ -1456,7 +1464,7 @@
                 
                 let badge = `<span class="bg-[var(--bg-main)] border border-[var(--border-main)] px-1.5 py-0.5 rounded text-[9px] t-muted shadow-sm">${w.level}</span>`;
                 if(w.level === '190_Fiil') badge = `<span class="bg-[var(--accent-light)] border border-[var(--accent-primary)] px-1.5 py-0.5 rounded text-[9px] t-accent font-bold shadow-sm">İstasyon ${w.group}</span>`;
-                if(w.level === 'Aspekte_B1') badge = `<span class="bg-indigo-500/10 border border-indigo-500/30 px-1.5 py-0.5 rounded text-[9px] text-indigo-500 font-bold shadow-sm">İstasyon ${w.group}</span>`;
+                if(w.level === 'Aspekte_B1') badge = `<span class="bg-[var(--accent-light)] border border-[var(--accent-primary)] px-1.5 py-0.5 rounded text-[9px] t-accent font-bold shadow-sm">İstasyon ${w.group}</span>`;
 
                 tr.innerHTML = `
                     <td class="py-3 px-4 font-mono text-sm">${formatGermanWord(w.de)}</td><td class="py-3 px-4 text-xs t-muted">${w.tr}</td><td class="py-3 px-4">${badge}</td>
@@ -1508,8 +1516,8 @@
         document.getElementById('resetDatabaseBtn').addEventListener('click', () => { if(confirm("Sıfırlansın mı?")){ resetToFactoryDefaults(); document.getElementById('libraryModal').classList.add('hidden'); initGame('190_Fiil'); } });
 
         window.addEventListener('DOMContentLoaded', () => {
-            // KAYITLI TEMAYI YÜKLE (Yoksa Blue varsayılan)
-            const savedTheme = localStorage.getItem('schatz_theme') || 'blue';
+            // İLK GİRİŞTE HER ZAMAN AÇIK MAVİ BAŞLASIN
+            const savedTheme = localStorage.getItem('schatz_theme_v19') || 'blue';
             setTheme(savedTheme);
             
             const s = localStorage.getItem('schatz_sound'); 
@@ -1519,7 +1527,7 @@
             loadDatabase(); initGame('190_Fiil'); 
 
             setTimeout(() => {
-                if(!localStorage.getItem('schatz_tutorial_seen_v18')) {
+                if(!localStorage.getItem('schatz_tutorial_seen_v19')) {
                     document.getElementById('welcomeModal').classList.remove('hidden');
                 }
             }, 500);
@@ -1527,6 +1535,5 @@
     </script>
 </body>
 </html>
-
 
 
