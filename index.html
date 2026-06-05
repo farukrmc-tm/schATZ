@@ -201,23 +201,23 @@
         </div>
 
         <div class="flex flex-col items-center">
-            <!-- Seviye Sekmeleri -->
+            <!-- Seviye Sekmeleri (DÜZELTİLDİ: relative classı eklendi) -->
             <div class="flex flex-wrap gap-2 justify-center w-full" id="levelTabs">
-                <button data-level="190_Fiil" class="lvl-tab px-5 py-3 rounded-xl text-xs font-black transition-all t-bg-accent shadow-md">
+                <button data-level="190_Fiil" class="lvl-tab relative px-5 py-3 rounded-xl text-xs font-black transition-all t-bg-accent shadow-md">
                     <i class="fa-solid fa-list-check mr-1.5"></i> 190 Akademik Fiil
                 </button>
-                <button data-level="Aspekte_B1" class="lvl-tab px-5 py-3 rounded-xl text-xs font-bold transition-all t-panel t-muted hover:t-accent hover:scale-[1.02]">
+                <button data-level="Aspekte_B1" class="lvl-tab relative px-5 py-3 rounded-xl text-xs font-bold transition-all t-panel t-muted hover:t-accent hover:scale-[1.02]">
                     <i class="fa-solid fa-book-bookmark mr-1.5"></i> Aspekte B1+
                 </button>
-                <button data-level="mistake" class="lvl-tab px-5 py-3 rounded-xl text-xs font-bold transition-all t-panel t-muted hover:text-rose-500 hover:border-rose-300 relative hover:scale-[1.02]">
+                <button data-level="mistake" class="lvl-tab relative px-5 py-3 rounded-xl text-xs font-bold transition-all t-panel t-muted hover:text-rose-500 hover:border-rose-300 hover:scale-[1.02]">
                     <i class="fa-solid fa-triangle-exclamation mr-1.5 text-[10px]"></i> Hatalılar
-                    <span id="mistakeBadge" class="absolute -top-1.5 -right-1 bg-rose-500 text-white text-[9px] px-1.5 py-0.5 rounded-full font-black hidden">0</span>
+                    <span id="mistakeBadge" class="absolute -top-1.5 -right-1 bg-rose-500 text-white text-[9px] px-1.5 py-0.5 rounded-full font-black hidden shadow-sm">0</span>
                 </button>
-                <button data-level="custom" class="lvl-tab px-5 py-3 rounded-xl text-xs font-bold transition-all t-panel t-muted hover:text-amber-500 hover:border-amber-300 relative hover:scale-[1.02]">
+                <button data-level="custom" class="lvl-tab relative px-5 py-3 rounded-xl text-xs font-bold transition-all t-panel t-muted hover:text-amber-500 hover:border-amber-300 hover:scale-[1.02]">
                     <i class="fa-solid fa-star mr-1.5 text-[10px]"></i> Özel Liste
-                    <span id="customBadge" class="absolute -top-1.5 -right-1 bg-amber-500 text-white text-[9px] px-1.5 py-0.5 rounded-full font-black hidden">0</span>
+                    <span id="customBadge" class="absolute -top-1.5 -right-1 t-bg-accent text-white text-[9px] px-1.5 py-0.5 rounded-full font-black hidden shadow-sm">0</span>
                 </button>
-                <button id="openDrillTabBtn" class="lvl-tab px-5 py-3 rounded-xl text-xs font-black transition-all bg-[var(--bg-main)] t-accent border border-[var(--border-main)] shadow-sm hover:t-bg-accent relative hover:-translate-y-0.5">
+                <button id="openDrillTabBtn" class="lvl-tab relative px-5 py-3 rounded-xl text-xs font-black transition-all bg-[var(--bg-main)] t-accent border border-[var(--border-main)] shadow-sm hover:t-bg-accent hover:-translate-y-0.5">
                     <i class="fa-solid fa-fire mr-1.5 text-[10px] animate-pulse"></i> Yoğun Pratik
                 </button>
             </div>
@@ -429,7 +429,6 @@
                 <button onclick="document.getElementById('drillSetupModal').classList.add('hidden')" class="t-muted hover:t-text p-2 rounded-full hover:bg-[var(--border-main)] transition-all hover:rotate-90"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
 
-            <!-- GÜNCELLENDİ: SEKME MENÜSÜ -->
             <div class="flex flex-wrap border-b border-[var(--border-main)] bg-[var(--bg-panel)] p-2 gap-2 shrink-0" id="drillMenuTabs">
                 <button onclick="switchDrillTab('manual')" id="tabBtn-manual" class="flex-1 min-w-[70px] py-2 rounded-xl text-[11px] font-bold transition-all t-bg-accent truncate px-1 shadow-sm">📝 Gir</button>
                 <button onclick="switchDrillTab('select')" id="tabBtn-select" class="flex-1 min-w-[70px] py-2 rounded-xl text-[11px] font-bold transition-all t-muted hover:t-text hover:bg-[var(--bg-main)] truncate px-1 border border-transparent">☑️ Seç</button>
@@ -788,8 +787,18 @@
 
         function updateBadges() {
             const m = allWords.filter(w => w.status === 'mistake').length; const c = allWords.filter(w => w.level === 'custom').length;
-            document.getElementById('mistakeBadge').className = m > 0 ? "absolute -top-1.5 -right-1 bg-rose-500 text-white text-[9px] px-1.5 py-0.5 rounded-full font-black shadow-sm" : "hidden"; document.getElementById('mistakeBadge').textContent = m;
-            document.getElementById('customBadge').className = c > 0 ? "absolute -top-1.5 -right-1 t-bg-accent text-white text-[9px] px-1.5 py-0.5 rounded-full font-black shadow-sm" : "hidden"; document.getElementById('customBadge').textContent = c;
+            
+            const mBadge = document.getElementById('mistakeBadge');
+            if(mBadge) {
+                mBadge.className = m > 0 ? "absolute -top-1.5 -right-1 bg-rose-500 text-white text-[9px] px-1.5 py-0.5 rounded-full font-black shadow-sm" : "hidden"; 
+                mBadge.textContent = m;
+            }
+            
+            const cBadge = document.getElementById('customBadge');
+            if(cBadge) {
+                cBadge.className = c > 0 ? "absolute -top-1.5 -right-1 t-bg-accent text-white text-[9px] px-1.5 py-0.5 rounded-full font-black shadow-sm" : "hidden"; 
+                cBadge.textContent = c;
+            }
         }
 
         function getTotalGroupsForLevel(level) {
@@ -1043,7 +1052,7 @@
         window.startSelectedDrill = (isEndless = false) => {
             const checkedIds = Array.from(document.querySelectorAll('#drillSelectList input:checked')).map(cb => cb.value);
             
-            if(isEndless && checkedIds.length < 2) { showToast("Sonsuz test için en az 2 kelime seçmelisin!", false); return; }
+            if(isEndless && checkedIds.length < 4) { showToast("Sonsuz test için en az 4 kelime seçmelisin!", false); return; }
             if(!isEndless && checkedIds.length < 3) { showToast("Klasik kamp için en az 3 kelime seçmelisin!", false); return; }
             
             const words = allWords.filter(w => checkedIds.includes(w.id));
@@ -1057,6 +1066,8 @@
             let pool = shuffle(allWords.filter(w => w.status === 'mistake'));
             const words = pool.slice(0, count);
             
+            if(isEndless && words.length < 4) { showToast("Sonsuz test için en az 4 hatalı kelimen olmalı!", false); return; }
+
             if(isEndless) initEndlessQuiz(words);
             else { document.getElementById('drillSetupModal').classList.add('hidden'); startDrillProcess(words); }
         };
@@ -1173,8 +1184,8 @@
         };
 
         function initEndlessQuiz(pool) {
-            if(pool.length < 1) {
-                showToast("Bu havuzda test oluşturmak için kelime bulunamadı!", false);
+            if(pool.length < 4) {
+                showToast("Bu havuzda test oluşturmak için en az 4 kelime olmalı!", false);
                 return;
             }
 
@@ -1208,12 +1219,22 @@
             document.getElementById('quizCorrectCount').textContent = endlessCorrectCount;
             document.getElementById('quizWrongCount').textContent = endlessWrongCount;
 
-            // 3 adet tamamen rastgele yanlış seçenek bul (Tüm kelimelerden)
             let options = [currentQuizWord];
             let attempts = 0;
+
+            const sourcePool = endlessPool.length >= 4 ? endlessPool : allWords; 
+
+            while(options.length < 4 && attempts < 150) {
+                let randomWord = sourcePool[Math.floor(Math.random() * sourcePool.length)];
+                if(!options.some(w => w.id === randomWord.id)) {
+                    options.push(randomWord);
+                }
+                attempts++;
+            }
+            
+            attempts = 0;
             while(options.length < 4 && attempts < 100) {
                 let randomWord = allWords[Math.floor(Math.random() * allWords.length)];
-                // Aynı kelimenin şıklarda olmamasını sağla
                 if(!options.some(w => w.id === randomWord.id)) {
                     options.push(randomWord);
                 }
@@ -1493,10 +1514,16 @@
                 const lvl = b.dataset.level || (b.id === 'openDrillTabBtn' ? 'drill' : '');
                 const isDrillBtn = (b.id === 'openDrillTabBtn') && (selectedLevel === 'drill' || selectedLevel === 'endless');
                 
+                // GÜNCELLENEN KISIM: Hover renklerini korumak için
+                let extraHover = "hover:t-accent hover:border-[var(--accent-primary)]";
+                if(lvl === 'mistake') extraHover = "hover:text-rose-500 hover:border-rose-300";
+                if(lvl === 'custom') extraHover = "hover:text-amber-500 hover:border-amber-300";
+                if(isDrillBtn) extraHover = "hover:t-bg-accent";
+
                 if (lvl === selectedLevel || isDrillBtn) {
-                    b.className = `lvl-tab px-5 py-3 rounded-xl text-xs font-black transition-all t-bg-accent shadow-lg scale-105 hover:-translate-y-0.5 border border-transparent`;
+                    b.className = `lvl-tab relative px-5 py-3 rounded-xl text-xs font-black transition-all t-bg-accent shadow-lg scale-105 hover:-translate-y-0.5 border border-transparent`;
                 } else {
-                    b.className = `lvl-tab px-5 py-3 rounded-xl text-xs font-bold transition-all t-panel t-muted hover:t-accent hover:border-[var(--accent-primary)] hover:scale-[1.02] shadow-sm`;
+                    b.className = `lvl-tab relative px-5 py-3 rounded-xl text-xs font-bold transition-all t-panel t-muted hover:scale-[1.02] shadow-sm ${extraHover}`;
                 }
             });
         }
