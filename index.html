@@ -201,13 +201,10 @@
         </div>
 
         <div class="flex flex-col items-center">
-            <!-- Seviye Sekmeleri (DÜZELTİLDİ: relative classı eklendi) -->
+            <!-- Seviye Sekmeleri -->
             <div class="flex flex-wrap gap-2 justify-center w-full" id="levelTabs">
                 <button data-level="190_Fiil" class="lvl-tab relative px-5 py-3 rounded-xl text-xs font-black transition-all t-bg-accent shadow-md">
                     <i class="fa-solid fa-list-check mr-1.5"></i> 190 Akademik Fiil
-                </button>
-                <button data-level="Aspekte_B1" class="lvl-tab relative px-5 py-3 rounded-xl text-xs font-bold transition-all t-panel t-muted hover:t-accent hover:scale-[1.02]">
-                    <i class="fa-solid fa-book-bookmark mr-1.5"></i> Aspekte B1+
                 </button>
                 <button data-level="mistake" class="lvl-tab relative px-5 py-3 rounded-xl text-xs font-bold transition-all t-panel t-muted hover:text-rose-500 hover:border-rose-300 hover:scale-[1.02]">
                     <i class="fa-solid fa-triangle-exclamation mr-1.5 text-[10px]"></i> Hatalılar
@@ -496,7 +493,6 @@
                         <select id="endlessPoolSelect" class="w-full t-input rounded-xl px-4 py-3 text-sm font-bold cursor-pointer transition-colors shadow-sm focus:ring-2 focus:ring-blue-500/50">
                             <option value="all">🌍 Tüm Kelimeler (Tamamı)</option>
                             <option value="190_Fiil">🚀 190 Akademik Fiil</option>
-                            <option value="Aspekte_B1">📚 Aspekte B1+ Kelimeleri</option>
                             <option value="mistake">⚠️ Sadece Hata Yaptıklarım</option>
                             <option value="custom">⭐ Özel Liste (Kendi Eklediklerim)</option>
                         </select>
@@ -659,25 +655,6 @@
             "fehlen an|Dativ|eksik olmak|Es fehlt uns an nichts.|Hiçbir eksiğimiz yok."
         ];
 
-        const RAW_ASPEKTE_WORDS = [
-            "die Leidenschaft|-|tutku / ihtiras|Er hat eine große Leidenschaft für die Forschung entwickelt.|O, araştırmaya karşı büyük bir tutku geliştirdi.",
-            "die Ernüchterung|-|hayal kırıklığı / aklı başa gelme|Nach der ersten Euphorie folgte schnell die Ernüchterung.|İlk coşkunun ardından hızla hayal kırıklığı (gerçeklerle yüzleşme) geldi.",
-            "verwirklichen|-|gerçekleştirmek (hayal/proje)|Er hat sich seinen Lebenstraum endlich verwirklicht.|O, hayatının hayalini sonunda gerçekleştirdi.",
-            "ehrgeizig|-|hırslı / azimli|Sie ist eine ehrgeizige Studentin mit klaren Zielen.|O, net hedefleri olan hırslı bir öğrencidir.",
-            "verantwortungsbewusst|-|sorumluluk sahibi|Wir suchen einen verantwortungsbewussten Mitarbeiter für dieses Projekt.|Bu proje için sorumluluk sahibi bir çalışan arıyoruz.",
-            "verschwiegen|-|ağzı sıkı / sır tutan|Ein guter Anwalt muss absolut verschwiegen sein.|İyi bir avukat kesinlikle sır tutan biri olmalıdır.",
-            "ehrenamtlich|-|gönüllü olarak|Viele Jugendliche engagieren sich heute ehrenamtlich.|Bugün birçok genç gönüllü olarak çalışmalara katılıyor.",
-            "die Übereinstimmung|-|uyum / mutabakat|Es gibt eine große Übereinstimmung in ihren Meinungen.|Onların fikirlerinde büyük bir uyum var.",
-            "der Standpunkt|-|bakış açısı / görüş|Von meinem Standpunkt aus ist diese Entscheidung falsch.|Benim bakış açıma göre bu karar yanlış.",
-            "widersprechen|Dativ|itiraz etmek / karşı çıkmak|Ich muss dir in diesem Punkt leider widersprechen.|Bu noktada sana maalesef itiraz etmek zorundayım.",
-            "nachhaltig|-|sürdürülebilir / kalıcı|Eine nachhaltige Entwicklung ist für unsere Zukunft essenziell.|Sürdürülebilir bir gelişim geleceğimiz için elzemdir.",
-            "die Zusammenarbeit|-|işbirliği|Die Zusammenarbeit zwischen den beiden Firmen war erfolgreich.|İki şirket arasındaki işbirliği başarılıydı.",
-            "verzichten auf|Akkusativ|-den vazgeçmek|Aus gesundheitlichen Gründen verzichtet sie auf Zucker.|Sağlık nedenlerinden dolayı o şekerden vazgeçiyor.",
-            "die Vorliebe|-|tercih / meyil|Er hat eine starke Vorliebe für klassische Musik.|Onun klasik müziğe karşı güçlü bir eğilimi var.",
-            "die Auswertung|-|değerlendirme (veri/analiz)|Die Auswertung der Daten wird einige Wochen dauern.|Verilerin değerlendirilmesi birkaç hafta sürecek.",
-            "der Gegensatz|-|zıtlık / tezat|Im Gegensatz zu dir finde ich den Film spannend.|Senin aksine ben filmi heyecan verici buluyorum."
-        ];
-
         let allWords = []; let basePool = []; let remainingPool = []; let activePairs = [];
         let selectedDeId = null; let selectedTrId = null; let selectedDeElement = null; let selectedTrElement = null;
         let score = 0; let streak = 0; let maxStreak = 0;
@@ -686,7 +663,7 @@
         let isGameInitialized = false; 
 
         let currentRound = 1; let totalRounds = 1;
-        let lastStations = { '190_Fiil': 1, 'Aspekte_B1': 1 };
+        let lastStations = { '190_Fiil': 1 };
         let activeGroupNum = 1;
 
         let isDrillMode = false; let drillPhase = 0; 
@@ -778,10 +755,6 @@
                 const groupNum = Math.floor(index / 10) + 1;
                 t.push({ id: generateId(), de: p[0], tr: p[2], level: '190_Fiil', group: groupNum, status: 'learning', errorCount: 0, kalip: `${p[0]} + ${p[1]}`, ornekDe: p[3], ornekTr: p[4], prep: prepExtracted, kasus: p[1] });
             });
-            RAW_ASPEKTE_WORDS.forEach((row, index) => {
-                const p = row.split('|'); const groupNum = Math.floor(index / 10) + 1;
-                t.push({ id: generateId(), de: p[0], tr: p[2], level: 'Aspekte_B1', group: groupNum, status: 'learning', errorCount: 0, kalip: p[1] !== '-' ? p[1] : '', ornekDe: p[3], ornekTr: p[4], kasus: p[1] });
-            });
             allWords = t; saveDatabase();
         }
 
@@ -814,7 +787,7 @@
 
         function updateMainStationCard() {
             const wrapper = document.getElementById('stationTargetWrapper');
-            if (selectedLevel === '190_Fiil' || selectedLevel === 'Aspekte_B1') {
+            if (selectedLevel === '190_Fiil') {
                 wrapper.classList.remove('hidden');
                 activeGroupNum = lastStations[selectedLevel] || 1;
                 const pct = getStationProgress(selectedLevel, activeGroupNum);
@@ -824,7 +797,7 @@
                 const totalWordsInLevel = allWords.filter(w => w.level === selectedLevel).length;
                 if (end > totalWordsInLevel) end = totalWordsInLevel;
                 
-                let titlePrefix = selectedLevel === '190_Fiil' ? '190 Fiil' : 'Aspekte B1+';
+                let titlePrefix = '190 Fiil';
                 document.getElementById('mainStationSubtitle').textContent = `${titlePrefix} Haritası`;
                 document.getElementById('mainStationTitle').textContent = `${activeGroupNum}. İstasyon (${start}-${end})`;
                 document.getElementById('mainStationPct').textContent = `%${pct}`;
@@ -842,7 +815,7 @@
             if (totalGroups === 0) totalGroups = 1;
 
             let activeG = lastStations[selectedLevel] || 1;
-            let titlePrefix = selectedLevel === '190_Fiil' ? '190 Akademik Fiil' : 'Aspekte B1+ Kelimeleri';
+            let titlePrefix = '190 Akademik Fiil';
             document.getElementById('modalMapSubtitle').textContent = titlePrefix;
 
             for(let i = 1; i <= totalGroups; i++) {
@@ -900,7 +873,7 @@
             
             selectedLevel = level; let levelWords = [];
 
-            if(level === '190_Fiil' || level === 'Aspekte_B1') {
+            if(level === '190_Fiil') {
                 activeGroupNum = lastStations[level] || 1; 
                 levelWords = allWords.filter(w => w.level === level && w.group === activeGroupNum);
                 totalRounds = 5;
@@ -932,7 +905,7 @@
 
         document.getElementById('restartGameBtn').onclick = () => { 
             document.getElementById('congratsModal').classList.add('hidden'); 
-            if(selectedLevel === '190_Fiil' || selectedLevel === 'Aspekte_B1') {
+            if(selectedLevel === '190_Fiil') {
                 let nextGroup = activeGroupNum + 1; let total = getTotalGroupsForLevel(selectedLevel);
                 if(nextGroup <= total) { selectStation(nextGroup); } else { initGame(selectedLevel); }
             } else { initGame(selectedLevel); }
@@ -1333,7 +1306,7 @@
                         for (let i = 0; i < 5; i++) if (remainingPool.length > 0) activePairs.push(remainingPool.pop());
                         setTimeout(() => { renderBoard(); updateStatsUI(); }, 200); return;
                     } else { startDrillPhase2(); return; }
-                } else if (selectedLevel === '190_Fiil' || selectedLevel === 'Aspekte_B1') {
+                } else if (selectedLevel === '190_Fiil') {
                     if (currentRound < totalRounds) {
                         currentRound++;
                         showToast(`Müthiş! Tur ${currentRound}/${totalRounds} başlıyor, kas hafızasına yazılıyor...`, true);
@@ -1371,13 +1344,13 @@
                 
                 const wordObj = allWords.find(w => w.id === card.id);
                 let prepTag = "";
-                if (wordObj && (wordObj.level === '190_Fiil' || wordObj.level === 'Aspekte_B1') && wordObj.kasus && wordObj.kasus !== '-') {
+                if (wordObj && wordObj.level === '190_Fiil' && wordObj.kasus && wordObj.kasus !== '-') {
                     let kColor = wordObj.kasus.includes('Akkusativ') ? 'text-rose-500' : (wordObj.kasus.includes('Dativ') ? 'text-blue-500' : 'text-amber-500');
                     prepTag = ` <span class="ml-2 px-1.5 py-0.5 text-[9px] rounded-md font-black uppercase tracking-wider border border-[var(--border-main)] bg-[var(--bg-main)] ${kColor} hidden sm:inline-block shadow-sm">${wordObj.prep ? '+ ' + wordObj.kasus : wordObj.kasus}</span>`;
                 }
 
                 let extraHtml = "";
-                if((selectedLevel === '190_Fiil' || selectedLevel === 'Aspekte_B1') && !isDrillMode) {
+                if(selectedLevel === '190_Fiil' && !isDrillMode) {
                     extraHtml = `
                     <div class="flex items-center gap-2" onclick="event.stopPropagation()">
                         <button onclick="showExampleModal('${card.id}')" class="px-2.5 py-1.5 rounded-lg bg-[var(--bg-main)] t-accent border border-[var(--border-main)] hover:t-bg-accent transition-all flex items-center gap-1.5 hover:scale-105 shadow-sm" title="Örnek Cümleyi Göster">
@@ -1453,7 +1426,7 @@
                 score += 10; streak += 1; if (streak > maxStreak) maxStreak = streak;
                 
                 if(!isDrillMode) {
-                    if (selectedLevel === '190_Fiil' || selectedLevel === 'Aspekte_B1') {
+                    if (selectedLevel === '190_Fiil') {
                         if(currentRound === totalRounds) { updateWordStatus(selectedDeId, 'known'); }
                     } else { updateWordStatus(selectedDeId, 'known'); }
                 }
@@ -1500,7 +1473,7 @@
             } else if (isDrillMode && drillPhase === 2) {
                  document.getElementById('poolLabel').textContent = "Kalan Kelime";
                  document.getElementById('poolCountEl').textContent = remainingPool.length + 1;
-            } else if (selectedLevel === '190_Fiil' || selectedLevel === 'Aspekte_B1') {
+            } else if (selectedLevel === '190_Fiil') {
                  document.getElementById('poolLabel').textContent = `Tur ${currentRound}/5 Kalan`;
                  document.getElementById('poolCountEl').textContent = remainingPool.length;
             } else {
@@ -1514,7 +1487,6 @@
                 const lvl = b.dataset.level || (b.id === 'openDrillTabBtn' ? 'drill' : '');
                 const isDrillBtn = (b.id === 'openDrillTabBtn') && (selectedLevel === 'drill' || selectedLevel === 'endless');
                 
-                // GÜNCELLENEN KISIM: Hover renklerini korumak için
                 let extraHover = "hover:t-accent hover:border-[var(--accent-primary)]";
                 if(lvl === 'mistake') extraHover = "hover:text-rose-500 hover:border-rose-300";
                 if(lvl === 'custom') extraHover = "hover:text-amber-500 hover:border-amber-300";
@@ -1547,7 +1519,6 @@
                 
                 let badge = `<span class="bg-[var(--bg-main)] border border-[var(--border-main)] px-1.5 py-0.5 rounded text-[9px] t-muted shadow-sm">${w.level}</span>`;
                 if(w.level === '190_Fiil') badge = `<span class="bg-[var(--accent-light)] border border-[var(--accent-primary)] px-1.5 py-0.5 rounded text-[9px] t-accent font-bold shadow-sm">İstasyon ${w.group}</span>`;
-                if(w.level === 'Aspekte_B1') badge = `<span class="bg-[var(--accent-light)] border border-[var(--accent-primary)] px-1.5 py-0.5 rounded text-[9px] t-accent font-bold shadow-sm">İstasyon ${w.group}</span>`;
 
                 tr.innerHTML = `
                     <td class="py-3 px-4 font-mono text-sm">${formatGermanWord(w.de)}</td><td class="py-3 px-4 text-xs t-muted">${w.tr}</td><td class="py-3 px-4">${badge}</td>
@@ -1617,6 +1588,5 @@
     </script>
 </body>
 </html>
-
 
 
